@@ -21,10 +21,7 @@ namespace MyFirstARGame
         // Update is called once per frame
         void Update()
         {
-            if (players == 1)
-            {
-                table = PhotonNetwork.Instantiate("Belt", new Vector3(0f, 0f, 0f), Quaternion.identity);
-            }
+            
         }
             
         [PunRPC]
@@ -35,6 +32,10 @@ namespace MyFirstARGame
             // But you could also remove it entirely and just send the tracked data to the PC instead of instantiating a GameObject.
             players++;
             Debug.Log("player: " + players);
+            if (players == 1)
+            {
+                table = PhotonNetwork.Instantiate("Belt", new Vector3(0f, 0f, 0f), Quaternion.identity);
+            }
         }
     }
 }
