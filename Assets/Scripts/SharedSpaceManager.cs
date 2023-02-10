@@ -34,6 +34,7 @@ namespace MyFirstARGame
 
         // clicked once
         private bool clickedOnce;
+        private bool clickedMoreThanOnce;
 
         private GameObject arCamera;
         private bool syncNextTick;
@@ -108,7 +109,7 @@ namespace MyFirstARGame
                         // if (someTimeElapsed) -> MatchReferenceCoordinateSystem()
                         if (this.syncNextTick)
                         {
-                            if (clickedOnce)
+                            if (clickedOnce && !clickedMoreThanOnce)
                             {
                                 this.networkedTrackedImage.GetPhotonView().RPC("PhoneClickedDebug", RpcTarget.Others);
                             }
@@ -133,11 +134,12 @@ namespace MyFirstARGame
         {
             // The user pressed our image target. Sync up the coordinate systems the next time we get an update.
             Debug.Log("Image target pressed.");
-            if (!this.clickedOnce)
+            if (!this.clickedOnce && !this.clickedMoreThanOnce)
             {
                 this.clickedOnce = true;
             } else
             {
+                this.clickedMoreThanOnce = true;
                 this.clickedOnce = false;
             }
             this.syncNextTick = true;
