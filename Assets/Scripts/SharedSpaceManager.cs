@@ -105,14 +105,14 @@ namespace MyFirstARGame
                         // if (someTimeElapsed) -> MatchReferenceCoordinateSystem()
                         if (this.syncNextTick)
                         {
-                            
-                            if (!this.hasFoundOrigin)
-                            {
-                                this.networkedTrackedImage.GetPhotonView().RPC("PhoneJoinDebug", RpcTarget.Others);
-
-                                NetworkLauncher nl_script = gameObject.GetComponent<NetworkLauncher>();
-                                nl_script.PhoneJoinedRoom();
-                            }
+                            //if (!this.hasFoundOrigin)
+                            //{
+                            this.networkedTrackedImage.GetPhotonView().RPC("PhoneClickedDebug", RpcTarget.Others);
+                            //    this.hasFoundOrigin = true;
+                            //    this.ShowOutline(true, false);
+                            //    this.MatchReferenceCoordinateSystem(trackedImg.gameObject);
+                            //    this.syncNextTick = false;
+                            //}
 
                             this.ShowOutline(true, false);
                             this.MatchReferenceCoordinateSystem(trackedImg.gameObject);

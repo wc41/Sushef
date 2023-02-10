@@ -103,11 +103,6 @@ namespace MyFirstARGame
             this.JoinedRoom?.Invoke(this);
         }
 
-        public void PhoneJoinedRoom()
-        {
-            Debug.Log("Phone Joined Room");
-        } 
-
         public override void OnLeftRoom()
         {
             Debug.Log("Left room");
