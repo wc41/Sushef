@@ -95,5 +95,14 @@ namespace MyFirstARGame
                 this.gameObject.SetActive(false);
             }
         }
+
+        [PunRPC]
+        public void PhoneJoinDebug()
+        {
+            // In our PC scene, we have an ImageTarget object that we can update with the observerd real word size and then disable us.
+            // It might still be desirable to keep this GameObject around, especially when troubleshooting image tracking related issues.
+            // But you could also remove it entirely and just send the tracked data to the PC instead of instantiating a GameObject.
+            Debug.Log("phone joined!!!");
+        }
     }
 }
