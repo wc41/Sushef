@@ -108,7 +108,7 @@ namespace MyFirstARGame
                             
                             if (!this.hasFoundOrigin)
                             {
-                                this.networkedTrackedImage.GetPhotonView().RPC("phoneJoinDebug", RpcTarget.Others);
+                                this.networkedTrackedImage.GetPhotonView().RPC("PhoneJoinDebug", RpcTarget.Others);
 
                                 NetworkLauncher nl_script = gameObject.GetComponent<NetworkLauncher>();
                                 nl_script.PhoneJoinedRoom();
