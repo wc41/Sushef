@@ -74,6 +74,7 @@ namespace MyFirstARGame
             if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("TrackedImage")) && hit.transform == this.transform)
             {
                 this.Pressed?.Invoke(this, position);
+                Debug.Log("logged in");
             }
         }
 

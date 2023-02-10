@@ -64,6 +64,8 @@ namespace MyFirstARGame
         {
             var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
             this.arCamera = PhotonNetwork.Instantiate("ARCamera", mainCamera.transform.position, mainCamera.transform.rotation);
+
+            Debug.Log("Phone has joined room");
         }
 
         private void ArTrackedImageManager_trackedImagesChanged(ARTrackedImagesChangedEventArgs args)
@@ -104,6 +106,13 @@ namespace MyFirstARGame
                         // if (someTimeElapsed) -> MatchReferenceCoordinateSystem()
                         if (this.syncNextTick)
                         {
+                            
+                            if (!this.hasFoundOrigin)
+                            {
+                                NetworkLauncher nl_script = gameObject.GetComponent<NetworkLauncher>();
+                                nl_script.PhoneJoinedRoom();
+                            }
+
                             this.ShowOutline(true, false);
                             this.MatchReferenceCoordinateSystem(trackedImg.gameObject);
                             this.hasFoundOrigin = true;
