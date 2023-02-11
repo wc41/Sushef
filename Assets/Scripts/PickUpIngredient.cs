@@ -74,11 +74,11 @@ namespace MyFirstARGame
             if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("GroundPlane")))
             {
                 Debug.Log("$$$ raycast update calling");
-                GlobalScript j = g.GetComponent<GlobalScript>();
+                // GlobalScript j = g.GetComponent<GlobalScript>();
 
                 Debug.Log("$$$ I found: " + hit.transform.gameObject.GetComponent<PhotonView>().ViewID + ".");
 
-                for (int i = 0; i < j.ingredients.Length; i++)
+                /*for (int i = 0; i < j.ingredients.Length; i++)
                 {
                     if (j.ingredients[i].GetComponent<PhotonView>().ViewID == 
                         hit.transform.gameObject.GetComponent<PhotonView>().ViewID)
@@ -86,7 +86,7 @@ namespace MyFirstARGame
                         this.UpdateOrPickUpObject(hit);
                         break;
                     }
-                }
+                }*/
             }
             //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
             //{
