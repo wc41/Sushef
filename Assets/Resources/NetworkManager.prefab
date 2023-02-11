@@ -82,6 +82,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   players: 0
   tables: []
+  ingredients: []
   wall1: {fileID: 0}
   wall2: {fileID: 0}
   workstation1: {fileID: 0}
