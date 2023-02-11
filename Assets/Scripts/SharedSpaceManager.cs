@@ -112,6 +112,8 @@ namespace MyFirstARGame
                             if (clickedOnce && !clickedMoreThanOnce)
                             {
                                 this.networkedTrackedImage.GetPhotonView().RPC("PhoneClickedDebug", RpcTarget.Others);
+                                GameObject g = GameObject.FindGameObjectWithTag("GameManager");
+                                g.GetPhotonView().RPC("PlayerJoin", RpcTarget.Others);
                             }
 
                             this.ShowOutline(true, false);

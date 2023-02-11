@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 6068959599356134711}
   - component: {fileID: 5055995115842406564}
   - component: {fileID: 4608888377164664123}
+  - component: {fileID: 3811155361211312847}
   m_Layer: 0
   m_Name: NetworkManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -67,3 +68,16 @@ MonoBehaviour:
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
+--- !u!114 &3811155361211312847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766730935116285964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5a1c3a54e0a62243ba2b7a0f332383a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players: 0
