@@ -38,10 +38,6 @@ namespace MyFirstARGame
 
         private GameObject arCamera;
         private bool syncNextTick;
-        private GameObject g;
-
-        private bool playerA;
-        private bool playerB;
 
         private void Awake()
         {
@@ -56,7 +52,6 @@ namespace MyFirstARGame
         {
             this.trackedImages = new List<ARTrackedImage>();
             NetworkLauncher.Singleton.JoinedRoom += this.NetworkLauncher_JoinedRoom;
-            g = GameObject.FindGameObjectWithTag("GameManager");
         }
 
         private void OnEnable()
@@ -117,6 +112,7 @@ namespace MyFirstARGame
                             if (clickedOnce && !clickedMoreThanOnce)
                             {
                                 this.networkedTrackedImage.GetPhotonView().RPC("PhoneClickedDebug", RpcTarget.Others);
+                                GameObject g = GameObject.FindGameObjectWithTag("GameManager");
                                 g.GetPhotonView().RPC("PlayerJoin", RpcTarget.Others);
                             }
 
@@ -197,22 +193,6 @@ namespace MyFirstARGame
             {
                 var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
                 this.arCamera.transform.SetPositionAndRotation(mainCamera.transform.position, mainCamera.transform.rotation);
-
-                Vector3 playerPosition = this.arCamera.transform.position;
-                if (!playerA && Vector3.Distance(new Vector3(0f, 0f, 2f), new Vector3(playerPosition.x, 0, playerPosition.z)) < 1)
-                {
-                    playerA = true;
-                    playerB = false;
-                    g.GetPhotonView().RPC("ReadyPlayer1", RpcTarget.Others);
-                } 
-
-                if (!playerB && Vector3.Distance(new Vector3(0f, 0f, -2f), new Vector3(playerPosition.x, 0, playerPosition.z)) < 1)
-                {
-                    playerB = true;
-                    playerA = false;
-                    g.GetPhotonView().RPC("ReadyPlayer2", RpcTarget.Others);
-                }
-
             }
         }
 
