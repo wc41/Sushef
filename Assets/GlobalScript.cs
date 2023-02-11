@@ -75,6 +75,12 @@ namespace MyFirstARGame
             }
         }
 
+        [PunRPC]
+        public void ReadyPlayer1()
+        {
+            Debug.Log("ready");
+        }
+
         public void beginRound()
         {
             time = 0;

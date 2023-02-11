@@ -38,6 +38,7 @@ namespace MyFirstARGame
 
         private GameObject arCamera;
         private bool syncNextTick;
+        private GameObject g;
 
         private void Awake()
         {
@@ -52,6 +53,7 @@ namespace MyFirstARGame
         {
             this.trackedImages = new List<ARTrackedImage>();
             NetworkLauncher.Singleton.JoinedRoom += this.NetworkLauncher_JoinedRoom;
+            g = GameObject.FindGameObjectWithTag("GameManager");
         }
 
         private void OnEnable()
@@ -112,7 +114,6 @@ namespace MyFirstARGame
                             if (clickedOnce && !clickedMoreThanOnce)
                             {
                                 //this.networkedTrackedImage.GetPhotonView().RPC("PhoneClickedDebug", RpcTarget.Others);
-                                GameObject g = GameObject.FindGameObjectWithTag("GameManager");
                                 g.GetPhotonView().RPC("PlayerJoin", RpcTarget.Others);
                             }
 
@@ -193,6 +194,11 @@ namespace MyFirstARGame
             {
                 var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
                 this.arCamera.transform.SetPositionAndRotation(mainCamera.transform.position, mainCamera.transform.rotation);
+
+                Vector3 playerPosition = this.arCamera.transform.position;
+                if (Vector3.Distance(new Vector3(0, 0, 2f), new Vector3(playerPosition.x, 0, playerPosition.z)) < 1f) {
+                    g.GetPhotonView().RPC("ReadyPlayer1", RpcTarget.Others);
+                }
             }
         }
 
