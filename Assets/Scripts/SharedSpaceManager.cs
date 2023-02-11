@@ -210,7 +210,7 @@ namespace MyFirstARGame
                         playerA = true;
                     }
 
-                    if (Vector3.Distance(new Vector3(0f, 0f, -1f), new Vector3(playerPosition.x, 0f, playerPosition.z)) < 0.3f)
+                    if (!playerB && Vector3.Distance(new Vector3(0f, 0f, -1f), new Vector3(playerPosition.x, 0f, playerPosition.z)) < 0.3f)
                     {
                         g.GetPhotonView().RPC("ReadyPlayer2", RpcTarget.Others);
                         playerB = true;
