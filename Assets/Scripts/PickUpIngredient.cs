@@ -113,11 +113,13 @@ namespace MyFirstARGame
         protected override void OnPress(Vector3 position)
         {
             this.pressed = true;
+            Debug.Log("$$$Pressed");
         }
 
         protected override void OnPressCancel()
         {
             this.pressed = false;
+            Debug.Log("lifted");
         }
     }
 }
