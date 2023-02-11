@@ -90,6 +90,7 @@ namespace MyFirstARGame
         [PunRPC]
         public void TakeIngredientAway(int id)
         {
+            Debug.Log("$$$ picking up ingredient");
             for (int i = 0; i < 10; i++)
             {
                 if (ingredients[i] != null)

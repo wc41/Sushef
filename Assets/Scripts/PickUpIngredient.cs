@@ -49,6 +49,7 @@ namespace MyFirstARGame
             {
                 GlobalScript j = gs[i].GetComponent<GlobalScript>();
                 if (j.IsHost()) {
+                    Debug.Log("$$$ host game manager found")
                     g = gs[i];
                 }
             }
@@ -73,7 +74,8 @@ namespace MyFirstARGame
 
             if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("GroundPlane")))
             {
-                
+                Debug.Log("$$$ raycast update calling");
+
                 this.UpdateOrPickUpObject(hit);
             }
             //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
@@ -90,6 +92,7 @@ namespace MyFirstARGame
             if (this.PickedUpObject == null || this.PickedUpObject != hit.transform.gameObject)
             {
                 this.PickedUpObject = hit.transform.gameObject;
+                Debug.Log("$$$ calling pick up ingredient");
                 g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others, this.PickedUpObject.GetComponent<PhotonView>().ViewID);
 
             }
