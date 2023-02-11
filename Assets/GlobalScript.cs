@@ -34,7 +34,7 @@ namespace MyFirstARGame
             Debug.Log("player: " + players);
             if (players == 1)
             {
-                table = PhotonNetwork.Instantiate("Belt", new Vector3(0f, 0f, 0f), Quaternion.identity);
+                table = PhotonNetwork.Instantiate("Belt", new Vector3(0f, 0.02f, 0f), Quaternion.identity);
             }
         }
     }
