@@ -95,7 +95,7 @@ namespace MyFirstARGame
             this.isJoinedToRoom = true;
 
             // First client spawns the network manager.
-            if (PhotonNetwork.IsMasterClient)
+            if (PhotonNetwork.CurrentRoom.PlayerCount < 1)
             {
                 this.NetworkCommunication = PhotonNetwork.Instantiate("NetworkManager", Vector3.zero, Quaternion.identity).GetComponent<NetworkCommunication>();
             }
