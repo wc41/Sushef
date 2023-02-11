@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
 namespace MyFirstARGame
 {
@@ -101,6 +102,7 @@ namespace MyFirstARGame
                 }
             }
         }
+
         [PunRPC]
         public void ReadyPlayer1()
         {
@@ -120,7 +122,6 @@ namespace MyFirstARGame
             time = 0;
             roundStarted = true;
             tables[0] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.2f, 0f), Quaternion.identity);
-            
             System.Random rnd = new System.Random();
             int num = rnd.Next(3);
             if (num == 0)

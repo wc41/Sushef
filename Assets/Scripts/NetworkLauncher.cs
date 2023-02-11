@@ -1,6 +1,7 @@
 namespace MyFirstARGame
 {
     using Photon.Pun;
+    using Photon.Realtime;
     using UnityEngine;
 
     /// <summary>
@@ -91,11 +92,12 @@ namespace MyFirstARGame
         public override void OnJoinedRoom()
         {
             // Entering here means we are connected to a room.
-            Debug.Log("Joined room");
+            Debug.Log("Joined room" + PhotonNetwork.CurrentRoom + ".");
             this.isJoinedToRoom = true;
 
             // First client spawns the network manager.
-            if (PhotonNetwork.IsMasterClient)
+            //if (PhotonNetwork.IsMasterClient)
+            if (photonView.Owner.IsMasterClient)
             {
                 this.NetworkCommunication = PhotonNetwork.Instantiate("NetworkManager", Vector3.zero, Quaternion.identity).GetComponent<NetworkCommunication>();
             }
