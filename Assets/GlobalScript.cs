@@ -37,17 +37,5 @@ namespace MyFirstARGame
                 table = PhotonNetwork.Instantiate("Belt", new Vector3(0f, 0f, 0f), Quaternion.identity);
             }
         }
-
-        [PunRPC]
-        public void ReadyPlayer1()
-        {
-            Debug.Log("ready");
-        }
-
-        [PunRPC]
-        public void ReadyPlayer2()
-        {
-            Debug.Log("ready");
-        }
     }
 }
