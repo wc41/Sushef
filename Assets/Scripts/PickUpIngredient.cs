@@ -42,7 +42,6 @@ namespace MyFirstARGame
         protected override void Awake()
         {
             base.Awake();
-            CanPlace = true;
             this.m_RaycastManager = this.GetComponent<ARRaycastManager>();
             GameObject [] gs = GameObject.FindGameObjectsWithTag("GameManager");
             for (int i = 0; i < gs.Length; i++)
