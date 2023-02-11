@@ -34,7 +34,7 @@ namespace MyFirstARGame
         /// <summary>
         /// Gets the <see cref="NetworkCommunication"/> instance.
         /// </summary>
-        public NetworkCommunication NetworkCommunication { get; private set; }
+        public NetworkCommunication NetworkCommunication = null;
 
         private void Awake()
         {
