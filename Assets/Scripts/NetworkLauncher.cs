@@ -100,6 +100,8 @@ namespace MyFirstARGame
             {
                 Debug.Log("Instantiating network manager");
                 this.NetworkCommunication = PhotonNetwork.Instantiate("NetworkManager", Vector3.zero, Quaternion.identity).GetComponent<NetworkCommunication>();
+                GameObject g = GameObject.FindGameObjectWithTag("GameManager");
+                g.GetPhotonView().RPC("SetHost", RpcTarget.MasterClient);
             }
 
             this.JoinedRoom?.Invoke(this);

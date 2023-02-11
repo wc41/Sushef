@@ -118,6 +118,12 @@ namespace MyFirstARGame
             isHost = false;
         }
 
+        [PunRPC]
+        public void SetHost()
+        {
+            isHost = true;
+        }
+ 
         public void beginRound()
         {
             time = 0;
