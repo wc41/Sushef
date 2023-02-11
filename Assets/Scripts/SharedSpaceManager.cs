@@ -58,6 +58,7 @@ namespace MyFirstARGame
             this.trackedImages = new List<ARTrackedImage>();
             NetworkLauncher.Singleton.JoinedRoom += this.NetworkLauncher_JoinedRoom;
             startLocationTrack = false;
+            g = GameObject.FindGameObjectWithTag("GameManager");
         }
 
         private void OnEnable()
@@ -118,7 +119,6 @@ namespace MyFirstARGame
                             if (clickedOnce && !clickedMoreThanOnce)
                             {
                                 //this.networkedTrackedImage.GetPhotonView().RPC("PhoneClickedDebug", RpcTarget.Others);
-                                g = GameObject.FindGameObjectWithTag("GameManager");
                                 g.GetPhotonView().RPC("PlayerJoin", RpcTarget.Others);
                                 startLocationTrack = true;
                             }

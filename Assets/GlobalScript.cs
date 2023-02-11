@@ -25,7 +25,7 @@ namespace MyFirstARGame
         public bool roundStarted;
         void Awake()
         {
-            roundStarted = true;
+            roundStarted = false;
             time = 0;
             tableId = 0;
             tables = new GameObject[10];
@@ -95,7 +95,7 @@ namespace MyFirstARGame
             {
                 players++;
                 Debug.Log("player: " + players);
-                if (!roundStarted && players == 2)
+                if (!roundStarted && players == 1)
                 {
                     beginRound();
                 }
