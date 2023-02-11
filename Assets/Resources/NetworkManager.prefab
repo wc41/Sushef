@@ -81,6 +81,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players: 0
-  table: {fileID: 0}
+  tables: []
   wall1: {fileID: 0}
   wall2: {fileID: 0}
+  roundStarted: 0
