@@ -81,4 +81,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   players: 0
-  table: {fileID: 0}
