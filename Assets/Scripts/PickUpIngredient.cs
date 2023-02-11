@@ -49,7 +49,7 @@ namespace MyFirstARGame
             {
                 GlobalScript j = gs[i].GetComponent<GlobalScript>();
                 if (j.IsHost()) {
-                    Debug.Log("$$$ host game manager found")
+                    Debug.Log("$$$ host game manager found");
                     g = gs[i];
                 }
             }
