@@ -46,6 +46,9 @@ MonoBehaviour:
   - PlayerJoin
   - ReadyPlayer1
   - ReadyPlayer2
+  - SetHost
+  - IsHost
+  - TakeIngredientAway
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

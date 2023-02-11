@@ -15,7 +15,7 @@ namespace MyFirstARGame
     /// and moved to the hit position.
     /// </summary>
     [RequireComponent(typeof(ARRaycastManager))]
-    public class PlaceOnPlane : PressInputBase
+    public class PickUpIngredient : PressInputBase
     {
         private static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 
@@ -26,10 +26,13 @@ namespace MyFirstARGame
         private ARRaycastManager m_RaycastManager;
         private bool pressed;
 
+        private GameObject g;
+
+
         /// <summary>
         /// The object instantiated as a result of a successful raycast intersection with a plane.
         /// </summary>
-        public GameObject SpawnedObject { get; private set; }
+        public GameObject PickedUpObject { get; private set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the user is allowed to place an object.
@@ -39,7 +42,17 @@ namespace MyFirstARGame
         protected override void Awake()
         {
             base.Awake();
+            CanPlace = true;
             this.m_RaycastManager = this.GetComponent<ARRaycastManager>();
+            GameObject [] gs = GameObject.FindGameObjectsWithTag("GameManager");
+            for (int i = 0; i < gs.Length; i++)
+            {
+                GlobalScript j = gs[i].GetComponent<GlobalScript>();
+                if (j.IsHost()) {
+                    g = gs[i];
+                }
+            }
+
         }
 
         private void Update()
@@ -57,29 +70,31 @@ namespace MyFirstARGame
             // Raycast against layer "GroundPlane" using normal Raycasting for our artifical ground plane.
             // For AR Foundation planes (if enabled), we use AR Raycasting.
             var ray = Camera.main.ScreenPointToRay(touchPosition);
+
             if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("GroundPlane")))
             {
-                this.CreateOrUpdateObject(hit.point, hit.transform.rotation);
+                
+                this.UpdateOrPickUpObject(hit);
             }
-            else if (this.m_RaycastManager.Raycast(touchPosition, PlaceOnPlane.s_Hits, TrackableType.PlaneWithinPolygon))
-            {
-                // Raycast hits are sorted by distance, so the first one
-                // will be the closest hit.
-                var hitPose = PlaceOnPlane.s_Hits[0].pose;
-                this.CreateOrUpdateObject(hitPose.position, hitPose.rotation);
-            }
+            //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
+            //{
+            //    // Raycast hits are sorted by distance, so the first one
+            //    // will be the closest hit.
+            //    var hitPose = PickUpIngredient.s_Hits[0].pose;
+            //    this.CreateOrUpdateObject(hitPose.position, hitPose.rotation);
+            //}
         }
 
-        private void CreateOrUpdateObject(Vector3 position, Quaternion rotation)
+        private void UpdateOrPickUpObject(RaycastHit hit)
         {
-            if (this.SpawnedObject == null)
+            if (this.PickedUpObject == null || this.PickedUpObject != hit.transform.gameObject)
             {
-                this.SpawnedObject = PhotonNetwork.Instantiate(this.placedPrefab.name, position, rotation);
+                this.PickedUpObject = hit.transform.gameObject;
+                g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others, this.PickedUpObject.GetComponent<PhotonView>().ViewID);
+
             }
-            else
-            {
-                this.SpawnedObject.transform.position = position;
-            }
+
+            this.PickedUpObject.transform.position = hit.point;
         }
 
         protected override void OnPress(Vector3 position)
