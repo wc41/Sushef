@@ -37,7 +37,12 @@ namespace MyFirstARGame
         private bool clickedMoreThanOnce;
 
         private GameObject arCamera;
+        private GameObject g;
         private bool syncNextTick;
+        private bool startLocationTrack;
+
+        private bool playerA;
+        private bool playerB;
 
         private void Awake()
         {
@@ -52,6 +57,7 @@ namespace MyFirstARGame
         {
             this.trackedImages = new List<ARTrackedImage>();
             NetworkLauncher.Singleton.JoinedRoom += this.NetworkLauncher_JoinedRoom;
+            startLocationTrack = false;
         }
 
         private void OnEnable()
@@ -112,8 +118,9 @@ namespace MyFirstARGame
                             if (clickedOnce && !clickedMoreThanOnce)
                             {
                                 //this.networkedTrackedImage.GetPhotonView().RPC("PhoneClickedDebug", RpcTarget.Others);
-                                GameObject g = GameObject.FindGameObjectWithTag("GameManager");
+                                g = GameObject.FindGameObjectWithTag("GameManager");
                                 g.GetPhotonView().RPC("PlayerJoin", RpcTarget.Others);
+                                startLocationTrack = true;
                             }
 
                             this.ShowOutline(true, false);
@@ -193,6 +200,23 @@ namespace MyFirstARGame
             {
                 var mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
                 this.arCamera.transform.SetPositionAndRotation(mainCamera.transform.position, mainCamera.transform.rotation);
+
+                if (startLocationTrack)
+                {
+                    Vector3 playerPosition = this.arCamera.transform.position;
+                    if (!playerA && Vector3.Distance(new Vector3(0f, 0f, 1f), new Vector3(playerPosition.x, 0f, playerPosition.z)) < 0.3f)
+                    {
+                        g.GetPhotonView().RPC("ReadyPlayer1", RpcTarget.Others);
+                        playerA = true;
+                    }
+
+                    if (Vector3.Distance(new Vector3(0f, 0f, -1f), new Vector3(playerPosition.x, 0f, playerPosition.z)) < 0.3f)
+                    {
+                        g.GetPhotonView().RPC("ReadyPlayer2", RpcTarget.Others);
+                        playerB = true;
+                    }
+
+                }
             }
         }
 
