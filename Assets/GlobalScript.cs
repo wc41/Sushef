@@ -27,7 +27,6 @@ namespace MyFirstARGame
         void Awake()
         {
             roundStarted = true;
-            isHost = true;
             time = 0;
             tableId = 0;
             tables = new GameObject[10];
