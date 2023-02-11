@@ -75,6 +75,9 @@ namespace MyFirstARGame
             {
                 Debug.Log("$$$ raycast update calling");
                 GlobalScript j = g.GetComponent<GlobalScript>();
+
+                Debug.Log("$$$ I found: " + hit.transform.gameObject.GetComponent<PhotonView>().ViewID + ".");
+
                 for (int i = 0; i < j.ingredients.Length; i++)
                 {
                     if (j.ingredients[i].GetComponent<PhotonView>().ViewID == 
