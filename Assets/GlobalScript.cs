@@ -26,7 +26,7 @@ namespace MyFirstARGame
         public bool isHost;
         void Awake()
         {
-            roundStarted = true;
+            roundStarted = false;
             time = 0;
             tableId = 0;
             tables = new GameObject[10];
@@ -96,7 +96,7 @@ namespace MyFirstARGame
             {
                 players++;
                 Debug.Log("player: " + players);
-                if (!roundStarted && players == 2)
+                if (!roundStarted && players == 2 && isHost)
                 {
                     beginRound();
                 }
@@ -107,7 +107,6 @@ namespace MyFirstARGame
         {
             Debug.Log("ready player 1");
             workstation1 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
-            isHost = false;
         }
 
         [PunRPC]
@@ -115,7 +114,6 @@ namespace MyFirstARGame
         {
             Debug.Log("ready player 2");
             workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.identity);
-            isHost = false;
         }
 
         [PunRPC]
