@@ -23,9 +23,11 @@ namespace MyFirstARGame
         private float time;
         private int tableId;
         public bool roundStarted;
+        public bool isHost;
         void Awake()
         {
             roundStarted = true;
+            isHost = true;
             time = 0;
             tableId = 0;
             tables = new GameObject[10];
@@ -35,7 +37,7 @@ namespace MyFirstARGame
         // Update is called once per frame
         void Update()
         {
-            if (roundStarted)
+            if (roundStarted && isHost)
             {
                 time += Time.deltaTime;
                 for (int i = 0; i < 10; i++)
@@ -106,6 +108,7 @@ namespace MyFirstARGame
         {
             Debug.Log("ready player 1");
             workstation1 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
+            isHost = false;
         }
 
         [PunRPC]
@@ -113,6 +116,7 @@ namespace MyFirstARGame
         {
             Debug.Log("ready player 2");
             workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.identity);
+            isHost = false;
         }
 
         public void beginRound()
