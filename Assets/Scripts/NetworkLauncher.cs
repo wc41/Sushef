@@ -34,7 +34,7 @@ namespace MyFirstARGame
         /// <summary>
         /// Gets the <see cref="NetworkCommunication"/> instance.
         /// </summary>
-        public NetworkCommunication NetworkCommunication { get; private set; }
+        public NetworkCommunication NetworkCommunication = null;
 
         private void Awake()
         {
@@ -91,13 +91,17 @@ namespace MyFirstARGame
         public override void OnJoinedRoom()
         {
             // Entering here means we are connected to a room.
-            Debug.Log("Joined room");
+            Debug.Log("Joined room " + PhotonNetwork.CurrentRoom + ".");
             this.isJoinedToRoom = true;
 
             // First client spawns the network manager.
-            if (PhotonNetwork.IsMasterClient)
+            Debug.Log("current room player count: " + PhotonNetwork.CurrentRoom.PlayerCount + "!!!");
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
             {
+                Debug.Log("Instantiating network manager");
                 this.NetworkCommunication = PhotonNetwork.Instantiate("NetworkManager", Vector3.zero, Quaternion.identity).GetComponent<NetworkCommunication>();
+                GameObject g = GameObject.FindGameObjectWithTag("GameManager");
+                g.GetPhotonView().RPC("SetHost", RpcTarget.MasterClient);
             }
 
             this.JoinedRoom?.Invoke(this);
