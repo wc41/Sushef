@@ -41,6 +41,9 @@ namespace MyFirstARGame
         private bool syncNextTick;
         private bool startLocationTrack;
 
+        private bool playerA;
+        private bool playerB;
+
         private void Awake()
         {
             // Image tracking needs a mobile device to work.
@@ -203,8 +206,37 @@ namespace MyFirstARGame
                     Vector3 playerPosition = this.arCamera.transform.position;
                     if (Vector3.Distance(new Vector3(0f, 0f, 0.5f), new Vector3(playerPosition.x, 0f, playerPosition.z)) < 0.2f)
                     {
-                        g.GetPhotonView().RPC("ReadyPlayer1", RpcTarget.Others);
+                        if (!playerA)
+                        {
+                            g.GetPhotonView().RPC("ReadyPlayer1", RpcTarget.Others);
+                            playerA = true;
+                        }
+                        
+                    } else
+                    {
+                        if (playerA)
+                        {
+                            playerA = false;
+                        }
                     }
+
+                    if (Vector3.Distance(new Vector3(0f, 0f, -0.5f), new Vector3(playerPosition.x, 0f, playerPosition.z)) < 0.2f)
+                    {
+                        if (!playerB)
+                        {
+                            g.GetPhotonView().RPC("ReadyPlayer2", RpcTarget.Others);
+                            playerB = true;
+                        }
+
+                    }
+                    else
+                    {
+                        if (playerB)
+                        {
+                            playerB = false;
+                        }
+                    }
+
                 }
             }
         }

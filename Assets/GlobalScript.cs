@@ -11,9 +11,14 @@ namespace MyFirstARGame
         // Start is called before the first frame update
 
         public int players;
+
+        // Game objects
         public GameObject[] tables;
         public GameObject wall1;
         public GameObject wall2;
+        public GameObject workstation1;
+        public GameObject workstation2;
+        
         private float time;
         private int tableId;
         public bool roundStarted;
@@ -47,7 +52,7 @@ namespace MyFirstARGame
                         PhotonNetwork.Destroy(tables[tableId]);
                     }
 
-                    tables[tableId] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.02f, 0f), Quaternion.identity);
+                    tables[tableId] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.2f, 0f), Quaternion.identity);
                     tableId++;
                     if (tableId > 9)
                     {
@@ -78,14 +83,22 @@ namespace MyFirstARGame
         [PunRPC]
         public void ReadyPlayer1()
         {
-            Debug.Log("ready");
+            Debug.Log("ready player 1");
+            workstation1 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
+        }
+
+        [PunRPC]
+        public void ReadyPlayer2()
+        {
+            Debug.Log("ready player 2");
+            workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.identity);
         }
 
         public void beginRound()
         {
             time = 0;
             roundStarted = true;
-            tables[0] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.02f, 0f), Quaternion.identity);
+            tables[0] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.2f, 0f), Quaternion.identity);
             tableId++;
             wall1 = PhotonNetwork.Instantiate("Barrier", new Vector3(-.5f, 0.02f, 0f), Quaternion.identity);
             wall2 = PhotonNetwork.Instantiate("Barrier", new Vector3(.5f, 0.02f, 0f), Quaternion.identity);
