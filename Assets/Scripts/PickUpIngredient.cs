@@ -43,16 +43,7 @@ namespace MyFirstARGame
         {
             base.Awake();
             this.m_RaycastManager = this.GetComponent<ARRaycastManager>();
-            GameObject [] gs = GameObject.FindGameObjectsWithTag("GameManager");
-            for (int i = 0; i < gs.Length; i++)
-            {
-                GlobalScript j = gs[i].GetComponent<GlobalScript>();
-                if (j.IsHost()) {
-                    Debug.Log("$$$ host game manager found");
-                    g = gs[i];
-                }
-            }
-
+            g = PhotonView.Find(1001).gameObject;
         }
 
         private void Update()
@@ -76,7 +67,7 @@ namespace MyFirstARGame
                 Debug.Log("$$$ raycast update calling");
                 // GlobalScript j = g.GetComponent<GlobalScript>();
 
-                Debug.Log("$$$ I found: " + hit.transform.gameObject.GetComponent<PhotonView>().ViewID + ".");
+                Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
 
                 /*for (int i = 0; i < j.ingredients.Length; i++)
                 {
