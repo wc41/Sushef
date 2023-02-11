@@ -196,7 +196,7 @@ namespace MyFirstARGame
                 this.arCamera.transform.SetPositionAndRotation(mainCamera.transform.position, mainCamera.transform.rotation);
 
                 Vector3 playerPosition = this.arCamera.transform.position;
-                if (Vector3.Distance(new Vector3(0, 0, 2f), new Vector3(playerPosition.x, 0, playerPosition.z)) < 1f) {
+                if (Vector3.Distance(new Vector3(0, 0, 0.5f), new Vector3(playerPosition.x, 0, playerPosition.z)) < 1f) {
                     g.GetPhotonView().RPC("ReadyPlayer1", RpcTarget.Others);
                 }
             }
