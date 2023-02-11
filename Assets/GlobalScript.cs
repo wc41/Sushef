@@ -5,13 +5,14 @@ using Photon.Pun;
 
 namespace MyFirstARGame
 {
-
     public class GlobalScript : MonoBehaviourPun
     {
         // Start is called before the first frame update
 
         public int players;
         public GameObject[] tables;
+        public GameObject[] ingredients;
+
         public GameObject wall1;
         public GameObject wall2;
         private float time;
@@ -23,6 +24,7 @@ namespace MyFirstARGame
             time = 0;
             tableId = 0;
             tables = new GameObject[10];
+            ingredients = new GameObject[10];
         }
 
         // Update is called once per frame
@@ -37,6 +39,10 @@ namespace MyFirstARGame
                     {
                         tables[i].transform.Translate(-0.3f * Time.deltaTime, 0, 0);
                     }
+                    if (ingredients[i] != null)
+                    {
+                        ingredients[i].transform.Translate(-0.3f * Time.deltaTime, 0, 0);
+                    }
                 }
 
                 if (time > 0.4f)
@@ -46,8 +52,26 @@ namespace MyFirstARGame
                     {
                         PhotonNetwork.Destroy(tables[tableId]);
                     }
+                    if (ingredients[tableId] != null) {
+                        PhotonNetwork.Destroy(ingredients[tableId]);
+                    }
 
-                    tables[tableId] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.02f, 0f), Quaternion.identity);
+                    tables[tableId] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.2f, 0f), Quaternion.identity);
+
+                    System.Random rnd = new System.Random();
+                    int num = rnd.Next(3);
+                    if (num == 0)
+                    {
+                        ingredients[tableId] = PhotonNetwork.Instantiate("ifish", new Vector3(.6f, 0.22f, 0f), Quaternion.identity);
+                    } else if (num == 1)
+                    {
+                        ingredients[tableId] = PhotonNetwork.Instantiate("irice", new Vector3(.6f, 0.22f, 0f), Quaternion.identity);
+                    }
+                    else if (num == 2)
+                    {
+                        ingredients[tableId] = PhotonNetwork.Instantiate("iweed", new Vector3(.6f, 0.22f, 0f), Quaternion.identity);
+                    }
+
                     tableId++;
                     if (tableId > 9)
                     {
@@ -55,7 +79,6 @@ namespace MyFirstARGame
                     }
                 }
             }
-
         }
 
         [PunRPC]
@@ -74,12 +97,25 @@ namespace MyFirstARGame
                 }
             }
         }
-
         public void beginRound()
         {
             time = 0;
             roundStarted = true;
-            tables[0] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.02f, 0f), Quaternion.identity);
+            tables[0] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.2f, 0f), Quaternion.identity);
+            System.Random rnd = new System.Random();
+            int num = rnd.Next(3);
+            if (num == 0)
+            {
+                ingredients[0] = PhotonNetwork.Instantiate("ifish", new Vector3(.6f, 0.22f, 0f), Quaternion.identity);
+            }
+            else if (num == 1)
+            {
+                ingredients[0] = PhotonNetwork.Instantiate("irice", new Vector3(.6f, 0.22f, 0f), Quaternion.identity);
+            }
+            else if (num == 2)
+            {
+                ingredients[0] = PhotonNetwork.Instantiate("iweed", new Vector3(.6f, 0.22f, 0f), Quaternion.identity);
+            }
             tableId++;
             wall1 = PhotonNetwork.Instantiate("Barrier", new Vector3(-.5f, 0.02f, 0f), Quaternion.identity);
             wall2 = PhotonNetwork.Instantiate("Barrier", new Vector3(.5f, 0.02f, 0f), Quaternion.identity);
