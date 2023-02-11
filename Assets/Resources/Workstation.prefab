@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6557498457561392420}
   - component: {fileID: -5363755338169263201}
   - component: {fileID: 2980715802443562350}
+  - component: {fileID: 8655514702364846284}
   m_Layer: 0
   m_Name: Workstation
   m_TagString: Untagged
@@ -117,7 +118,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 2980715802443562350}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -137,3 +139,15 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &8655514702364846284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545367138906385146}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ccfd5f388597d343814acc7933476c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
