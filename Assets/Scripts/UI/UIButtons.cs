@@ -63,10 +63,11 @@
         private void SetPlacementState(bool state)
         {
             this.isPlacing = state;
-            var placeOnPlane = FindObjectOfType<PlaceOnPlane>();
-            if (placeOnPlane != null)
+            // var placeOnPlane = FindObjectOfType<PlaceOnPlane>();
+            var moveIngredits = FindObjectOfType<PickUpIngredient>();
+            if (moveIngredits != null)
             {
-                placeOnPlane.CanPlace = this.isPlacing;
+                moveIngredits.CanPlace = this.isPlacing;
                 this.SetButtonState(this.togglePlacementButton, this.isPlacing);
             }
         }
