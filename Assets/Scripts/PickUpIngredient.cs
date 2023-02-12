@@ -43,7 +43,6 @@ namespace MyFirstARGame
         {
             base.Awake();
             this.m_RaycastManager = this.GetComponent<ARRaycastManager>();
-            g = GameObject.FindGameObjectWithTag("GameManager");
         }
 
         private void Update()
@@ -51,6 +50,7 @@ namespace MyFirstARGame
             if (Pointer.current == null || this.pressed == false || !this.CanPlace)
                 return;
 
+            g = GameObject.FindGameObjectWithTag("GameManager");
             var touchPosition = Pointer.current.position.ReadValue();
 
             // Ensure we are not over any UI element.
