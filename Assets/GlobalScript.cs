@@ -165,6 +165,13 @@ namespace MyFirstARGame
             isHost = true;
         }
 
+        [PunRPC]
+        public void Trash(int ID)
+        {
+            GameObject toTrash = PhotonView.Find(ID).gameObject;
+            PhotonNetwork.Destroy(toTrash);
+        }
+
         public bool IsHost()
         {
             return isHost;

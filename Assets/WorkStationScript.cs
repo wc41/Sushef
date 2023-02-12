@@ -21,12 +21,16 @@ namespace MyFirstARGame
         List<int> seaweed;
         List<int> allIngredients;
 
+        GameObject sushi;
+        GameObject g;
+
         void Start()
         {
             fish = new List<int>();
             rice = new List<int>();
             seaweed = new List<int>();
             allIngredients = new List<int>();
+            g = GameObject.FindGameObjectWithTag("GameManager");
         }
 
         // Update is called once per frame
@@ -41,56 +45,52 @@ namespace MyFirstARGame
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    int toRemove = fish[0];
-                    fish.RemoveAt(0);
-                    allIngredients.Remove(toRemove);
+                    useFish();
                 }
-            } else if (fish.Count >= 1)
+
+                Debug.Log("$$$ made sashimi");
+                rearrange();
+                // sushi = PhotonNetwork.Instantiate("sashimi", gameObject.translation, Quaternion.identity);
+
+            }
+            else if (fish.Count >= 1)
             {
                 if (rice.Count >= 1)
                 {
                     if (seaweed.Count >= 1)
                     {
-                        int toRemove = fish[0];
-                        fish.RemoveAt(0);
-                        allIngredients.Remove(toRemove);
-                        toRemove = rice[0];
-                        rice.RemoveAt(0);
-                        allIngredients.Remove(toRemove);
-                        toRemove = seaweed[0];
-                        seaweed.RemoveAt(0);
-                        allIngredients.Remove(toRemove);
-                    } else
+                        useFish();
+                        useRice();
+                        useSeaweed();
+                        Debug.Log("$$$ made maki");
+                        rearrange();
+                        // sushi = PhotonNetwork.Instantiate("maki", gameObject.translation, Quaternion.identity);
+
+                    }
+                    else
                     {
-                        int toRemove = fish[0];
-                        fish.RemoveAt(0);
-                        allIngredients.Remove(toRemove);
-                        toRemove = rice[0];
-                        rice.RemoveAt(0);
-                        allIngredients.Remove(toRemove);
+                        useFish();
+                        useRice();
+                        Debug.Log("$$$ made nigiri");
+                        rearrange();
+                        // sushi = PhotonNetwork.Instantiate("nigiri", gameObject.translation, Quaternion.identity);
+
                     }
                 }
             } else
             {
                 if (rice.Count >= 2 && seaweed.Count >= 1)
                 {
-                    int toRemove = seaweed[0];
-                    fish.RemoveAt(0);
-                    allIngredients.Remove(toRemove);
-                    toRemove = rice[0];
-                    rice.RemoveAt(0);
-                    allIngredients.Remove(toRemove);
-                    toRemove = rice[0];
-                    rice.RemoveAt(0);
-                    allIngredients.Remove(toRemove);
+                    useSeaweed();
+                    useRice();
+                    useRice();
+                    Debug.Log("$$$ made onigiri");
+                    rearrange();
+
                 }
+                // sushi = PhotonNetwork.Instantiate("onigiri", gameObject.translation, Quaternion.identity);
+
             }
-
-            // creating a sushi piece:
-            // Remove Objects from List
-            // Remove Objects from Array (Displayed on board)
-            // Create sushi object
-
         }
 
         [PunRPC]
@@ -110,8 +110,59 @@ namespace MyFirstARGame
                 // switch case for names
                 allIngredients.Add(ID);
                 Vector3 pos = i.transform.position;
-                pos = new Vector3(0.1f * allIngredients.IndexOf(ID) + -0.1f, 0.15f, gameObject.transform.position.z);
+                pos = new Vector3(0.1f * allIngredients.IndexOf(ID) + -0.1f, 0.19f, gameObject.transform.position.z);
                 i.transform.position = pos;
+
+                if (i.name.Contains("fish"))
+                {
+                    fish.Add(ID);
+                } else if (i.name.Contains("weed"))
+                {
+                    seaweed.Add(ID);
+                } else if (i.name.Contains("rice"))
+                {
+                    rice.Add(ID);
+                }
+            }
+            Debug.Log("$$$ Current Ingredients: " + string.Join(", ", allIngredients));
+        }
+
+        private void useFish()
+        {
+            int toRemove = fish[0];
+            fish.RemoveAt(0);
+            allIngredients.Remove(toRemove);
+            GameObject toTrash = PhotonView.Find(toRemove).gameObject;
+            PhotonNetwork.Destroy(toTrash);
+        }
+
+        private void useSeaweed()
+        {
+            int toRemove = seaweed[0];
+            seaweed.RemoveAt(0);
+            allIngredients.Remove(toRemove);
+            GameObject toTrash = PhotonView.Find(toRemove).gameObject;
+            PhotonNetwork.Destroy(toTrash);
+        }
+
+        private void useRice()
+        {
+            int toRemove = rice[0];
+            rice.RemoveAt(0);
+            allIngredients.Remove(toRemove);
+            GameObject toTrash = PhotonView.Find(toRemove).gameObject;
+            PhotonNetwork.Destroy(toTrash);
+        }
+
+        private void rearrange()
+        {
+            for (int i = 0; i < allIngredients.Count; i++)
+            {
+                GameObject obj = PhotonView.Find(allIngredients[i]).gameObject;
+                Vector3 pos = obj.transform.position;
+                pos = new Vector3(0.1f * i + -0.1f, 0.19f, gameObject.transform.position.z);
+                obj.transform.position = pos;
+
             }
         }
 
