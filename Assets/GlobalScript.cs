@@ -19,7 +19,7 @@ namespace MyFirstARGame
         public GameObject wall2;
         public GameObject workstation1;
         public GameObject workstation2;
-        
+
         private float time;
         private int tableId;
         public bool roundStarted;
@@ -119,11 +119,13 @@ namespace MyFirstARGame
                 }
             }
         }
+
         [PunRPC]
         public void ReadyPlayer1()
         {
             Debug.Log("ready player 1");
             workstation1 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
+
         }
 
         [PunRPC]
@@ -131,6 +133,7 @@ namespace MyFirstARGame
         {
             Debug.Log("ready player 2");
             workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.identity);
+
         }
 
         [PunRPC]
