@@ -49,6 +49,7 @@ MonoBehaviour:
   - SetHost
   - IsHost
   - TakeIngredientAway
+  - Raycast
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
