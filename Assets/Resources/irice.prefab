@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -2130981748710712192}
   - component: {fileID: -7144288818303709338}
   - component: {fileID: 3078871017834071173}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: irice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
