@@ -25,8 +25,8 @@ namespace MyFirstARGame
         public bool roundStarted;
         public bool isHost;
 
-        private bool ready1;
-        private bool ready2;
+        public bool ready1;
+        public bool ready2;
 
         void Awake()
         {
@@ -131,19 +131,19 @@ namespace MyFirstARGame
         [PunRPC]
         public void ReadyPlayer1(int ID)
         {
+            ready1 = true;
             Debug.Log("ready player 1");
             workstation1 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
             workstation1.GetComponent<PhotonView>().TransferOwnership(ID);
-            ready1 = true;
         }
 
         [PunRPC]
         public void ReadyPlayer2(int ID)
         {
+            ready2 = true;
             Debug.Log("ready player 2");
             workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.Euler(0, 180, 0));
             workstation2.GetComponent<PhotonView>().TransferOwnership(ID);
-            ready2 = true;
         }
 
         [PunRPC]
