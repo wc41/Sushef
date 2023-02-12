@@ -52,8 +52,11 @@ namespace MyFirstARGame
 
         private void Update()
         {
+            // update after release
             if (Pointer.current != null && this.PickedUpObject != null && this.pressed == false)
             {
+
+                // hit board
                 if (Physics.Raycast(lastRay, out RaycastHit draghit, 1000, LayerMask.GetMask("Board")))
                 {
                     g = GameObject.FindGameObjectWithTag("GameManager");
@@ -70,7 +73,19 @@ namespace MyFirstARGame
                         g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
                         this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
                     }
+                } 
 
+                // hit trash
+                else if (Physics.Raycast(lastRay, out RaycastHit trashHit, 1000, LayerMask.GetMask("Trash"))) {
+                    Debug.Log("$$$ released on trash");
+                    g = GameObject.FindGameObjectWithTag("GameManager");
+
+                    Vector3 puObjectPosition = this.PickedUpObject.transform.position;
+
+                    Debug.Log("$$$ released on board at z-Position: " + puObjectPosition.z);
+
+                    g.GetPhotonView().RPC("Trash", RpcTarget.Others,
+                        this.PickedUpObject.GetComponent<PhotonView>().ViewID);
                 }
 
                 this.PickedUpObject = null;
