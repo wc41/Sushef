@@ -75,9 +75,12 @@ namespace MyFirstARGame
 
                 for (int i = 0; i < j.ingredients.Length; i++)
                 {
+                    Debug.Log("$$$ checking with gameObject for viewID");
+
                     if (j.ingredients[i].GetComponent<PhotonView>().ViewID == 
                         hit.transform.gameObject.GetComponent<PhotonView>().ViewID)
                     {
+                        Debug.Log("$$$ viewID matching! now picking up object");
                         this.UpdateOrPickUpObject(hit);
                         break;
                     }
