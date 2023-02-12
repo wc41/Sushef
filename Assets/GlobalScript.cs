@@ -24,10 +24,6 @@ namespace MyFirstARGame
         private int tableId;
         public bool roundStarted;
         public bool isHost;
-
-        public bool ready1;
-        public bool ready2;
-
         void Awake()
         {
             roundStarted = false;
@@ -37,9 +33,6 @@ namespace MyFirstARGame
             ingredients = new GameObject[10];
             workstation1 = new GameObject();
             workstation2 = new GameObject();
-
-            ready1 = false;
-            ready2 = false;
         }
 
         // Update is called once per frame
@@ -121,7 +114,7 @@ namespace MyFirstARGame
             {
                 players++;
                 Debug.Log("player: " + players);
-                if (!roundStarted && isHost && (ready1 || ready2))
+                if (!roundStarted && players == 1 && isHost)
                 {
                     beginRound();
                 }
@@ -131,7 +124,6 @@ namespace MyFirstARGame
         [PunRPC]
         public void ReadyPlayer1(int ID)
         {
-            ready1 = true;
             Debug.Log("ready player 1");
             workstation1 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
             workstation1.GetComponent<PhotonView>().TransferOwnership(ID);
@@ -140,7 +132,6 @@ namespace MyFirstARGame
         [PunRPC]
         public void ReadyPlayer2(int ID)
         {
-            ready2 = true;
             Debug.Log("ready player 2");
             workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.Euler(0, 180, 0));
             workstation2.GetComponent<PhotonView>().TransferOwnership(ID);
