@@ -50,7 +50,6 @@ namespace MyFirstARGame
             if (Pointer.current == null || this.pressed == false || !this.CanPlace)
                 return;
 
-            g = GameObject.FindGameObjectWithTag("GameManager");
             var touchPosition = Pointer.current.position.ReadValue();
 
             // Ensure we are not over any UI element.
@@ -61,6 +60,9 @@ namespace MyFirstARGame
             // Raycast against layer "GroundPlane" using normal Raycasting for our artifical ground plane.
             // For AR Foundation planes (if enabled), we use AR Raycasting.
             var ray = Camera.main.ScreenPointToRay(touchPosition);
+
+            Debug.Log("$$$ ray spawned");
+            g = GameObject.FindGameObjectWithTag("GameManager");
 
             g.GetPhotonView().RPC("Raycast", RpcTarget.Others, ray);
 
