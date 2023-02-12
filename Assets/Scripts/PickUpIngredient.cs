@@ -78,7 +78,7 @@ namespace MyFirstARGame
                         // ws1
                         ws = j.workstation1;
                         Debug.Log("$$$ Using WS1");
-                    } else
+                    } else if (puObjectPosition.z < 0)
                     {
                         ws = j.workstation2;
                         Debug.Log("$$$ Using WS2");
