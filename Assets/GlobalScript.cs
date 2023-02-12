@@ -24,6 +24,10 @@ namespace MyFirstARGame
         private int tableId;
         public bool roundStarted;
         public bool isHost;
+
+        private bool ready1;
+        private bool ready2;
+
         void Awake()
         {
             roundStarted = false;
@@ -33,6 +37,9 @@ namespace MyFirstARGame
             ingredients = new GameObject[10];
             workstation1 = new GameObject();
             workstation2 = new GameObject();
+
+            ready1 = false;
+            ready2 = false;
         }
 
         // Update is called once per frame
@@ -85,6 +92,9 @@ namespace MyFirstARGame
                         tableId = 0;
                     }
                 }
+            } else if (isHost && !roundStarted && (ready1 || ready2))
+            {
+                beginRound();
             }
         }
 
