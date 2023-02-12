@@ -35,6 +35,8 @@ namespace MyFirstARGame
         /// </summary>
         public GameObject PickedUpObject { get; private set; }
 
+        GameObject ws;
+
         
 
         /// <summary>
@@ -58,7 +60,6 @@ namespace MyFirstARGame
                     Debug.Log("$$$ released on board");
 
                     GlobalScript j = g.GetComponent<GlobalScript>();
-                    GameObject ws;
                     Vector3 puObjectPosition = this.PickedUpObject.transform.position;
 
                     Debug.Log("$$$ released on board at z-Position: " + puObjectPosition.z);
@@ -148,7 +149,6 @@ namespace MyFirstARGame
                 g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
                     this.PickedUpObject.GetComponent<PhotonView>().ViewID);
 
-                Debug.Log("!!! " + this.PickedUpObject.GetComponent<PhotonView>().ow)
                 this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
             }
