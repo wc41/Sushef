@@ -45,10 +45,7 @@ namespace MyFirstARGame
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    int toRemove = fish[0];
-                    fish.RemoveAt(0);
-                    allIngredients.Remove(toRemove);
-                    g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
+                    useFish();
                 }
 
                 // sushi = PhotonNetwork.Instantiate("sashimi", gameObject.translation, Quaternion.identity);
@@ -60,33 +57,16 @@ namespace MyFirstARGame
                 {
                     if (seaweed.Count >= 1)
                     {
-                        int toRemove = fish[0];
-                        fish.RemoveAt(0);
-                        allIngredients.Remove(toRemove);
-                        g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
-                        toRemove = rice[0];
-                        rice.RemoveAt(0);
-                        allIngredients.Remove(toRemove);
-                        g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
-                        toRemove = seaweed[0];
-                        seaweed.RemoveAt(0);
-                        allIngredients.Remove(toRemove);
-                        g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
-
+                        useFish();
+                        useRice();
+                        useSeaweed();
                         // sushi = PhotonNetwork.Instantiate("maki", gameObject.translation, Quaternion.identity);
 
                     }
                     else
                     {
-                        int toRemove = fish[0];
-                        fish.RemoveAt(0);
-                        allIngredients.Remove(toRemove);
-                        g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
-                        toRemove = rice[0];
-                        rice.RemoveAt(0);
-                        allIngredients.Remove(toRemove);
-                        g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
-
+                        useFish();
+                        useRice();
                         // sushi = PhotonNetwork.Instantiate("nigiri", gameObject.translation, Quaternion.identity);
 
                     }
@@ -95,18 +75,9 @@ namespace MyFirstARGame
             {
                 if (rice.Count >= 2 && seaweed.Count >= 1)
                 {
-                    int toRemove = seaweed[0];
-                    fish.RemoveAt(0);
-                    allIngredients.Remove(toRemove);
-                    g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
-                    toRemove = rice[0];
-                    rice.RemoveAt(0);
-                    allIngredients.Remove(toRemove);
-                    g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
-                    toRemove = rice[0];
-                    rice.RemoveAt(0);
-                    allIngredients.Remove(toRemove);
-                    g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
+                    useSeaweed();
+                    useRice();
+                    useRice();
                 }
 
                 // sushi = PhotonNetwork.Instantiate("onigiri", gameObject.translation, Quaternion.identity);
@@ -146,7 +117,29 @@ namespace MyFirstARGame
             }
         }
 
+        private void useFish()
+        {
+            int toRemove = fish[0];
+            fish.RemoveAt(0);
+            allIngredients.Remove(toRemove);
+            g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
+        }
 
+        private void useSeaweed()
+        {
+            int toRemove = seaweed[0];
+            fish.RemoveAt(0);
+            allIngredients.Remove(toRemove);
+            g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
+        }
+
+        private void useRice()
+        {
+            int toRemove = rice[0];
+            rice.RemoveAt(0);
+            allIngredients.Remove(toRemove);
+            g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
+        }
 
     }
 }
