@@ -62,9 +62,9 @@ namespace MyFirstARGame
             var ray = Camera.main.ScreenPointToRay(touchPosition);
 
             Debug.Log("$$$ ray spawned");
-            g = GameObject.FindGameObjectWithTag("GameManager");
+            // g = GameObject.FindGameObjectWithTag("GameManager");
 
-            g.GetPhotonView().RPC("Raycast", RpcTarget.Others, ray);
+            // g.GetPhotonView().RPC("Raycast", RpcTarget.Others, ray);
 
             if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
             {
