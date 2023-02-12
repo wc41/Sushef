@@ -118,11 +118,11 @@ namespace MyFirstARGame
             }
 
             
-            if (this.PickedUpObject != null)
-            {
-                Debug.Log("$$$ Dragging object");
+            //if (this.PickedUpObject != null)
+            //{
+            //    Debug.Log("$$$ Dragging object");
 
-            }
+            //}
             
 
 
@@ -162,7 +162,7 @@ namespace MyFirstARGame
         {
             this.pressed = false;
             Debug.Log("lifted");
-            this.PickedUpObject = null;
+            //this.PickedUpObject = null;
         }
     }
 }
