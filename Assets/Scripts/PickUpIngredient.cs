@@ -63,7 +63,6 @@ namespace MyFirstARGame
             // For AR Foundation planes (if enabled), we use AR Raycasting.
             var ray = Camera.main.ScreenPointToRay(touchPosition);
 
-            Debug.Log("$$$ ray spawned");
             g = GameObject.FindGameObjectWithTag("GameManager");
 
             if (this.PickedUpObject != null)
