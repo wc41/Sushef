@@ -60,33 +60,17 @@ namespace MyFirstARGame
                     Debug.Log("$$$ released on board");
                     g = GameObject.FindGameObjectWithTag("GameManager");
                     
-
-                    GlobalScript j = g.GetComponent<GlobalScript>();
-
-                    //if (j.IsHost())
-                    //{
-                    //    Debug.Log("$$$ j is the host");
-                    //} else
-                    //{
-                    //    Debug.Log("$$$ j is not the host");
-
-                    //}
-
-
                     Vector3 puObjectPosition = this.PickedUpObject.transform.position;
 
                     Debug.Log("$$$ released on board at z-Position: " + puObjectPosition.z);
 
                     if (puObjectPosition.z > 0)
                     {
-                        // ws1
-                        Debug.Log("$$$ Using WS1: " + j.workstation1.name);
                         g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
                         this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
                     }
                     else if (puObjectPosition.z < 0)
                     {
-                        Debug.Log("$$$ Using WS2" + j.workstation2.name);
                         g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
                         this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
                     }
