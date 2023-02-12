@@ -99,6 +99,7 @@ namespace MyFirstARGame
             // presumably called when ingredient object collides with workstation area
             // presumably PhotonView ID is also sent 
 
+            Debug.Log("$$$ add ingredient called");
             GameObject i = PhotonView.Find(ID).gameObject;
 
             if (allIngredients.Count == 3)

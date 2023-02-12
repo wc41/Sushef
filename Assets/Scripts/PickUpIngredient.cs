@@ -79,9 +79,7 @@ namespace MyFirstARGame
                     ws.GetPhotonView().RPC("AddIngredient", RpcTarget.Others,
                         this.PickedUpObject.GetComponent<PhotonView>().ViewID);
 
-                    this.PickedUpObject = null;
                 }
-
 
                 this.PickedUpObject = null;
             }
@@ -112,6 +110,12 @@ namespace MyFirstARGame
 
                 Debug.Log("$$$ checking with gameObject for viewID: "
                            + hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+
+                this.PickUpOrUpdateObject(hit);
+
+                this.lastRay = ray;
+            } else
+            {
 
                 this.PickUpOrUpdateObject(hit);
 
