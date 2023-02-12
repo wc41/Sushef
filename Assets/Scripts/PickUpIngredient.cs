@@ -43,7 +43,7 @@ namespace MyFirstARGame
         {
             base.Awake();
             this.m_RaycastManager = this.GetComponent<ARRaycastManager>();
-            g = PhotonView.Find(1001).gameObject;
+            // g = PhotonView.Find(1001).gameObject;
         }
 
         private void Update()
