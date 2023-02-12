@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: -647748036067236907}
   - component: {fileID: 7017659443634952501}
   - component: {fileID: 8380690694718005661}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: ifish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
