@@ -124,10 +124,6 @@ namespace MyFirstARGame
             {
                 players++;
                 Debug.Log("player: " + players);
-                if (!roundStarted && players == 1 && isHost)
-                {
-                    beginRound();
-                }
             }
         }
 
