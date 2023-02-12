@@ -54,15 +54,11 @@ namespace MyFirstARGame
         {
             if (Pointer.current != null && this.PickedUpObject != null && this.pressed == false)
             {
-                Debug.Log("$$$ released");
                 if (Physics.Raycast(lastRay, out RaycastHit draghit, 1000, LayerMask.GetMask("Board")))
                 {
-                    Debug.Log("$$$ released on board");
                     g = GameObject.FindGameObjectWithTag("GameManager");
                     
                     Vector3 puObjectPosition = this.PickedUpObject.transform.position;
-
-                    Debug.Log("$$$ released on board at z-Position: " + puObjectPosition.z);
 
                     if (puObjectPosition.z > 0)
                     {
@@ -99,13 +95,9 @@ namespace MyFirstARGame
 
             if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
             {
-                Debug.Log("$$$ raycast update calling");
                 //GlobalScript j = g.GetComponent<GlobalScript>();
 
                 Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
-
-                Debug.Log("$$$ checking with gameObject for viewID: "
-                           + hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
 
                 this.PickUpOrUpdateObject(hit);
 
@@ -141,7 +133,6 @@ namespace MyFirstARGame
             if (this.PickedUpObject == null || this.PickedUpObject != hit.transform.gameObject)
             {
                 this.PickedUpObject = hit.transform.gameObject;
-                Debug.Log("$$$ calling pick up ingredient");
                 g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
                     this.PickedUpObject.GetComponent<PhotonView>().ViewID);
 
@@ -159,13 +150,11 @@ namespace MyFirstARGame
         protected override void OnPress(Vector3 position)
         {
             this.pressed = true;
-            Debug.Log("$$$Pressed");
         }
 
         protected override void OnPressCancel()
         {
             this.pressed = false;
-            Debug.Log("lifted");
             //this.PickedUpObject = null;
         }
     }

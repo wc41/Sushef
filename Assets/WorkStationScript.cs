@@ -120,6 +120,7 @@ namespace MyFirstARGame
                     rice.Add(ID);
                 }
             }
+            Debug.Log("$$$ Current Ingredients: " + string.Join(", ", allIngredients));
         }
 
         private void useFish()
