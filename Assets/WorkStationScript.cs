@@ -48,6 +48,7 @@ namespace MyFirstARGame
                     useFish();
                 }
 
+                Debug.Log("$$$ made sashimi");
                 // sushi = PhotonNetwork.Instantiate("sashimi", gameObject.translation, Quaternion.identity);
 
             }
@@ -60,6 +61,7 @@ namespace MyFirstARGame
                         useFish();
                         useRice();
                         useSeaweed();
+                        Debug.Log("$$$ made maki");
                         // sushi = PhotonNetwork.Instantiate("maki", gameObject.translation, Quaternion.identity);
 
                     }
@@ -67,6 +69,7 @@ namespace MyFirstARGame
                     {
                         useFish();
                         useRice();
+                        Debug.Log("$$$ made nigiri");
                         // sushi = PhotonNetwork.Instantiate("nigiri", gameObject.translation, Quaternion.identity);
 
                     }
@@ -78,8 +81,9 @@ namespace MyFirstARGame
                     useSeaweed();
                     useRice();
                     useRice();
-                }
+                    Debug.Log("$$$ made onigiri");
 
+                }
                 // sushi = PhotonNetwork.Instantiate("onigiri", gameObject.translation, Quaternion.identity);
 
             }
@@ -102,7 +106,7 @@ namespace MyFirstARGame
                 // switch case for names
                 allIngredients.Add(ID);
                 Vector3 pos = i.transform.position;
-                pos = new Vector3(0.1f * allIngredients.IndexOf(ID) + -0.1f, 0.15f, gameObject.transform.position.z);
+                pos = new Vector3(0.1f * allIngredients.IndexOf(ID) + -0.1f, 0.2f, gameObject.transform.position.z);
                 i.transform.position = pos;
 
                 if (i.name.Contains("fish"))
