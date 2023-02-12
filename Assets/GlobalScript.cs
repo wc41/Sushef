@@ -32,6 +32,8 @@ namespace MyFirstARGame
             tableId = 0;
             tables = new GameObject[10];
             ingredients = new GameObject[10];
+            workstation1 = new GameObject();
+            workstation2 = new GameObject();
         }
 
         // Update is called once per frame
