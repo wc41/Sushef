@@ -142,6 +142,7 @@ namespace MyFirstARGame
         [PunRPC]
         public void Raycast(Ray ray)
         {
+            Debug.Log("$$$ testing raycast");
             if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
             {
                 Debug.Log("$$$ raycast update calling");
