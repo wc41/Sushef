@@ -49,6 +49,7 @@ namespace MyFirstARGame
                 }
 
                 Debug.Log("$$$ made sashimi");
+                rearrange();
                 // sushi = PhotonNetwork.Instantiate("sashimi", gameObject.translation, Quaternion.identity);
 
             }
@@ -62,6 +63,7 @@ namespace MyFirstARGame
                         useRice();
                         useSeaweed();
                         Debug.Log("$$$ made maki");
+                        rearrange();
                         // sushi = PhotonNetwork.Instantiate("maki", gameObject.translation, Quaternion.identity);
 
                     }
@@ -70,6 +72,7 @@ namespace MyFirstARGame
                         useFish();
                         useRice();
                         Debug.Log("$$$ made nigiri");
+                        rearrange();
                         // sushi = PhotonNetwork.Instantiate("nigiri", gameObject.translation, Quaternion.identity);
 
                     }
@@ -82,6 +85,7 @@ namespace MyFirstARGame
                     useRice();
                     useRice();
                     Debug.Log("$$$ made onigiri");
+                    rearrange();
 
                 }
                 // sushi = PhotonNetwork.Instantiate("onigiri", gameObject.translation, Quaternion.identity);
@@ -112,7 +116,7 @@ namespace MyFirstARGame
                 if (i.name.Contains("fish"))
                 {
                     fish.Add(ID);
-                } else if (i.name.Contains("seaweed"))
+                } else if (i.name.Contains("weed"))
                 {
                     seaweed.Add(ID);
                 } else if (i.name.Contains("rice"))
@@ -148,6 +152,18 @@ namespace MyFirstARGame
             allIngredients.Remove(toRemove);
             GameObject toTrash = PhotonView.Find(toRemove).gameObject;
             PhotonNetwork.Destroy(toTrash);
+        }
+
+        private void rearrange()
+        {
+            for (int i = 0; i < allIngredients.Count; i++)
+            {
+                GameObject obj = PhotonView.Find(allIngredients[i]).gameObject;
+                Vector3 pos = obj.transform.position;
+                pos = new Vector3(0.1f * i + -0.1f, 0.19f, gameObject.transform.position.z);
+                obj.transform.position = pos;
+
+            }
         }
 
     }
