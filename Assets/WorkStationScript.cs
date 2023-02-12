@@ -93,7 +93,7 @@ namespace MyFirstARGame
 
         }
 
-
+        [PunRPC]
         public void AddIngredient(int ID)
         {
             // presumably called when ingredient object collides with workstation area
@@ -109,7 +109,7 @@ namespace MyFirstARGame
                 // switch case for names
                 allIngredients.Add(ID);
                 Vector3 pos = i.transform.position;
-                pos = new Vector3(1f * allIngredients.IndexOf(ID) + -1f, 0.15f, gameObject.transform.position.z);
+                pos = new Vector3(0.1f * allIngredients.IndexOf(ID) + -0.1f, 0.15f, gameObject.transform.position.z);
                 i.transform.position = pos;
             }
         }

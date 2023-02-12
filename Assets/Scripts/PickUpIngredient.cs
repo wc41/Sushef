@@ -34,6 +34,8 @@ namespace MyFirstARGame
         /// </summary>
         public GameObject PickedUpObject { get; private set; }
 
+        GameObject ws;
+
         /// <summary>
         /// Gets or sets a value indicating whether the user is allowed to place an object.
         /// </summary>
@@ -64,22 +66,47 @@ namespace MyFirstARGame
             Debug.Log("$$$ ray spawned");
             g = GameObject.FindGameObjectWithTag("GameManager");
 
-            // g.GetPhotonView().RPC("Raycast", RpcTarget.Others, ray);
-
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
+            if (this.PickedUpObject != null)
             {
-                Debug.Log("$$$ raycast update calling");
-                GlobalScript j = g.GetComponent<GlobalScript>();
+                if (Physics.Raycast(ray, out RaycastHit draghit, 1000, LayerMask.GetMask("Board")))
+                {
+                    GlobalScript j = g.GetComponent<GlobalScript>();
+                    Vector3 puObjectPosition = this.PickedUpObject.transform.position;
+                    
+                    if (puObjectPosition.z > 0)
+                    {
+                        // ws1
+                        ws = j.workstation1;
+                    } else
+                    {
+                        ws = j.workstation2;
+                    }
 
-                Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
+                    ws.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, this.PickedUpObject.GetComponent<PhotonView>().ViewID);
+                } else
+                {
+                    this.PickedUpObject.transform.position = draghit.point;
+                }
 
-                Debug.Log("$$$ checking with gameObject for viewID: "
-                           + hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+            } else
+            {
+                if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
+                {
+                    Debug.Log("$$$ raycast update calling");
+                    GlobalScript j = g.GetComponent<GlobalScript>();
 
-                Debug.Log("$$$ ingredients length is: " + j.ingredients.Length);
+                    Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
 
-                this.UpdateOrPickUpObject(hit);
+                    Debug.Log("$$$ checking with gameObject for viewID: "
+                               + hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+
+                    Debug.Log("$$$ ingredients length is: " + j.ingredients.Length);
+
+                    this.UpdateOrPickUpObject(hit);
+                }
             }
+
+            
             //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
             //{
             //    // Raycast hits are sorted by distance, so the first one
