@@ -127,15 +127,17 @@ namespace MyFirstARGame
             int toRemove = fish[0];
             fish.RemoveAt(0);
             allIngredients.Remove(toRemove);
-            g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
+            GameObject toTrash = PhotonView.Find(toRemove).gameObject;
+            PhotonNetwork.Destroy(toTrash);
         }
 
         private void useSeaweed()
         {
             int toRemove = seaweed[0];
-            fish.RemoveAt(0);
+            seaweed.RemoveAt(0);
             allIngredients.Remove(toRemove);
-            g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
+            GameObject toTrash = PhotonView.Find(toRemove).gameObject;
+            PhotonNetwork.Destroy(toTrash);
         }
 
         private void useRice()
@@ -143,7 +145,8 @@ namespace MyFirstARGame
             int toRemove = rice[0];
             rice.RemoveAt(0);
             allIngredients.Remove(toRemove);
-            g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
+            GameObject toTrash = PhotonView.Find(toRemove).gameObject;
+            PhotonNetwork.Destroy(toTrash);
         }
 
     }
