@@ -148,6 +148,9 @@ namespace MyFirstARGame
                 Debug.Log("$$$ calling pick up ingredient");
                 g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
                     this.PickedUpObject.GetComponent<PhotonView>().ViewID);
+
+                this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+
             }
             this.PickedUpObject.transform.position = hit.point;
 
