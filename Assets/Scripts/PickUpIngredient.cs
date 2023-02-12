@@ -68,6 +68,7 @@ namespace MyFirstARGame
 
             if (this.PickedUpObject != null)
             {
+                Debug.Log("$$$ Dragging object");
                 if (Physics.Raycast(ray, out RaycastHit draghit, 1000, LayerMask.GetMask("Board")))
                 {
                     GlobalScript j = g.GetComponent<GlobalScript>();
@@ -77,12 +78,15 @@ namespace MyFirstARGame
                     {
                         // ws1
                         ws = j.workstation1;
+                        Debug.Log("$$$ Using WS1");
                     } else
                     {
                         ws = j.workstation2;
+                        Debug.Log("$$$ Using WS2");
                     }
 
                     ws.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, this.PickedUpObject.GetComponent<PhotonView>().ViewID);
+                    this.PickedUpObject = null;
                 } else
                 {
                     this.PickedUpObject.transform.position = draghit.point;
@@ -139,6 +143,7 @@ namespace MyFirstARGame
         {
             this.pressed = false;
             Debug.Log("lifted");
+            this.PickedUpObject = null;
         }
     }
 }
