@@ -121,7 +121,7 @@ namespace MyFirstARGame
             {
                 players++;
                 Debug.Log("player: " + players);
-                if (!roundStarted && players == 1 && isHost && (ready1 || ready2))
+                if (!roundStarted && isHost && (ready1 || ready2))
                 {
                     beginRound();
                 }
