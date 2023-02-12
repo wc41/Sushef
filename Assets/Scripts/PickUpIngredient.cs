@@ -74,7 +74,9 @@ namespace MyFirstARGame
                 Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
 
                 Debug.Log("$$$ checking with gameObject for viewID: "
-                           + hit.transform.gameObject.GetComponent<PhotonView>().ViewID); 
+                           + hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+
+                Debug.Log("$$$ ingredients length is: " + j.ingredients.Length);
 
                 for (int i = 0; i < j.ingredients.Length; i++)
                 {
