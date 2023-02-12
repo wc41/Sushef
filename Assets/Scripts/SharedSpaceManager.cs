@@ -206,13 +206,13 @@ namespace MyFirstARGame
                     Vector3 playerPosition = this.arCamera.transform.position;
                     if (!playerA && Vector3.Distance(new Vector3(0f, 0f, 1f), new Vector3(playerPosition.x, 0f, playerPosition.z)) < 0.3f)
                     {
-                        g.GetPhotonView().RPC("ReadyPlayer1", RpcTarget.Others);
+                        g.GetPhotonView().RPC("ReadyPlayer1", RpcTarget.Others, PhotonNetwork.LocalPlayer.ActorNumber);
                         playerA = true;
                     }
 
                     if (!playerB && Vector3.Distance(new Vector3(0f, 0f, -1f), new Vector3(playerPosition.x, 0f, playerPosition.z)) < 0.3f)
                     {
-                        g.GetPhotonView().RPC("ReadyPlayer2", RpcTarget.Others);
+                        g.GetPhotonView().RPC("ReadyPlayer2", RpcTarget.Others, PhotonNetwork.LocalPlayer.ActorNumber);
                         playerB = true;
                     }
 
