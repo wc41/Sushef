@@ -25,6 +25,9 @@ namespace MyFirstARGame
         public bool roundStarted;
         public bool isHost;
 
+        private bool ready1;
+        private bool ready2;
+
         void Awake()
         {
             roundStarted = false;
@@ -32,6 +35,11 @@ namespace MyFirstARGame
             tableId = 0;
             tables = new GameObject[10];
             ingredients = new GameObject[10];
+            workstation1 = new GameObject();
+            workstation2 = new GameObject();
+
+            ready1 = false;
+            ready2 = false;
         }
 
         // Update is called once per frame
@@ -84,6 +92,21 @@ namespace MyFirstARGame
                         tableId = 0;
                     }
                 }
+            } else if (isHost && !roundStarted && (ready1 || ready2))
+            {
+                beginRound();
+            }
+        }
+
+        [PunRPC]
+        public void AddIngredientGlobal(int id, int workstation)
+        {
+            if (workstation == 1)
+            {
+                workstation1.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id);
+            } if (workstation == 2)
+            {
+                workstation2.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id);
             }
         }
 
@@ -121,19 +144,19 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
-        public void ReadyPlayer1()
+        public void ReadyPlayer1(int ID)
         {
             Debug.Log("ready player 1");
             workstation1 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
-
+            workstation1.GetComponent<PhotonView>().TransferOwnership(ID);
         }
 
         [PunRPC]
-        public void ReadyPlayer2()
+        public void ReadyPlayer2(int ID)
         {
             Debug.Log("ready player 2");
             workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.Euler(0, 180, 0));
-
+            workstation2.GetComponent<PhotonView>().TransferOwnership(ID);
         }
 
         [PunRPC]
