@@ -132,7 +132,7 @@ namespace MyFirstARGame
         public void ReadyPlayer2()
         {
             Debug.Log("ready player 2");
-            workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.identity);
+            workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.Euler(0, 180, 0));
 
         }
 
