@@ -138,6 +138,28 @@ namespace MyFirstARGame
         {
             isHost = true;
         }
+
+        [PunRPC]
+        public void Raycast(Ray ray)
+        {
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
+            {
+                Debug.Log("$$$ raycast update calling");
+                // GlobalScript j = g.GetComponent<GlobalScript>();
+
+                Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
+
+                /*for (int i = 0; i < j.ingredients.Length; i++)
+                {
+                    if (j.ingredients[i].GetComponent<PhotonView>().ViewID == 
+                        hit.transform.gameObject.GetComponent<PhotonView>().ViewID)
+                    {
+                        this.UpdateOrPickUpObject(hit);
+                        break;
+                    }
+                }*/
+            }
+        }
         public bool IsHost()
         {
             return isHost;

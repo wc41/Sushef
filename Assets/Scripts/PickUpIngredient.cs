@@ -43,7 +43,7 @@ namespace MyFirstARGame
         {
             base.Awake();
             this.m_RaycastManager = this.GetComponent<ARRaycastManager>();
-            // g = PhotonView.Find(1001).gameObject;
+            g = GameObject.FindGameObjectWithTag("GameManager");
         }
 
         private void Update()
@@ -61,6 +61,8 @@ namespace MyFirstARGame
             // Raycast against layer "GroundPlane" using normal Raycasting for our artifical ground plane.
             // For AR Foundation planes (if enabled), we use AR Raycasting.
             var ray = Camera.main.ScreenPointToRay(touchPosition);
+
+            g.GetPhotonView().RPC("Raycast", RpcTarget.Others, ray);
 
             if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
             {
