@@ -62,6 +62,8 @@ namespace MyFirstARGame
                     GlobalScript j = g.GetComponent<GlobalScript>();
                     Vector3 puObjectPosition = this.PickedUpObject.transform.position;
 
+                    Debug.Log("$$$ released on board at z-Position: " + puObjectPosition.z);
+
                     if (puObjectPosition.z > 0)
                     {
                         // ws1
@@ -73,7 +75,7 @@ namespace MyFirstARGame
                         ws = j.workstation2;
                         Debug.Log("$$$ Using WS2");
                     }
-
+                    
                     ws.GetPhotonView().RPC("AddIngredient", RpcTarget.Others,
                         this.PickedUpObject.GetComponent<PhotonView>().ViewID);
 
