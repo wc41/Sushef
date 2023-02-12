@@ -52,37 +52,37 @@ namespace MyFirstARGame
 
         private void Update()
         {
-            if (Pointer.current != null && this.PickedUpObject != null && this.pressed == false)
-            {
-                Debug.Log("$$$ released");
-                if (Physics.Raycast(lastRay, out RaycastHit draghit, 1000, LayerMask.GetMask("Board")))
-                {
-                    Debug.Log("$$$ released on board");
+            //if (Pointer.current != null && this.PickedUpObject != null && this.pressed == false)
+            //{
+            //    Debug.Log("$$$ released");
+            //    if (Physics.Raycast(lastRay, out RaycastHit draghit, 1000, LayerMask.GetMask("Board")))
+            //    {
+            //        Debug.Log("$$$ released on board");
 
-                    GlobalScript j = g.GetComponent<GlobalScript>();
-                    Vector3 puObjectPosition = this.PickedUpObject.transform.position;
+            //        GlobalScript j = g.GetComponent<GlobalScript>();
+            //        Vector3 puObjectPosition = this.PickedUpObject.transform.position;
 
-                    if (puObjectPosition.z > 0)
-                    {
-                        // ws1
-                        ws = j.workstation1;
-                        Debug.Log("$$$ Using WS1");
-                    }
-                    else if (puObjectPosition.z < 0)
-                    {
-                        ws = j.workstation2;
-                        Debug.Log("$$$ Using WS2");
-                    }
+            //        if (puObjectPosition.z > 0)
+            //        {
+            //            // ws1
+            //            ws = j.workstation1;
+            //            Debug.Log("$$$ Using WS1");
+            //        }
+            //        else if (puObjectPosition.z < 0)
+            //        {
+            //            ws = j.workstation2;
+            //            Debug.Log("$$$ Using WS2");
+            //        }
 
-                    ws.GetPhotonView().RPC("AddIngredient", RpcTarget.Others,
-                        this.PickedUpObject.GetComponent<PhotonView>().ViewID);
+            //        ws.GetPhotonView().RPC("AddIngredient", RpcTarget.Others,
+            //            this.PickedUpObject.GetComponent<PhotonView>().ViewID);
 
-                    this.PickedUpObject = null;
-                }
+            //        this.PickedUpObject = null;
+            //    }
 
 
-                this.PickedUpObject = null;
-            }
+            //    this.PickedUpObject = null;
+            //}
 
             if (Pointer.current == null || this.pressed == false || !this.CanPlace)
                 return;
