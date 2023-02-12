@@ -58,6 +58,7 @@ namespace MyFirstARGame
                 if (Physics.Raycast(lastRay, out RaycastHit draghit, 1000, LayerMask.GetMask("Board")))
                 {
                     Debug.Log("$$$ released on board");
+                    g = GameObject.FindGameObjectWithTag("GameManager");
 
                     GlobalScript j = g.GetComponent<GlobalScript>();
                     Vector3 puObjectPosition = this.PickedUpObject.transform.position;
@@ -153,7 +154,7 @@ namespace MyFirstARGame
                 this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
             }
-            this.PickedUpObject.transform.position = hit.point;
+            this.PickedUpObject.transform.position = hit.point + (hit.transform.position - hit.point);
 
         }
 
