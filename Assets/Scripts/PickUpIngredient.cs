@@ -69,14 +69,14 @@ namespace MyFirstARGame
                         // ws1
                         ws = j.workstation1;
                         Debug.Log("$$$ Using WS1");
-                        j.workstation1.GetPhotonView().RPC("AddIngredient", RpcTarget.Others,
+                        g.GetPhotonView().RPC("AddIngredient", RpcTarget.Others,
                         this.PickedUpObject.GetComponent<PhotonView>().ViewID);
                     }
                     else if (puObjectPosition.z < 0)
                     {
                         ws = j.workstation2;
                         Debug.Log("$$$ Using WS2");
-                        j.workstation2.GetPhotonView().RPC("AddIngredient", RpcTarget.Others,
+                        g.GetPhotonView().RPC("AddIngredient", RpcTarget.Others,
                         this.PickedUpObject.GetComponent<PhotonView>().ViewID);
                     }
 
