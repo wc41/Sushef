@@ -78,18 +78,7 @@ namespace MyFirstARGame
 
                 Debug.Log("$$$ ingredients length is: " + j.ingredients.Length);
 
-                for (int i = 0; i < j.ingredients.Length; i++)
-                {
-                    Debug.Log(" with gameObject viewID: " + j.ingredients[i].GetComponent<PhotonView>().ViewID);
-
-                    if (j.ingredients[i].GetComponent<PhotonView>().ViewID == 
-                        hit.transform.gameObject.GetComponent<PhotonView>().ViewID)
-                    {
-                        Debug.Log("$$$ viewID matching! now picking up object");
-                        this.UpdateOrPickUpObject(hit);
-                        break;
-                    }
-                }
+                this.UpdateOrPickUpObject(hit);
             }
             //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
             //{
