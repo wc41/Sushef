@@ -106,7 +106,7 @@ namespace MyFirstARGame
                 // switch case for names
                 allIngredients.Add(ID);
                 Vector3 pos = i.transform.position;
-                pos = new Vector3(0.1f * allIngredients.IndexOf(ID) + -0.1f, 0.2f, gameObject.transform.position.z);
+                pos = new Vector3(0.1f * allIngredients.IndexOf(ID) + -0.1f, 0.19f, gameObject.transform.position.z);
                 i.transform.position = pos;
 
                 if (i.name.Contains("fish"))
