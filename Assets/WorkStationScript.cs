@@ -21,12 +21,16 @@ namespace MyFirstARGame
         List<int> seaweed;
         List<int> allIngredients;
 
+        GameObject sushi;
+        GameObject g;
+
         void Start()
         {
             fish = new List<int>();
             rice = new List<int>();
             seaweed = new List<int>();
             allIngredients = new List<int>();
+            g = GameObject.FindGameObjectWithTag("GameManager");
         }
 
         // Update is called once per frame
@@ -44,8 +48,13 @@ namespace MyFirstARGame
                     int toRemove = fish[0];
                     fish.RemoveAt(0);
                     allIngredients.Remove(toRemove);
+                    g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
                 }
-            } else if (fish.Count >= 1)
+
+                // sushi = PhotonNetwork.Instantiate("sashimi", gameObject.translation, Quaternion.identity);
+
+            }
+            else if (fish.Count >= 1)
             {
                 if (rice.Count >= 1)
                 {
@@ -54,20 +63,32 @@ namespace MyFirstARGame
                         int toRemove = fish[0];
                         fish.RemoveAt(0);
                         allIngredients.Remove(toRemove);
+                        g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
                         toRemove = rice[0];
                         rice.RemoveAt(0);
                         allIngredients.Remove(toRemove);
+                        g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
                         toRemove = seaweed[0];
                         seaweed.RemoveAt(0);
                         allIngredients.Remove(toRemove);
-                    } else
+                        g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
+
+                        // sushi = PhotonNetwork.Instantiate("maki", gameObject.translation, Quaternion.identity);
+
+                    }
+                    else
                     {
                         int toRemove = fish[0];
                         fish.RemoveAt(0);
                         allIngredients.Remove(toRemove);
+                        g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
                         toRemove = rice[0];
                         rice.RemoveAt(0);
                         allIngredients.Remove(toRemove);
+                        g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
+
+                        // sushi = PhotonNetwork.Instantiate("nigiri", gameObject.translation, Quaternion.identity);
+
                     }
                 }
             } else
@@ -77,20 +98,20 @@ namespace MyFirstARGame
                     int toRemove = seaweed[0];
                     fish.RemoveAt(0);
                     allIngredients.Remove(toRemove);
+                    g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
                     toRemove = rice[0];
                     rice.RemoveAt(0);
                     allIngredients.Remove(toRemove);
+                    g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
                     toRemove = rice[0];
                     rice.RemoveAt(0);
                     allIngredients.Remove(toRemove);
+                    g.GetPhotonView().RPC("Trash", RpcTarget.Others, toRemove);
                 }
+
+                // sushi = PhotonNetwork.Instantiate("onigiri", gameObject.translation, Quaternion.identity);
+
             }
-
-            // creating a sushi piece:
-            // Remove Objects from List
-            // Remove Objects from Array (Displayed on board)
-            // Create sushi object
-
         }
 
         [PunRPC]
@@ -111,8 +132,21 @@ namespace MyFirstARGame
                 Vector3 pos = i.transform.position;
                 pos = new Vector3(0.1f * allIngredients.IndexOf(ID) + -0.1f, 0.15f, gameObject.transform.position.z);
                 i.transform.position = pos;
+
+                if (i.name.Contains("fish"))
+                {
+                    fish.Add(ID);
+                } else if (i.name.Contains("seaweed"))
+                {
+                    seaweed.Add(ID);
+                } else if (i.name.Contains("rice"))
+                {
+                    rice.Add(ID);
+                }
             }
         }
+
+
 
     }
 }
