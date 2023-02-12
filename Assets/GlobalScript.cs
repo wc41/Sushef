@@ -24,6 +24,7 @@ namespace MyFirstARGame
         private int tableId;
         public bool roundStarted;
         public bool isHost;
+
         void Awake()
         {
             roundStarted = false;
@@ -87,6 +88,22 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
+        public void TakeIngredientAway(int id)
+        {
+            Debug.Log("$$$ picking up ingredient");
+            for (int i = 0; i < 10; i++)
+            {
+                if (ingredients[i] != null)
+                {
+                    if (ingredients[i].GetComponent<PhotonView>().ViewID == id)
+                    {
+                        ingredients[i] = null;
+                    }
+                }
+            }
+        }
+
+        [PunRPC]
         public void PlayerJoin()
         {
             // In our PC scene, we have an ImageTarget object that we can update with the observerd real word size and then disable us.
@@ -96,7 +113,7 @@ namespace MyFirstARGame
             {
                 players++;
                 Debug.Log("player: " + players);
-                if (!roundStarted && players == 2 && isHost)
+                if (!roundStarted && players == 1 && isHost)
                 {
                     beginRound();
                 }
@@ -120,6 +137,11 @@ namespace MyFirstARGame
         public void SetHost()
         {
             isHost = true;
+        }
+
+        public bool IsHost()
+        {
+            return isHost;
         }
  
         public void beginRound()

@@ -12,10 +12,22 @@ namespace MyFirstARGame
         {
             if (!Application.isMobilePlatform)
             {
-                this.GetComponent<ARSelectionInteractable>().enabled = false;
-                this.GetComponent<ARTranslationInteractable>().enabled = false;
-                this.GetComponent<ARRotationInteractable>().enabled = false;
-                this.GetComponent<ARScaleInteractable>().enabled = false;
+                if (this.GetComponent<ARSelectionInteractable>() != null)
+                {
+                    this.GetComponent<ARSelectionInteractable>().enabled = false;
+                }
+                if (this.GetComponent<ARTranslationInteractable>() != null)
+                {
+                    this.GetComponent<ARTranslationInteractable>().enabled = false;
+                }
+                if (this.GetComponent<ARRotationInteractable>() != null)
+                {
+                    this.GetComponent<ARRotationInteractable>().enabled = false;
+                }
+                if (this.GetComponent<ARScaleInteractable>() != null)
+                {
+                    this.GetComponent<ARScaleInteractable>().enabled = false;
+                }
             }
         }
     }
