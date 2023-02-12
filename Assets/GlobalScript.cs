@@ -99,6 +99,18 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
+        public void AddIngredientGlobal(int id, int workstation)
+        {
+            if (workstation == 1)
+            {
+                workstation1.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id);
+            } if (workstation == 2)
+            {
+                workstation2.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id);
+            }
+        }
+
+        [PunRPC]
         public void TakeIngredientAway(int id)
         {
             Debug.Log("$$$ picking up ingredient");

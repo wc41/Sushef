@@ -63,14 +63,16 @@ namespace MyFirstARGame
 
                     GlobalScript j = g.GetComponent<GlobalScript>();
 
-                    if (j.IsHost())
-                    {
-                        Debug.Log("$$$ j is the host");
-                    } else
-                    {
-                        Debug.Log("$$$ j is not the host");
+                    //if (j.IsHost())
+                    //{
+                    //    Debug.Log("$$$ j is the host");
+                    //} else
+                    //{
+                    //    Debug.Log("$$$ j is not the host");
 
-                    }
+                    //}
+
+
                     Vector3 puObjectPosition = this.PickedUpObject.transform.position;
 
                     Debug.Log("$$$ released on board at z-Position: " + puObjectPosition.z);
@@ -78,17 +80,15 @@ namespace MyFirstARGame
                     if (puObjectPosition.z > 0)
                     {
                         // ws1
-                        ws = j.workstation1;
                         Debug.Log("$$$ Using WS1: " + j.workstation1.name);
-                        j.workstation1.GetPhotonView().RPC("AddIngredient", RpcTarget.Others,
-                        this.PickedUpObject.GetComponent<PhotonView>().ViewID);
+                        g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
+                        this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
                     }
                     else if (puObjectPosition.z < 0)
                     {
-                        ws = j.workstation2;
                         Debug.Log("$$$ Using WS2" + j.workstation2.name);
-                        j.workstation2.GetPhotonView().RPC("AddIngredient", RpcTarget.Others,
-                        this.PickedUpObject.GetComponent<PhotonView>().ViewID);
+                        g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
+                        this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
                     }
 
                 }
@@ -116,7 +116,7 @@ namespace MyFirstARGame
             if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
             {
                 Debug.Log("$$$ raycast update calling");
-                GlobalScript j = g.GetComponent<GlobalScript>();
+                //GlobalScript j = g.GetComponent<GlobalScript>();
 
                 Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
 
