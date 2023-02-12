@@ -65,6 +65,22 @@ namespace MyFirstARGame
 
             g = GameObject.FindGameObjectWithTag("GameManager");
 
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
+            {
+                Debug.Log("$$$ raycast update calling");
+                GlobalScript j = g.GetComponent<GlobalScript>();
+
+                Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
+
+                Debug.Log("$$$ checking with gameObject for viewID: "
+                           + hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+
+                Debug.Log("$$$ ingredients length is: " + j.ingredients.Length);
+
+                this.UpdateOrPickUpObject(hit);
+            }
+
+            /*
             if (this.PickedUpObject != null)
             {
                 Debug.Log("$$$ Dragging object");
@@ -88,20 +104,7 @@ namespace MyFirstARGame
                     this.PickedUpObject = null;
                 } 
             }
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
-            {
-                Debug.Log("$$$ raycast update calling");
-                GlobalScript j = g.GetComponent<GlobalScript>();
-
-                Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
-
-                Debug.Log("$$$ checking with gameObject for viewID: "
-                           + hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
-
-                Debug.Log("$$$ ingredients length is: " + j.ingredients.Length);
-
-                this.UpdateOrPickUpObject(hit);
-            }
+            */
 
 
             //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
