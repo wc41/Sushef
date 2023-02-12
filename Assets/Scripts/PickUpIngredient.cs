@@ -62,18 +62,18 @@ namespace MyFirstARGame
             var ray = Camera.main.ScreenPointToRay(touchPosition);
 
             Debug.Log("$$$ ray spawned");
-            // g = GameObject.FindGameObjectWithTag("GameManager");
+            g = GameObject.FindGameObjectWithTag("GameManager");
 
             // g.GetPhotonView().RPC("Raycast", RpcTarget.Others, ray);
 
             if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
             {
                 Debug.Log("$$$ raycast update calling");
-                // GlobalScript j = g.GetComponent<GlobalScript>();
+                GlobalScript j = g.GetComponent<GlobalScript>();
 
                 Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
 
-                /*for (int i = 0; i < j.ingredients.Length; i++)
+                for (int i = 0; i < j.ingredients.Length; i++)
                 {
                     if (j.ingredients[i].GetComponent<PhotonView>().ViewID == 
                         hit.transform.gameObject.GetComponent<PhotonView>().ViewID)
@@ -81,7 +81,7 @@ namespace MyFirstARGame
                         this.UpdateOrPickUpObject(hit);
                         break;
                     }
-                }*/
+                }
             }
             //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
             //{

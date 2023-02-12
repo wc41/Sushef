@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -3146865680724899248}
   - component: {fileID: -8421177352088640481}
   - component: {fileID: -7989780613275910435}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Belt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
