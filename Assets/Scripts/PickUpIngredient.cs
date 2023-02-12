@@ -62,7 +62,7 @@ namespace MyFirstARGame
             // For AR Foundation planes (if enabled), we use AR Raycasting.
             var ray = Camera.main.ScreenPointToRay(touchPosition);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("GroundPlane")))
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
             {
                 Debug.Log("$$$ raycast update calling");
                 // GlobalScript j = g.GetComponent<GlobalScript>();
