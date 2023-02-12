@@ -63,11 +63,27 @@ namespace MyFirstARGame
             // For AR Foundation planes (if enabled), we use AR Raycasting.
             var ray = Camera.main.ScreenPointToRay(touchPosition);
 
-            Debug.Log("$$$ ray spawned");
             g = GameObject.FindGameObjectWithTag("GameManager");
 
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
+            {
+                Debug.Log("$$$ raycast update calling");
+                GlobalScript j = g.GetComponent<GlobalScript>();
+
+                Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
+
+                Debug.Log("$$$ checking with gameObject for viewID: "
+                           + hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
+
+                Debug.Log("$$$ ingredients length is: " + j.ingredients.Length);
+
+                this.UpdateOrPickUpObject(hit);
+            }
+
+            /*
             if (this.PickedUpObject != null)
             {
+                Debug.Log("$$$ Dragging object");
                 if (Physics.Raycast(ray, out RaycastHit draghit, 1000, LayerMask.GetMask("Board")))
                 {
                     GlobalScript j = g.GetComponent<GlobalScript>();
@@ -77,36 +93,20 @@ namespace MyFirstARGame
                     {
                         // ws1
                         ws = j.workstation1;
-                    } else
+                        Debug.Log("$$$ Using WS1");
+                    } else if (puObjectPosition.z < 0)
                     {
                         ws = j.workstation2;
+                        Debug.Log("$$$ Using WS2");
                     }
 
                     ws.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, this.PickedUpObject.GetComponent<PhotonView>().ViewID);
-                } else
-                {
-                    this.PickedUpObject.transform.position = draghit.point;
-                }
-
-            } else
-            {
-                if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
-                {
-                    Debug.Log("$$$ raycast update calling");
-                    GlobalScript j = g.GetComponent<GlobalScript>();
-
-                    Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
-
-                    Debug.Log("$$$ checking with gameObject for viewID: "
-                               + hit.transform.gameObject.GetComponent<PhotonView>().ViewID);
-
-                    Debug.Log("$$$ ingredients length is: " + j.ingredients.Length);
-
-                    this.UpdateOrPickUpObject(hit);
-                }
+                    this.PickedUpObject = null;
+                } 
             }
+            */
 
-            
+
             //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
             //{
             //    // Raycast hits are sorted by distance, so the first one
@@ -139,6 +139,7 @@ namespace MyFirstARGame
         {
             this.pressed = false;
             Debug.Log("lifted");
+            this.PickedUpObject = null;
         }
     }
 }
