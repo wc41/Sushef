@@ -88,3 +88,4 @@ MonoBehaviour:
   workstation1: {fileID: 0}
   workstation2: {fileID: 0}
   roundStarted: 0
+  isHost: 0
