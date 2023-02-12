@@ -93,18 +93,24 @@ namespace MyFirstARGame
 
         }
 
-        public void AddIngredient(string name, int ID)
+
+        public void AddIngredient(int ID)
         {
             // presumably called when ingredient object collides with workstation area
             // presumably PhotonView ID is also sent 
 
-            if (allIngredients.Count == 6)
+            GameObject i = PhotonView.Find(ID).gameObject;
+
+            if (allIngredients.Count == 3)
             {
-                Debug.Log("Reached Limit");
+                Debug.Log("$$$ Reached Limit");
             } else
             {
                 // switch case for names
                 allIngredients.Add(ID);
+                Vector3 pos = i.transform.position;
+                pos = new Vector3(1f * allIngredients.IndexOf(ID) + -1f, 0.15f, gameObject.transform.position.z);
+                i.transform.position = pos;
             }
         }
 
