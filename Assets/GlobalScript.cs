@@ -28,8 +28,6 @@ namespace MyFirstARGame
         private bool ready1;
         private bool ready2;
 
-        GameObject order;
-
         void Awake()
         {
             roundStarted = false;
@@ -194,7 +192,7 @@ namespace MyFirstARGame
         [PunRPC]
         public void UpdateOrder(int num)
         {
-            order = GameObject.FindGameObjectWithTag("OrderUI");
+            GameObject order = GameObject.FindGameObjectWithTag("OrderUI");
             OrderListScript o = order.GetComponent<OrderListScript>();
             o.ReceiveOrder(num);
         }
@@ -202,6 +200,7 @@ namespace MyFirstARGame
         [PunRPC]
         public void Create(int index)
         {
+            GameObject order = GameObject.FindGameObjectWithTag("OrderUI");
             OrderListScript o = order.GetComponent<OrderListScript>();
             Debug.Log("$$$ making sushi...");
             o.Create(index);
