@@ -202,6 +202,7 @@ namespace MyFirstARGame
         {
             GameObject order = GameObject.FindGameObjectWithTag("OrderUI");
             OrderListScript o = order.GetComponent<OrderListScript>();
+            Debug.Log("$$$ making sushi...");
             o.Create(index);
         }
 

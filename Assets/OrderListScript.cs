@@ -49,6 +49,7 @@ namespace MyFirstARGame
             {
                 order[type] -= 1;
             }
+            Debug.Log("$$$ don!");
         }
     }
 }
