@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using UnityEngine.UI;
 
 namespace MyFirstARGame
 {
@@ -25,7 +24,7 @@ namespace MyFirstARGame
         GameObject sushi;
         GameObject g;
 
-        public Text order;
+        public GameObject order;
 
         void Start()
         {
@@ -35,7 +34,8 @@ namespace MyFirstARGame
             allIngredients = new List<int>();
             g = GameObject.FindGameObjectWithTag("GameManager");
 
-            order.text = "Your Order";
+            order = GameObject.FindGameObjectWithTag("OrderUI");
+            order.GetPhotonView().RPC("ReceiveOrder", RpcTarget.Others, 30);
         }
 
         // Update is called once per frame
