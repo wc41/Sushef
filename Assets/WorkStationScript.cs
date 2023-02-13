@@ -102,6 +102,7 @@ namespace MyFirstARGame
                 {
                     allIngredients.Remove(i);
                     Debug.Log("$$$ ingredient removed from workstation");
+
                 }
             }
         }
