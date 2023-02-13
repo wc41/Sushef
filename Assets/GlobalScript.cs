@@ -35,8 +35,6 @@ namespace MyFirstARGame
             tableId = 0;
             tables = new GameObject[10];
             ingredients = new GameObject[10];
-            workstation1 = new GameObject();
-            workstation2 = new GameObject();
 
             ready1 = false;
             ready2 = false;
@@ -180,6 +178,8 @@ namespace MyFirstARGame
         [PunRPC]
         public void Trash(int ID)
         {
+            Debug.Log("$$$ destroying object");
+
             GameObject toTrash = PhotonView.Find(ID).gameObject;
             PhotonNetwork.Destroy(toTrash);
         }
