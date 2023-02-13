@@ -45,6 +45,7 @@
         {
             GameObject panel = GameObject.FindGameObjectWithTag("RecipeUI");
             panel.SetActive(false);
+            this.isPlacing = true;
         }
 
         /// <summary>
@@ -103,5 +104,6 @@
         {
             button.GetComponent<Image>().color = state ? Color.green : Color.white;
         }
+
     }
 }
