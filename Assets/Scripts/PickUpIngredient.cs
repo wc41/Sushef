@@ -110,8 +110,6 @@ namespace MyFirstARGame
 
         private void PickUpObject(RaycastHit hit)
         {
-
-            Debug.Log("$$$ picking it up & updating offset");
             this.PickedUpObject = hit.collider.gameObject;
 
             g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
@@ -119,14 +117,14 @@ namespace MyFirstARGame
 
             this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
-            hitPoint.transform.position = hit.point;
-            offset = PickedUpObject.transform.position - hit.point;
+            //hitPoint.transform.position = hit.point;
+            //offset = PickedUpObject.transform.position - hit.point;
         }
 
         private void UpdateObject(RaycastHit hit)
         {
-            this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
-            //this.PickedUpObject.transform.position = hit.point;
+            //this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
+            this.PickedUpObject.transform.position = hit.point;
         }
 
         private void dropOntoBoard()
