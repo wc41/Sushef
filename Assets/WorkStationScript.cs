@@ -31,7 +31,6 @@ namespace MyFirstARGame
             seaweed = new List<int>();
             allIngredients = new List<int>();
             g = GameObject.FindGameObjectWithTag("GameManager");
-            g.GetPhotonView().RPC("UpdateOrder", RpcTarget.Others, 30);
         }
 
         // Update is called once per frame
@@ -96,6 +95,11 @@ namespace MyFirstARGame
                 // sushi = PhotonNetwork.Instantiate("onigiri", gameObject.translation, Quaternion.identity);
 
             }
+        }
+
+        public void GetOrder()
+        {
+            g.GetPhotonView().RPC("UpdateOrder", RpcTarget.Others, 30);
         }
 
         [PunRPC]
