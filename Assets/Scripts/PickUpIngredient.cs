@@ -17,8 +17,8 @@ namespace MyFirstARGame
     [RequireComponent(typeof(ARRaycastManager))]
     public class PickUpIngredient : PressInputBase
     {
+        RaycastHit hit;
 
-        RaycastHit lastHit;
         public Transform hitPoint;
         Vector3 offset;
 
@@ -55,6 +55,42 @@ namespace MyFirstARGame
             this.m_RaycastManager = this.GetComponent<ARRaycastManager>();
         }
 
+        private void releasedOnBoard()
+        {
+            Debug.Log("$$$ released on board");
+            g = GameObject.FindGameObjectWithTag("GameManager");
+
+            Vector3 puObjectPosition = this.PickedUpObject.transform.position;
+
+            if (puObjectPosition.z > 0)
+            {
+                g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
+                this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
+            }
+            else if (puObjectPosition.z < 0)
+            {
+                g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
+                this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
+            }
+        }
+
+        private void releasedOnTrash(RaycastHit trashHit)
+        {
+            Debug.Log("$$$ released on trash");
+            g = GameObject.FindGameObjectWithTag("GameManager");
+
+            Vector3 trashPos = trashHit.transform.position;
+            if (trashPos.z > 0)
+            {
+                g.GetPhotonView().RPC("Trash", RpcTarget.Others,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
+            }
+            else if (trashPos.z < 0)
+            {
+                g.GetPhotonView().RPC("Trash", RpcTarget.Others,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
+            }
+        }
         private void Update()
         {
             // update after release
@@ -64,40 +100,12 @@ namespace MyFirstARGame
                 // hit board
                 if (Physics.Raycast(lastRay, out RaycastHit draghit, 1000, LayerMask.GetMask("Board")))
                 {
-                    Debug.Log("$$$ released on board");
-                    g = GameObject.FindGameObjectWithTag("GameManager");
-                    
-                    Vector3 puObjectPosition = this.PickedUpObject.transform.position;
-
-                    if (puObjectPosition.z > 0)
-                    {
-                        g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
-                        this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
-                    }
-                    else if (puObjectPosition.z < 0)
-                    {
-                        g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
-                        this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
-                    }
+                    releasedOnBoard();
                 }
 
                 // hit trash
                 else if (Physics.Raycast(lastRay, out RaycastHit trashHit, 1000, LayerMask.GetMask("Trash"))) {
-                    Debug.Log("$$$ released on trash");
-                    g = GameObject.FindGameObjectWithTag("GameManager");
-
-                    Vector3 trashPos = trashHit.transform.position;
-                    if (trashPos.z > 0)
-                    {
-                        g.GetPhotonView().RPC("Trash", RpcTarget.Others,
-                            this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
-                    }
-                    else if (trashPos.z < 0)
-                    {
-                        g.GetPhotonView().RPC("Trash", RpcTarget.Others,
-                            this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
-                    }
-
+                    releasedOnTrash(trashHit);
                 }
 
                 this.PickedUpObject = null;
@@ -120,15 +128,22 @@ namespace MyFirstARGame
 
             g = GameObject.FindGameObjectWithTag("GameManager");
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000, LayerMask.GetMask("Game")))
+            if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Game")))
             {
                 //GlobalScript j = g.GetComponent<GlobalScript>();
 
                 Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
 
-                this.PickUpOrUpdateObject(hit);
+                if (this.PickedUpObject == null)
+                {
+                    PickUpObject(hit);
+                }
 
                 this.lastRay = ray;
+            }
+            if (this.PickedUpObject != null)
+            {
+                UpdateObject(hit);
             }
 
             
@@ -147,9 +162,9 @@ namespace MyFirstARGame
             //}
         }
 
-        private void PickUpOrUpdateObject(RaycastHit hit)
+        private void PickUpObject(RaycastHit hit)
         {
-            if (this.PickedUpObject == null || this.PickedUpObject != hit.transform.gameObject)
+            if (this.PickedUpObject == null)
             {
                 this.PickedUpObject = hit.transform.gameObject;
 
@@ -158,14 +173,16 @@ namespace MyFirstARGame
 
                 this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
-                //hitPoint.transform.position = hit.point;
-                //offset = PickedUpObject.transform.position - hit.point;
-
+                hitPoint.transform.position = hit.point;
+                offset = PickedUpObject.transform.position - hit.point;
             }
+        }
+        private void UpdateObject(RaycastHit hit)
+        {
             if (this.PickedUpObject != null)
             {
-                //this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
-                this.PickedUpObject.transform.position = hit.point;
+                this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
+                //this.PickedUpObject.transform.position = hit.point;
             }
         }
 
