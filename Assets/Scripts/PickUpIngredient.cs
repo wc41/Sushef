@@ -116,14 +116,6 @@ namespace MyFirstARGame
             if (Pointer.current == null || this.pressed == false || !this.CanPlace)
                 return;
 
-            if (Physics.Raycast(lastRay, out RaycastHit recipeHit, 1000, LayerMask.GetMask("Recipe")))
-            {
-                Debug.Log("$$$ Opening recipe book");
-                PhotonView.Find(1).gameObject.SetActive(true);
-                this.CanPlace = false;
-                return;
-            }
-
             var touchPosition = Pointer.current.position.ReadValue();
 
             var ray = Camera.main.ScreenPointToRay(touchPosition);
@@ -137,6 +129,14 @@ namespace MyFirstARGame
             // For AR Foundation planes (if enabled), we use AR Raycasting.
 
             g = GameObject.FindGameObjectWithTag("GameManager");
+
+            if (Physics.Raycast(lastRay, out RaycastHit recipeHit, 1000, LayerMask.GetMask("Recipe")))
+            {
+                Debug.Log("$$$ Opening recipe book");
+                PhotonView.Find(1).gameObject.SetActive(true);
+                this.CanPlace = false;
+                return;
+            }
 
             if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Game")))
             {
