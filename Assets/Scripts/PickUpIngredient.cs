@@ -151,13 +151,14 @@ namespace MyFirstARGame
 
                 this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
-                hitPoint.transform.position = hit.point;
-                offset = PickedUpObject.transform.position - hit.point;
+                //hitPoint.transform.position = hit.point;
+                //offset = PickedUpObject.transform.position - hit.point;
 
             }
             if (this.PickedUpObject != null)
             {
-                this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
+                //this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
+                this.PickedUpObject.transform.position = hit.point;
             }
         }
 
