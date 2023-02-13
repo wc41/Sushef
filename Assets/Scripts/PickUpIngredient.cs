@@ -164,18 +164,15 @@ namespace MyFirstARGame
 
         private void PickUpObject(RaycastHit hit)
         {
-            if (this.PickedUpObject == null)
-            {
-                this.PickedUpObject = hit.transform.gameObject;
+            this.PickedUpObject = hit.transform.gameObject;
 
-                g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
-                    this.PickedUpObject.GetComponent<PhotonView>().ViewID);
+            g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
+                this.PickedUpObject.GetComponent<PhotonView>().ViewID);
 
-                this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
-                hitPoint = hit.point;
-                offset = PickedUpObject.transform.position - hit.point;
-            }
+            hitPoint = hit.point;
+            offset = PickedUpObject.transform.position - hit.point;
         }
 
         private void UpdateObject(RaycastHit hit)
@@ -186,7 +183,7 @@ namespace MyFirstARGame
                 Debug.Log("$$$ offset = " + offset);
                 Debug.Log("$$$ hitPoint.position = " + hitPoint);
 
-                this.PickedUpObject.transform.position = hitPoint + offset;
+                this.PickedUpObject.transform.position = hit.point + offset;
                 //this.PickedUpObject.transform.position = hit.point;
             }
         }
