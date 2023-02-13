@@ -113,6 +113,7 @@ namespace MyFirstARGame
 
             if (Physics.Raycast(lastRay, out RaycastHit recipeHit, 1000, LayerMask.GetMask("Recipe")) && this.pressed == false)
             {
+                Debug.Log("$$$ Opening recipe book");
                 PhotonView.Find(1).gameObject.SetActive(true);
                 this.CanPlace = false;
             }
