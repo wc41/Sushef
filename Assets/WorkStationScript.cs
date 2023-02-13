@@ -99,7 +99,6 @@ namespace MyFirstARGame
             Debug.Log("$$$ trashing ingredient");
             GameObject toTrash = PhotonView.Find(id).gameObject;
             PhotonNetwork.Destroy(toTrash);
-
         }
 
 
