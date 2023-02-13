@@ -54,42 +54,6 @@ namespace MyFirstARGame
             base.Awake();
             this.m_RaycastManager = this.GetComponent<ARRaycastManager>();
         }
-
-        private void dropOntoBoard()
-        {
-            Debug.Log("$$$ released on board");
-            g = GameObject.FindGameObjectWithTag("GameManager");
-
-            Vector3 puObjectPosition = this.PickedUpObject.transform.position;
-
-            if (puObjectPosition.z > 0)
-            {
-                g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
-                this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
-            }
-            else if (puObjectPosition.z < 0)
-            {
-                g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
-                this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
-            }
-        }
-        private void dropIntoTrash(RaycastHit trashHit)
-        {
-            Debug.Log("$$$ released on trash");
-            g = GameObject.FindGameObjectWithTag("GameManager");
-
-            Vector3 trashPos = trashHit.transform.position;
-            if (trashPos.z > 0)
-            {
-                g.GetPhotonView().RPC("Trash", RpcTarget.Others,
-                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
-            }
-            else if (trashPos.z < 0)
-            {
-                g.GetPhotonView().RPC("Trash", RpcTarget.Others,
-                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
-            }
-        }
         private void Update()
         {
             // update after release
@@ -161,6 +125,42 @@ namespace MyFirstARGame
         {
             this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
             //this.PickedUpObject.transform.position = hit.point;
+        }
+
+        private void dropOntoBoard()
+        {
+            Debug.Log("$$$ released on board");
+            g = GameObject.FindGameObjectWithTag("GameManager");
+
+            Vector3 puObjectPosition = this.PickedUpObject.transform.position;
+
+            if (puObjectPosition.z > 0)
+            {
+                g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
+                this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
+            }
+            else if (puObjectPosition.z < 0)
+            {
+                g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
+                this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
+            }
+        }
+        private void dropIntoTrash(RaycastHit trashHit)
+        {
+            Debug.Log("$$$ released on trash");
+            g = GameObject.FindGameObjectWithTag("GameManager");
+
+            Vector3 trashPos = trashHit.transform.position;
+            if (trashPos.z > 0)
+            {
+                g.GetPhotonView().RPC("Trash", RpcTarget.Others,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
+            }
+            else if (trashPos.z < 0)
+            {
+                g.GetPhotonView().RPC("Trash", RpcTarget.Others,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
+            }
         }
 
         protected override void OnPress(Vector3 position)
