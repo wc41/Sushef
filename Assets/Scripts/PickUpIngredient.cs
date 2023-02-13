@@ -111,15 +111,18 @@ namespace MyFirstARGame
                 this.PickedUpObject = null;
             }
 
+            
+
+            if (Pointer.current == null || this.pressed == false || !this.CanPlace)
+                return;
+
             if (Physics.Raycast(lastRay, out RaycastHit recipeHit, 1000, LayerMask.GetMask("Recipe")))
             {
                 Debug.Log("$$$ Opening recipe book");
                 PhotonView.Find(1).gameObject.SetActive(true);
                 this.CanPlace = false;
-            }
-
-            if (Pointer.current == null || this.pressed == false || !this.CanPlace)
                 return;
+            }
 
             var touchPosition = Pointer.current.position.ReadValue();
 
