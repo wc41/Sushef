@@ -179,7 +179,7 @@ namespace MyFirstARGame
                 Debug.Log("$$$ offset = " + offset);
                 Debug.Log("$$$ hitPoint.position = " + hitPoint);
 
-                this.PickedUpObject.transform.position = new Vector3(hit.point.x + offset.x, 0.2f, 0.07f);
+                this.PickedUpObject.transform.position = new Vector3(hit.point.x + offset.x, 0.2f, hit.point.z);
                 //this.PickedUpObject.transform.position = hit.point;
             }
         }
