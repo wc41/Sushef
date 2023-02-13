@@ -11,8 +11,6 @@ namespace MyFirstARGame
         System.Random rnd;
         Text orderText;
 
-        int order1, order2, order3, order4;
-
         int[] order = { 0, 0, 0, 0 };
         bool ready;
         // Start is called before the first frame update
@@ -26,7 +24,7 @@ namespace MyFirstARGame
         {
             if (ready)
             {
-                orderText.text = "Nigiri: " + order1 + " Onigiri: " + order2 + " Maki: " + order3 + " Sashimi: " + order4;
+                orderText.text = "Nigiri: " + order[0] + " Onigiri: " + order[1] + " Maki: " + order[2] + " Sashimi: " + order[3];
             }
             else
             {
@@ -37,11 +35,11 @@ namespace MyFirstARGame
         {
             rnd = new System.Random();
             order[0] = (int)(num * 1f * rnd.Next(15, 35) / 100f);
-            num -= order1;
+            num -= order[0];
             order[1] = (int)(num * 1f * rnd.Next(25, 40) / 100f);
-            num -= order2;
+            num -= order[1];
             order[2] = (int)(num * 1f * rnd.Next(35, 65) / 100f);
-            order[3] = num - order3;
+            order[3] = num - order[2];
             ready = true;
         }
 
