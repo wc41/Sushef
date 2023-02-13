@@ -17,6 +17,11 @@ namespace MyFirstARGame
     [RequireComponent(typeof(ARRaycastManager))]
     public class PickUpIngredient : PressInputBase
     {
+
+        RaycastHit lastHit;
+        public Transform hitPoint;
+        Vector3 offset;
+
         private static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 
         [SerializeField]
@@ -73,7 +78,7 @@ namespace MyFirstARGame
                         g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
                         this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
                     }
-                } 
+                }
 
                 // hit trash
                 else if (Physics.Raycast(lastRay, out RaycastHit trashHit, 1000, LayerMask.GetMask("Trash"))) {
@@ -81,8 +86,6 @@ namespace MyFirstARGame
                     g = GameObject.FindGameObjectWithTag("GameManager");
 
                     Vector3 puObjectPosition = this.PickedUpObject.transform.position;
-
-                    Debug.Log("$$$ released on board at z-Position: " + puObjectPosition.z);
 
                     g.GetPhotonView().RPC("Trash", RpcTarget.Others,
                         this.PickedUpObject.GetComponent<PhotonView>().ViewID);
@@ -147,14 +150,18 @@ namespace MyFirstARGame
         {
             if (this.PickedUpObject == null || this.PickedUpObject != hit.transform.gameObject)
             {
-                this.PickedUpObject = hit.transform.gameObject;
+                this.PickedUpObject = hit.collider.gameObject;
                 g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
                     this.PickedUpObject.GetComponent<PhotonView>().ViewID);
 
                 this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
+                hitPoint.transform.position = hit.point;
+                offset = PickedUpObject.transform.position - hit.point;
+
             }
-            this.PickedUpObject.transform.position = hit.point;
+
+            this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
 
         }
 
