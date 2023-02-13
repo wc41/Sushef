@@ -19,7 +19,7 @@ namespace MyFirstARGame
     {
         RaycastHit hit;
 
-        public Transform hitPoint;
+        public Vector3 hitPoint;
         Vector3 offset;
 
         private static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
@@ -159,24 +159,27 @@ namespace MyFirstARGame
 
         private void PickUpObject(RaycastHit hit)
         {
-            if (this.PickedUpObject == null)
-            {
-                this.PickedUpObject = hit.transform.gameObject;
+            this.PickedUpObject = hit.transform.gameObject;
 
-                g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
-                    this.PickedUpObject.GetComponent<PhotonView>().ViewID);
+            g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
+                this.PickedUpObject.GetComponent<PhotonView>().ViewID);
 
-                this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
-                hitPoint.transform.position = hit.point;
-                offset = PickedUpObject.transform.position - hit.point;
-            }
+            hitPoint = hit.point;
+            offset = PickedUpObject.transform.position - hit.point;
+
         }
+
         private void UpdateObject(RaycastHit hit)
         {
             if (this.PickedUpObject != null)
             {
-                this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
+                Debug.Log("$$$ this.PickedUpObject.transform.position = " + this.PickedUpObject.transform.position);
+                Debug.Log("$$$ offset = " + offset);
+                Debug.Log("$$$ hitPoint.position = " + hitPoint);
+
+                this.PickedUpObject.transform.position = new Vector3(hit.point.x + offset.x, 0.2f, 0.07f);
                 //this.PickedUpObject.transform.position = hit.point;
             }
         }
