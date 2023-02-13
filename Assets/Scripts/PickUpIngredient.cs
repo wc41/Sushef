@@ -130,7 +130,7 @@ namespace MyFirstARGame
 
             g = GameObject.FindGameObjectWithTag("GameManager");
 
-            if (Physics.Raycast(lastRay, out RaycastHit recipeHit, 1000, LayerMask.GetMask("Recipe")))
+            if (Physics.Raycast(ray, out RaycastHit recipeHit, 1000, LayerMask.GetMask("Recipe")))
             {
                 Debug.Log("$$$ Opening recipe book");
                 PhotonView.Find(1).gameObject.SetActive(true);
