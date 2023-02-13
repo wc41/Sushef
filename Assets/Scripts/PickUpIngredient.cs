@@ -120,12 +120,6 @@ namespace MyFirstARGame
                 this.PickUpOrUpdateObject(hit);
 
                 this.lastRay = ray;
-            } else
-            {
-
-                this.PickUpOrUpdateObject(hit);
-
-                this.lastRay = ray;
             }
 
             
@@ -150,7 +144,8 @@ namespace MyFirstARGame
         {
             if (this.PickedUpObject == null || this.PickedUpObject != hit.transform.gameObject)
             {
-                this.PickedUpObject = hit.collider.gameObject;
+                this.PickedUpObject = hit.transform.gameObject;
+
                 g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
                     this.PickedUpObject.GetComponent<PhotonView>().ViewID);
 
@@ -160,9 +155,10 @@ namespace MyFirstARGame
                 offset = PickedUpObject.transform.position - hit.point;
 
             }
-
-            this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
-
+            if (this.PickedUpObject != null)
+            {
+                this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
+            }
         }
 
         //private void UpdateObject(RaycastHit hit)
