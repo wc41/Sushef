@@ -35,8 +35,6 @@ namespace MyFirstARGame
             tableId = 0;
             tables = new GameObject[10];
             ingredients = new GameObject[10];
-            workstation1 = new GameObject();
-            workstation2 = new GameObject();
 
             ready1 = false;
             ready2 = false;
@@ -178,10 +176,17 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
-        public void Trash(int ID)
+        public void Trash(int id, int workstation)
         {
-            GameObject toTrash = PhotonView.Find(ID).gameObject;
-            PhotonNetwork.Destroy(toTrash);
+            Debug.Log("globalscript trash called");
+            if (workstation == 1)
+            {
+                workstation1.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id);
+            }
+            if (workstation == 2)
+            {
+                workstation2.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id);
+            }
         }
 
         public bool IsHost()
