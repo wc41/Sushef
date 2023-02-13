@@ -31,7 +31,7 @@ namespace MyFirstARGame
             seaweed = new List<int>();
             allIngredients = new List<int>();
             g = GameObject.FindGameObjectWithTag("GameManager");
-            g.GetPhotonView().RPC("UpdateOrder", RpcTarget.Others, 0);
+            g.GetPhotonView().RPC("UpdateOrder", RpcTarget.Others, 30);
         }
 
         // Update is called once per frame

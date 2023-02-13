@@ -3251,6 +3251,7 @@ MonoBehaviour:
   togglePlacementButton: {fileID: 0}
   toggleManipulateButton: {fileID: 0}
   recipeUICloseButton: {fileID: 13329752}
+  orderText: {fileID: 366436150}
 --- !u!224 &4792654349558838537
 RectTransform:
   m_ObjectHideFlags: 0
