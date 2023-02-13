@@ -176,13 +176,17 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
-        public void Trash(int ID)
+        public void Trash(int id, int workstation)
         {
             Debug.Log("globalscript trash called");
-            GameObject toTrash = PhotonView.Find(ID).gameObject;
-            toTrash.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
-
-            PhotonNetwork.Destroy(toTrash);
+            if (workstation == 1)
+            {
+                workstation1.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id);
+            }
+            if (workstation == 2)
+            {
+                workstation2.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id);
+            }
         }
 
         public bool IsHost()
