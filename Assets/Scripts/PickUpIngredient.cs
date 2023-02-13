@@ -111,6 +111,12 @@ namespace MyFirstARGame
                 this.PickedUpObject = null;
             }
 
+            if (Physics.Raycast(lastRay, out RaycastHit recipeHit, 1000, LayerMask.GetMask("Recipe")) && this.pressed == false)
+            {
+                PhotonView.Find(1).gameObject.SetActive(true);
+                this.CanPlace = false;
+            }
+
             if (Pointer.current == null || this.pressed == false || !this.CanPlace)
                 return;
 
@@ -145,21 +151,6 @@ namespace MyFirstARGame
             {
                 UpdateObject(hit);
             }
-
-            
-            //if (this.PickedUpObject != null)
-            //{
-            //    Debug.Log("$$$ Dragging object");
-
-            //}
-
-            //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
-            //{
-            //    // Raycast hits are sorted by distance, so the first one
-            //    // will be the closest hit.
-            //    var hitPose = PickUpIngredient.s_Hits[0].pose;
-            //    this.CreateOrUpdateObject(hitPose.position, hitPose.rotation);
-            //}
         }
 
         private void PickUpObject(RaycastHit hit)
