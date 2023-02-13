@@ -20,6 +20,8 @@ namespace MyFirstARGame
 
         RaycastHit lastHit;
         public Transform hitPoint;
+        RaycastHit hit;
+
         Vector3 offset;
 
         private static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
@@ -120,55 +122,47 @@ namespace MyFirstARGame
 
             g = GameObject.FindGameObjectWithTag("GameManager");
 
-            int layerMask = ~(1 << 12);
 
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000, layerMask /*LayerMask.GetMask("Game")*/))
+            if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Game")))
             {
                 //GlobalScript j = g.GetComponent<GlobalScript>();
-
+                
                 Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
-
-                this.PickUpOrUpdateObject(hit);
-
+                if (this.PickedUpObject == null)
+                {
+                    this.PickUpObject(hit);
+                }
                 this.lastRay = ray;
             }
 
-            
+            if (this.PickedUpObject != null)
+            {
+                this.UpdateObject(hit);
+            }
+
             //if (this.PickedUpObject != null)
             //{
             //    Debug.Log("$$$ Dragging object");
 
             //}
-
-            //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
-            //{
-            //    // Raycast hits are sorted by distance, so the first one
-            //    // will be the closest hit.
-            //    var hitPose = PickUpIngredient.s_Hits[0].pose;
-            //    this.CreateOrUpdateObject(hitPose.position, hitPose.rotation);
-            //}
         }
 
-        private void PickUpOrUpdateObject(RaycastHit hit)
+        private void PickUpObject(RaycastHit hit)
         {
-            if (this.PickedUpObject == null || this.PickedUpObject != hit.transform.gameObject)
-            {
-                this.PickedUpObject = hit.transform.gameObject;
+            this.PickedUpObject = hit.transform.gameObject;
 
-                g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
-                    this.PickedUpObject.GetComponent<PhotonView>().ViewID);
+            g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
+                this.PickedUpObject.GetComponent<PhotonView>().ViewID);
 
-                this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+            this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
-                hitPoint.transform.position = hit.point;
-                offset = PickedUpObject.transform.position - hit.point;
-
-            }
-            if (this.PickedUpObject != null)
-            {
-                this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
-                //this.PickedUpObject.transform.position = hit.point;
-            }
+            hitPoint.transform.position = hit.point;
+            offset = PickedUpObject.transform.position - hit.point;
+        }
+        private void UpdateObject(RaycastHit hit)
+        {
+            this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
+            //this.PickedUpObject.transform.position = hit.point;
         }
 
         //private void UpdateObject(RaycastHit hit)

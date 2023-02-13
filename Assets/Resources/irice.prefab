@@ -306,7 +306,7 @@ MonoBehaviour:
       m_Calls: []
   m_XROrigin: {fileID: 0}
   m_ARSessionOrigin: {fileID: 0}
-  m_ObjectGestureTranslationMode: 0
+  m_ObjectGestureTranslationMode: 2
   m_MaxTranslationDistance: 10
   m_FallbackLayerMask:
     serializedVersion: 2
