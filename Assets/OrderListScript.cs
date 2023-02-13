@@ -12,6 +12,8 @@ namespace MyFirstARGame
         Text orderText;
 
         int order1, order2, order3, order4;
+
+        int[] order = { 0, 0, 0, 0 };
         bool ready;
         // Start is called before the first frame update
         void Start()
@@ -34,13 +36,21 @@ namespace MyFirstARGame
         public void ReceiveOrder(int num)
         {
             rnd = new System.Random();
-            order1 = (int)(num * 1f * rnd.Next(15, 35) / 100f);
+            order[0] = (int)(num * 1f * rnd.Next(15, 35) / 100f);
             num -= order1;
-            order2 = (int)(num * 1f * rnd.Next(25, 40) / 100f);
+            order[1] = (int)(num * 1f * rnd.Next(25, 40) / 100f);
             num -= order2;
-            order3 = (int)(num * 1f * rnd.Next(35, 65) / 100f);
-            order4 = num - order3;
+            order[2] = (int)(num * 1f * rnd.Next(35, 65) / 100f);
+            order[3] = num - order3;
             ready = true;
+        }
+
+        public void Create(int type)
+        {
+            if (order[type] > 0)
+            {
+                order[type] -= 1;
+            }
         }
     }
 }

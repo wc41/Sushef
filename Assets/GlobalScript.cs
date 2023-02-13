@@ -185,11 +185,19 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
-        public void UpdateOrder(int index)
+        public void UpdateOrder(int num)
         {
             GameObject order = GameObject.FindGameObjectWithTag("OrderUI");
             OrderListScript o = order.GetComponent<OrderListScript>();
-            o.ReceiveOrder(index);
+            o.ReceiveOrder(num);
+        }
+
+        [PunRPC]
+        public void Create(int index)
+        {
+            GameObject order = GameObject.FindGameObjectWithTag("OrderUI");
+            OrderListScript o = order.GetComponent<OrderListScript>();
+            o.Create(index);
         }
 
         public bool IsHost()
