@@ -13,6 +13,7 @@ namespace MyFirstARGame
 
         int order1, order2, order3, order4;
         bool ready;
+        public GameObject ws;
         // Start is called before the first frame update
         void Start()
         {
@@ -31,10 +32,9 @@ namespace MyFirstARGame
                 orderText.text = "";
             }
         }
-
-        [PunRPC]
         public void ReceiveOrder(int num)
         {
+
             rnd = new System.Random();
             order1 = (int)(num * 1f * rnd.Next(15, 35) / 100f);
             num -= order1;
