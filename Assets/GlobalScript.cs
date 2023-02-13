@@ -161,10 +161,6 @@ namespace MyFirstARGame
             Debug.Log("ready player 1");
             workstation1 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
             workstation1.GetComponent<PhotonView>().TransferOwnership(ID);
-
-            order = GameObject.FindGameObjectWithTag("OrderUI");
-            OrderListScript o = order.GetComponent<OrderListScript>();
-            o.ReceiveOrder(30);
         }
 
         [PunRPC]
@@ -173,10 +169,6 @@ namespace MyFirstARGame
             Debug.Log("ready player 2");
             workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.Euler(0, 180, 0));
             workstation2.GetComponent<PhotonView>().TransferOwnership(ID);
-
-            order = GameObject.FindGameObjectWithTag("OrderUI");
-            OrderListScript o = order.GetComponent<OrderListScript>();
-            o.ReceiveOrder(30);
         }
 
         [PunRPC]
@@ -204,13 +196,12 @@ namespace MyFirstARGame
         {
             order = GameObject.FindGameObjectWithTag("OrderUI");
             OrderListScript o = order.GetComponent<OrderListScript>();
-            // o.ReceiveOrder(num);
+            o.ReceiveOrder(num);
         }
 
         [PunRPC]
         public void Create(int index)
         {
-            order = GameObject.FindGameObjectWithTag("OrderUI");
             OrderListScript o = order.GetComponent<OrderListScript>();
             Debug.Log("$$$ making sushi...");
             o.Create(index);
