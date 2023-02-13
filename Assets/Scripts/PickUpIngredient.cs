@@ -184,9 +184,9 @@ namespace MyFirstARGame
             {
                 Debug.Log("$$$ this.PickedUpObject.transform.position = " + this.PickedUpObject.transform.position);
                 Debug.Log("$$$ offset = " + offset);
-                Debug.Log("$$$ hitPoint.transform.position = " + hitPoint.transform.position);
+                Debug.Log("$$$ hitPoint.position = " + hitPoint.position);
 
-                this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
+                this.PickedUpObject.transform.position = hitPoint.position + offset;
                 //this.PickedUpObject.transform.position = hit.point;
             }
         }
