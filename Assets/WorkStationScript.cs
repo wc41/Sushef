@@ -99,6 +99,16 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
+        public void TrashIngredientOmg(int id)
+        {
+            Debug.Log("$$$ trashing ingredient");
+            GameObject toTrash = PhotonView.Find(id).gameObject;
+            PhotonNetwork.Destroy(toTrash);
+
+        }
+
+
+        [PunRPC]
         public void RemoveIngredient(int ID)
         {
             foreach (int i in allIngredients)

@@ -17,6 +17,11 @@ namespace MyFirstARGame
     [RequireComponent(typeof(ARRaycastManager))]
     public class PickUpIngredient : PressInputBase
     {
+
+        RaycastHit lastHit;
+        public Transform hitPoint;
+        Vector3 offset;
+
         private static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 
         [SerializeField]
@@ -59,6 +64,7 @@ namespace MyFirstARGame
                 // hit board
                 if (Physics.Raycast(lastRay, out RaycastHit draghit, 1000, LayerMask.GetMask("Board")))
                 {
+                    Debug.Log("$$$ released on board");
                     g = GameObject.FindGameObjectWithTag("GameManager");
                     
                     Vector3 puObjectPosition = this.PickedUpObject.transform.position;
@@ -73,19 +79,25 @@ namespace MyFirstARGame
                         g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
                         this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
                     }
-                } 
+                }
 
                 // hit trash
                 else if (Physics.Raycast(lastRay, out RaycastHit trashHit, 1000, LayerMask.GetMask("Trash"))) {
                     Debug.Log("$$$ released on trash");
                     g = GameObject.FindGameObjectWithTag("GameManager");
 
-                    Vector3 puObjectPosition = this.PickedUpObject.transform.position;
+                    Vector3 trashPos = trashHit.transform.position;
+                    if (trashPos.z > 0)
+                    {
+                        g.GetPhotonView().RPC("Trash", RpcTarget.Others,
+                            this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
+                    }
+                    else if (trashPos.z < 0)
+                    {
+                        g.GetPhotonView().RPC("Trash", RpcTarget.Others,
+                            this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
+                    }
 
-                    Debug.Log("$$$ released on board at z-Position: " + puObjectPosition.z);
-
-                    g.GetPhotonView().RPC("Trash", RpcTarget.Others,
-                        this.PickedUpObject.GetComponent<PhotonView>().ViewID);
                 }
 
                 this.PickedUpObject = null;
@@ -117,12 +129,6 @@ namespace MyFirstARGame
                 this.PickUpOrUpdateObject(hit);
 
                 this.lastRay = ray;
-            } else
-            {
-
-                this.PickUpOrUpdateObject(hit);
-
-                this.lastRay = ray;
             }
 
             
@@ -131,8 +137,6 @@ namespace MyFirstARGame
             //    Debug.Log("$$$ Dragging object");
 
             //}
-            
-
 
             //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
             //{
@@ -148,14 +152,21 @@ namespace MyFirstARGame
             if (this.PickedUpObject == null || this.PickedUpObject != hit.transform.gameObject)
             {
                 this.PickedUpObject = hit.transform.gameObject;
+
                 g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
                     this.PickedUpObject.GetComponent<PhotonView>().ViewID);
 
                 this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
-            }
-            this.PickedUpObject.transform.position = hit.point;
+                //hitPoint.transform.position = hit.point;
+                //offset = PickedUpObject.transform.position - hit.point;
 
+            }
+            if (this.PickedUpObject != null)
+            {
+                //this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
+                this.PickedUpObject.transform.position = hit.point;
+            }
         }
 
         //private void UpdateObject(RaycastHit hit)
