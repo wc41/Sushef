@@ -54,9 +54,6 @@ MonoBehaviour:
   - AddIngredientGlobal
   - Trash
   - RemoveIngredient
-  - ReceiveOrder
-  - UpdateOrder
-  - Create
   - TrashIngredientOmg
   DisableAutoOpenWizard: 1
   ShowSettings: 0

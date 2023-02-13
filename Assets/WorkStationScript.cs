@@ -31,7 +31,6 @@ namespace MyFirstARGame
             seaweed = new List<int>();
             allIngredients = new List<int>();
             g = GameObject.FindGameObjectWithTag("GameManager");
-            g.GetPhotonView().RPC("UpdateOrder", RpcTarget.Others, 30);
         }
 
         // Update is called once per frame
@@ -50,7 +49,6 @@ namespace MyFirstARGame
                 }
 
                 Debug.Log("$$$ made sashimi");
-                g.GetPhotonView().RPC("Create", RpcTarget.Others, 3);
                 rearrange();
                 // sushi = PhotonNetwork.Instantiate("sashimi", gameObject.translation, Quaternion.identity);
 
@@ -65,7 +63,6 @@ namespace MyFirstARGame
                         useRice();
                         useSeaweed();
                         Debug.Log("$$$ made maki");
-                        g.GetPhotonView().RPC("Create", RpcTarget.Others, 2);
                         rearrange();
                         // sushi = PhotonNetwork.Instantiate("maki", gameObject.translation, Quaternion.identity);
 
@@ -75,7 +72,6 @@ namespace MyFirstARGame
                         useFish();
                         useRice();
                         Debug.Log("$$$ made nigiri");
-                        g.GetPhotonView().RPC("Create", RpcTarget.Others, 0);
                         rearrange();
                         // sushi = PhotonNetwork.Instantiate("nigiri", gameObject.translation, Quaternion.identity);
 
@@ -89,7 +85,6 @@ namespace MyFirstARGame
                     useRice();
                     useRice();
                     Debug.Log("$$$ made onigiri");
-                    g.GetPhotonView().RPC("Create", RpcTarget.Others, 1);
                     rearrange();
 
                 }
