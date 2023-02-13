@@ -17,8 +17,6 @@ namespace MyFirstARGame
     [RequireComponent(typeof(ARRaycastManager))]
     public class PickUpIngredient : PressInputBase
     {
-
-        RaycastHit lastHit;
         public Transform hitPoint;
         RaycastHit hit;
 
@@ -149,7 +147,7 @@ namespace MyFirstARGame
 
         private void PickUpObject(RaycastHit hit)
         {
-            this.PickedUpObject = hit.transform.gameObject;
+            this.PickedUpObject = hit.collider.gameObject;
 
             g.GetPhotonView().RPC("TakeIngredientAway", RpcTarget.Others,
                 this.PickedUpObject.GetComponent<PhotonView>().ViewID);
