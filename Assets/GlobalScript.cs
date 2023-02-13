@@ -184,6 +184,14 @@ namespace MyFirstARGame
             PhotonNetwork.Destroy(toTrash);
         }
 
+        [PunRPC]
+        public void UpdateOrder(int index)
+        {
+            GameObject order = GameObject.FindGameObjectWithTag("OrderUI");
+            OrderListScript o = order.GetComponent<OrderListScript>();
+            o.ReceiveOrder(index);
+        }
+
         public bool IsHost()
         {
             return isHost;

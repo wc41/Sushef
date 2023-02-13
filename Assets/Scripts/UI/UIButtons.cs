@@ -21,6 +21,9 @@
         [SerializeField]
         private GameObject recipeUICloseButton;
 
+        [SerializeField]
+        private GameObject orderText;
+
         private bool isPlacing;
         private bool isManipulating;
 
@@ -45,7 +48,7 @@
         {
             GameObject panel = GameObject.FindGameObjectWithTag("RecipeUI");
             panel.SetActive(false);
-            this.isPlacing = true;
+            SetPlacementState(true);
         }
 
         /// <summary>

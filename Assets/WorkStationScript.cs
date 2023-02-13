@@ -24,8 +24,6 @@ namespace MyFirstARGame
         GameObject sushi;
         GameObject g;
 
-        public GameObject order;
-
         void Start()
         {
             fish = new List<int>();
@@ -33,9 +31,7 @@ namespace MyFirstARGame
             seaweed = new List<int>();
             allIngredients = new List<int>();
             g = GameObject.FindGameObjectWithTag("GameManager");
-
-            order = GameObject.FindGameObjectWithTag("OrderUI");
-            order.GetPhotonView().RPC("ReceiveOrder", RpcTarget.Others, 30);
+            g.GetPhotonView().RPC("UpdateOrder", RpcTarget.Others, 0);
         }
 
         // Update is called once per frame

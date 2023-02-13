@@ -31,8 +31,6 @@ namespace MyFirstARGame
                 orderText.text = "";
             }
         }
-
-        [PunRPC]
         public void ReceiveOrder(int num)
         {
             rnd = new System.Random();
