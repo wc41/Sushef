@@ -24,7 +24,7 @@ namespace MyFirstARGame
         GameObject sushi;
         GameObject g;
 
-        GameObject order;
+        public GameObject order;
 
         void Start()
         {
