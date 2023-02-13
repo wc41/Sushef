@@ -18,6 +18,12 @@
         [SerializeField]
         private GameObject toggleManipulateButton;
 
+        [SerializeField]
+        private GameObject recipeUICloseButton;
+
+        [SerializeField]
+        private GameObject orderText;
+
         private bool isPlacing;
         private bool isManipulating;
 
@@ -36,6 +42,13 @@
         {
             this.SetPlacementState(false);
             this.SetManipulateState(!this.isManipulating);
+        }
+
+        public void CloseMenu()
+        {
+            GameObject panel = GameObject.FindGameObjectWithTag("RecipeUI");
+            panel.SetActive(false);
+            SetPlacementState(true);
         }
 
         /// <summary>
@@ -94,5 +107,6 @@
         {
             button.GetComponent<Image>().color = state ? Color.green : Color.white;
         }
+
     }
 }
