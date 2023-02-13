@@ -64,6 +64,7 @@ namespace MyFirstARGame
                 // hit board
                 if (Physics.Raycast(lastRay, out RaycastHit draghit, 1000, LayerMask.GetMask("Board")))
                 {
+                    Debug.Log("$$$ released on board");
                     g = GameObject.FindGameObjectWithTag("GameManager");
                     
                     Vector3 puObjectPosition = this.PickedUpObject.transform.position;
@@ -128,8 +129,6 @@ namespace MyFirstARGame
             //    Debug.Log("$$$ Dragging object");
 
             //}
-            
-
 
             //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
             //{
