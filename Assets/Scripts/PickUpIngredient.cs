@@ -111,6 +111,8 @@ namespace MyFirstARGame
                 this.PickedUpObject = null;
             }
 
+            
+
             if (Pointer.current == null || this.pressed == false || !this.CanPlace)
                 return;
 
@@ -127,6 +129,14 @@ namespace MyFirstARGame
             // For AR Foundation planes (if enabled), we use AR Raycasting.
 
             g = GameObject.FindGameObjectWithTag("GameManager");
+
+            if (Physics.Raycast(ray, out RaycastHit recipeHit, 1000, LayerMask.GetMask("Recipe")))
+            {
+                Debug.Log("$$$ Opening recipe book");
+                PhotonView.Find(1).gameObject.SetActive(true);
+                this.CanPlace = false;
+                return;
+            }
 
             if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Game")))
             {
@@ -145,21 +155,6 @@ namespace MyFirstARGame
             {
                 UpdateObject(hit);
             }
-
-            
-            //if (this.PickedUpObject != null)
-            //{
-            //    Debug.Log("$$$ Dragging object");
-
-            //}
-
-            //else if (this.m_RaycastManager.Raycast(touchPosition, PickUpIngredient.s_Hits, TrackableType.PlaneWithinPolygon))
-            //{
-            //    // Raycast hits are sorted by distance, so the first one
-            //    // will be the closest hit.
-            //    var hitPose = PickUpIngredient.s_Hits[0].pose;
-            //    this.CreateOrUpdateObject(hitPose.position, hitPose.rotation);
-            //}
         }
 
         private void PickUpObject(RaycastHit hit)
