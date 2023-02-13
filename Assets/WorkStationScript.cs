@@ -94,6 +94,20 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
+        public void RemoveIngredient(int ID)
+        {
+            foreach (int i in allIngredients)
+            {
+                if (i == ID)
+                {
+                    allIngredients.Remove(i);
+                    Debug.Log("$$$ ingredient removed from workstation");
+                }
+            }
+        }
+
+
+        [PunRPC]
         public void AddIngredient(int ID)
         {
             // presumably called when ingredient object collides with workstation area

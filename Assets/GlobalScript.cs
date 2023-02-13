@@ -121,8 +121,20 @@ namespace MyFirstARGame
                     if (ingredients[i].GetComponent<PhotonView>().ViewID == id)
                     {
                         ingredients[i] = null;
+                        return;
                     }
                 }
+            }
+
+            Debug.Log("$$$ ingredient not found from conveyor belt");
+
+            if (workstation1 != null)
+            {
+                workstation1.GetPhotonView().RPC("RemoveIngredient", RpcTarget.Others, id);
+            }
+            if (workstation2 != null)
+            {
+                workstation2.GetPhotonView().RPC("RemoveIngredient", RpcTarget.Others, id);
             }
         }
 
