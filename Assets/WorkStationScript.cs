@@ -66,6 +66,7 @@ namespace MyFirstARGame
                         useSeaweed();
                         Debug.Log("$$$ made maki");
                         g.GetPhotonView().RPC("Create", RpcTarget.Others, 2);
+                        
                         rearrange();
                         // sushi = PhotonNetwork.Instantiate("maki", gameObject.translation, Quaternion.identity);
 

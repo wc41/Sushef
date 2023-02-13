@@ -25,6 +25,9 @@ namespace MyFirstARGame
         public bool roundStarted;
         public bool isHost;
 
+        public bool readyToMake;
+        public int readyToMakeThis;
+
         private bool ready1;
         private bool ready2;
 
