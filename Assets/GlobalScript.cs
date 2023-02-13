@@ -180,6 +180,8 @@ namespace MyFirstARGame
         {
             Debug.Log("globalscript trash called");
             GameObject toTrash = PhotonView.Find(ID).gameObject;
+            toTrash.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
+
             PhotonNetwork.Destroy(toTrash);
         }
 
