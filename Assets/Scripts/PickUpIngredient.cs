@@ -172,7 +172,8 @@ namespace MyFirstARGame
             this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
             hitPoint = hit.point;
-            offset = PickedUpObject.transform.position - hit.point;
+            offset = PickedUpObject.transform.position - hit.point - new Vector3(0, 0, -0.1f);
+
         }
 
         private void UpdateObject(RaycastHit hit)
