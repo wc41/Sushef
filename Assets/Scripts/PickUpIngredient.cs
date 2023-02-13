@@ -177,10 +177,15 @@ namespace MyFirstARGame
                 offset = PickedUpObject.transform.position - hit.point;
             }
         }
+
         private void UpdateObject(RaycastHit hit)
         {
             if (this.PickedUpObject != null)
             {
+                Debug.Log("$$$ this.PickedUpObject.transform.position = " + this.PickedUpObject.transform.position);
+                Debug.Log("$$$ offset = " + offset);
+                Debug.Log("$$$ hitPoint.transform.position = " + hitPoint.transform.position);
+
                 this.PickedUpObject.transform.position = hitPoint.transform.position + offset;
                 //this.PickedUpObject.transform.position = hit.point;
             }
