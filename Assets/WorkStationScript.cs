@@ -24,16 +24,14 @@ namespace MyFirstARGame
         GameObject sushi;
         GameObject g;
 
-        GameObject orderList;
+        GameObject order;
 
-        void Start()
+        void Awake()
         {
             fish = new List<int>();
             rice = new List<int>();
             seaweed = new List<int>();
             allIngredients = new List<int>();
-            orderList = PhotonView.Find(2).gameObject;
-            orderList.GetComponent<OrderListScript>().ReceiveOrder(30);
         }
 
         // Update is called once per frame
@@ -44,6 +42,16 @@ namespace MyFirstARGame
             // Onigiri: S + R + R
             // Maki: S + R + F
             // Sashimi: F + F + F
+        }
+
+        [PunRPC] 
+        public void Cook(int playerID)
+        {
+            if (playerID != PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                Debug.Log("Expecting player ID:" + PhotonNetwork.LocalPlayer.ActorNumber + ", is actually: " + playerID);
+                return;
+            }
             if (fish.Count >= 3)
             {
                 for (int i = 0; i < 3; i++)
@@ -52,10 +60,8 @@ namespace MyFirstARGame
                 }
 
                 Debug.Log("$$$ made sashimi");
-                orderList.GetComponent<OrderListScript>().Create(3);
                 rearrange();
-                // sushi = PhotonNetwork.Instantiate("sashimi", gameObject.translation, Quaternion.identity);
-
+                sushi = PhotonNetwork.Instantiate("ssashimi", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
             }
             else if (fish.Count >= 1)
             {
@@ -67,23 +73,20 @@ namespace MyFirstARGame
                         useRice();
                         useSeaweed();
                         Debug.Log("$$$ made maki");
-                        orderList.GetComponent<OrderListScript>().Create(2);
                         rearrange();
-                        // sushi = PhotonNetwork.Instantiate("maki", gameObject.translation, Quaternion.identity);
-
+                        sushi = PhotonNetwork.Instantiate("smaki", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
                     }
                     else
                     {
                         useFish();
                         useRice();
                         Debug.Log("$$$ made nigiri");
-                        orderList.GetComponent<OrderListScript>().Create(0);
                         rearrange();
-                        // sushi = PhotonNetwork.Instantiate("nigiri", gameObject.translation, Quaternion.identity);
-
+                        sushi = PhotonNetwork.Instantiate("snigiri", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
                     }
                 }
-            } else
+            }
+            else
             {
                 if (rice.Count >= 2 && seaweed.Count >= 1)
                 {
@@ -91,24 +94,49 @@ namespace MyFirstARGame
                     useRice();
                     useRice();
                     Debug.Log("$$$ made onigiri");
-                    orderList.GetComponent<OrderListScript>().Create(1);
                     rearrange();
-
+                    sushi = PhotonNetwork.Instantiate("sonigiri", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
                 }
-                // sushi = PhotonNetwork.Instantiate("onigiri", gameObject.translation, Quaternion.identity);
-
             }
         }
 
-        [PunRPC]
-        public void TrashIngredientOmg(int id)
+        public void PlaceOrder()
         {
+            order = GameObject.FindGameObjectWithTag("OrderUI");
+            order.GetComponent<OrderListScript>().ReceiveOrder(30);
+        }
+
+        [PunRPC]
+        public void TrashIngredientOmg(int id, int playerID)
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber != playerID) return;
             Debug.Log("$$$ trashing ingredient");
             GameObject toTrash = PhotonView.Find(id).gameObject;
             PhotonNetwork.Destroy(toTrash);
-
+            rearrange();
         }
 
+
+        [PunRPC]
+        public void MadeSushi(int id, int playerID)
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber != playerID) return;
+            string name = sushi.name;
+            if (name.Contains("onigiri"))
+            {
+                order.GetComponent<OrderListScript>().Create(1);
+            } else if (name.Contains("nigiri"))
+            {
+                order.GetComponent<OrderListScript>().Create(0);
+            } else if (name.Contains("sashimi"))
+            {
+                order.GetComponent<OrderListScript>().Create(3);
+            } else if (name.Contains("maki"))
+            {
+                order.GetComponent<OrderListScript>().Create(2);
+            }
+            PhotonNetwork.Destroy(sushi);
+        }
 
         [PunRPC]
         public void RemoveIngredient(int ID)
@@ -119,18 +147,19 @@ namespace MyFirstARGame
                 {
                     allIngredients.Remove(i);
                     Debug.Log("$$$ ingredient removed from workstation");
-
                 }
             }
+            rearrange();
         }
 
 
         [PunRPC]
-        public void AddIngredient(int ID)
+        public void AddIngredient(int ID, int playerID)
         {
             // presumably called when ingredient object collides with workstation area
             // presumably PhotonView ID is also sent 
 
+            if (PhotonNetwork.LocalPlayer.ActorNumber != playerID) return;
             Debug.Log("$$$ add ingredient called");
             GameObject i = PhotonView.Find(ID).gameObject;
 

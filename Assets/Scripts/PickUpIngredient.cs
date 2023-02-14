@@ -35,6 +35,9 @@ namespace MyFirstARGame
         private Ray lastRay;
         private GameObject g;
 
+        private float hold;
+        Time timer;
+
 
         /// <summary>
         /// The object instantiated as a result of a successful raycast intersection with a plane.
@@ -61,17 +64,21 @@ namespace MyFirstARGame
             Debug.Log("$$$ released on board");
             g = GameObject.FindGameObjectWithTag("GameManager");
 
-            Vector3 puObjectPosition = this.PickedUpObject.transform.position;
+            if (this.PickedUpObject.tag == "Ingredient")
+            {
+                Vector3 puObjectPosition = this.PickedUpObject.transform.position;
 
-            if (puObjectPosition.z > 0)
-            {
-                g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
-                this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
-            }
-            else if (puObjectPosition.z < 0)
-            {
-                g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
-                this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
+                if (puObjectPosition.z > 0)
+                {
+                    g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.MasterClient,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1, PhotonNetwork.LocalPlayer.ActorNumber);
+                }
+                else if (puObjectPosition.z < 0)
+                {
+                    g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.MasterClient,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2, PhotonNetwork.LocalPlayer.ActorNumber);
+                }
+                this.PickedUpObject = null;
             }
         }
 
@@ -83,17 +90,43 @@ namespace MyFirstARGame
             Vector3 trashPos = trashHit.transform.position;
             if (trashPos.z > 0)
             {
-                g.GetPhotonView().RPC("Trash", RpcTarget.Others,
-                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
+                g.GetPhotonView().RPC("Trash", RpcTarget.MasterClient,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1, PhotonNetwork.LocalPlayer.ActorNumber);
             }
             else if (trashPos.z < 0)
             {
-                g.GetPhotonView().RPC("Trash", RpcTarget.Others,
-                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
+                g.GetPhotonView().RPC("Trash", RpcTarget.MasterClient,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2, PhotonNetwork.LocalPlayer.ActorNumber);
+            }
+            this.PickedUpObject = null;
+        }
+
+        private void releasedOnPlate(RaycastHit plateHit)
+        {
+            Debug.Log("$$$ released on plate");
+            g = GameObject.FindGameObjectWithTag("GameManager");
+
+            Vector3 platePos = plateHit.transform.position;
+            if (this.PickedUpObject.tag == "Sushi")
+            {
+                if (platePos.z > 0)
+                {
+                    g.GetPhotonView().RPC("Sushi", RpcTarget.MasterClient,
+                        this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1, PhotonNetwork.LocalPlayer.ActorNumber);
+                }
+                else if (platePos.z < 0)
+                {
+                    g.GetPhotonView().RPC("Sushi", RpcTarget.MasterClient,
+                        this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2, PhotonNetwork.LocalPlayer.ActorNumber);
+                }
+                this.PickedUpObject = null;
             }
         }
+
+
         private void Update()
         {
+            
             // update after release
             if (Pointer.current != null && this.PickedUpObject != null && this.pressed == false)
             {
@@ -109,7 +142,10 @@ namespace MyFirstARGame
                     releasedOnTrash(trashHit);
                 }
 
-                this.PickedUpObject = null;
+                else if (Physics.Raycast(lastRay, out RaycastHit plateHit, 1000, LayerMask.GetMask("Plate")))
+                {
+                    releasedOnPlate(plateHit);
+                }
             }
 
             
@@ -146,6 +182,29 @@ namespace MyFirstARGame
                     Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
 
                     PickUpObject(hit);
+                } else if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Sushi")))
+                {
+                    Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
+
+                    PickUpObject(hit);
+                }
+                else if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Board")))
+                {
+                    hold += Time.deltaTime;
+                    if (hold >= 1f)
+                    {
+                        Vector3 puObjectPosition = hit.transform.position;
+
+                        if (puObjectPosition.z > 0)
+                        {
+                            g.GetPhotonView().RPC("HoldToCreate", RpcTarget.MasterClient, 1, PhotonNetwork.LocalPlayer.ActorNumber);
+                        }
+                        else if (puObjectPosition.z < 0)
+                        {
+                            g.GetPhotonView().RPC("HoldToCreate", RpcTarget.MasterClient, 2, PhotonNetwork.LocalPlayer.ActorNumber);
+                        }
+                        hold = 0f;
+                    }
                 }
             }
 

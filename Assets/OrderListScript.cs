@@ -41,6 +41,8 @@ namespace MyFirstARGame
             order[2] = (int)(num * 1f * rnd.Next(35, 65) / 100f);
             order[3] = num - order[2];
             ready = true;
+
+            Debug.Log("$$$order received, making...");
         }
 
         public void Create(int type)

@@ -58,6 +58,10 @@ MonoBehaviour:
   - UpdateOrder
   - Create
   - TrashIngredientOmg
+  - Sushi
+  - MadeSushi
+  - Cook
+  - HoldToCreate
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

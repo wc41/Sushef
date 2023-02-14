@@ -98,14 +98,14 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
-        public void AddIngredientGlobal(int id, int workstation)
+        public void AddIngredientGlobal(int id, int workstation, int playerID)
         {
             if (workstation == 1)
             {
-                workstation1.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id);
+                workstation1.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id, playerID);
             } if (workstation == 2)
             {
-                workstation2.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id);
+                workstation2.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id, playerID);
             }
         }
 
@@ -138,6 +138,19 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
+        public void HoldToCreate(int ID, int playerID)
+        {
+            if (ID == 1)
+            {
+                workstation1.GetPhotonView().RPC("Cook", RpcTarget.Others, playerID);
+            }
+            if (ID == 2)
+            {
+                workstation2.GetPhotonView().RPC("Cook", RpcTarget.Others, playerID);
+            }
+        }
+
+        [PunRPC]
         public void PlayerJoin()
         {
             // In our PC scene, we have an ImageTarget object that we can update with the observerd real word size and then disable us.
@@ -158,16 +171,14 @@ namespace MyFirstARGame
         public void ReadyPlayer1(int ID)
         {
             Debug.Log("ready player 1");
-            workstation1 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
-            workstation1.GetComponent<PhotonView>().TransferOwnership(ID);
+            workstation1 = PhotonView.Find(ID).gameObject;
         }
 
         [PunRPC]
         public void ReadyPlayer2(int ID)
         {
             Debug.Log("ready player 2");
-            workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.Euler(0, 180, 0));
-            workstation2.GetComponent<PhotonView>().TransferOwnership(ID);
+            workstation2 = PhotonView.Find(ID).gameObject;
         }
 
         [PunRPC]
@@ -177,16 +188,30 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
-        public void Trash(int id, int workstation)
+        public void Trash(int id, int workstation, int playerID)
         {
             Debug.Log("globalscript trash called");
             if (workstation == 1)
             {
-                workstation1.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id);
+                workstation1.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id, playerID);
             }
             if (workstation == 2)
             {
-                workstation2.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id);
+                workstation2.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id, playerID);
+            }
+        }
+
+        [PunRPC]
+        public void Sushi(int id, int workstation, int playerID)
+        {
+            Debug.Log("globalscript sushi called");
+            if (workstation == 1)
+            {
+                workstation1.GetPhotonView().RPC("MadeSushi", RpcTarget.Others, id, playerID);
+            }
+            if (workstation == 2)
+            {
+                workstation2.GetPhotonView().RPC("MadeSushi", RpcTarget.Others, id, playerID);
             }
         }
 
