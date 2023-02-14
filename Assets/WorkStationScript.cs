@@ -38,6 +38,7 @@ namespace MyFirstARGame
                 GameObject orderList = GameObject.FindGameObjectWithTag("OrderUI");
                 order = Instantiate(o, new Vector3(), Quaternion.identity);
                 order.transform.SetParent(orderList.transform);
+                Debug.Log("$$$ making order");
                 order.GetComponent<OrderListScript>().ReceiveOrder(30);
             }
         }
