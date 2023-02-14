@@ -100,11 +100,6 @@ namespace MyFirstARGame
             }
         }
 
-        public void GetOrder()
-        {
-            g.GetPhotonView().RPC("UpdateOrder", RpcTarget.Others, 30);
-        }
-
         [PunRPC]
         public void TrashIngredientOmg(int id)
         {
