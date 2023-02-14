@@ -208,6 +208,7 @@ namespace MyFirstARGame
                     {
                         Debug.Log("!!! Player ID: " + PhotonNetwork.LocalPlayer.ActorNumber);
                         GameObject workstation1 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
+                        workstation1.GetComponent<WorkStationScript>().PlaceOrder();
                         g.GetPhotonView().RPC("ReadyPlayer1", RpcTarget.Others, workstation1.GetPhotonView().ViewID);
                         playerA = true;
                     }
@@ -216,6 +217,7 @@ namespace MyFirstARGame
                     {
                         Debug.Log("!!! Player ID: " + PhotonNetwork.LocalPlayer.ActorNumber);
                         GameObject workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
+                        workstation2.GetComponent<WorkStationScript>().PlaceOrder();
                         g.GetPhotonView().RPC("ReadyPlayer2", RpcTarget.Others, workstation2.GetPhotonView().ViewID);
                         playerB = true;
                     }
