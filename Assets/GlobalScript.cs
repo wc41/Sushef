@@ -223,8 +223,8 @@ namespace MyFirstARGame
             }
             
             tableId++;
-            wall1 = PhotonNetwork.Instantiate("Barrier", new Vector3(-.5f, 0.02f, 0f), Quaternion.identity);
-            wall2 = PhotonNetwork.Instantiate("Barrier", new Vector3(.5f, 0.02f, 0f), Quaternion.identity);
+            wall1 = PhotonNetwork.Instantiate("Barrier", new Vector3(-.53f, 0.02f, 0f), Quaternion.identity);
+            wall2 = PhotonNetwork.Instantiate("Barrier", new Vector3(.53f, 0.02f, 0f), Quaternion.identity);
         }
     }
 }
