@@ -72,7 +72,6 @@ namespace MyFirstARGame
                         useFish();
                         useRice();
                         Debug.Log("$$$ made nigiri");
-                        order.GetComponent<OrderListScript>().Create(0);
                         rearrange();
                         sushi = PhotonNetwork.Instantiate("snigiri", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
                     }
