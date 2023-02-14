@@ -35,10 +35,24 @@ namespace MyFirstARGame
             allIngredients = new List<int>();
             if (!PhotonNetwork.IsMasterClient)
             {
-                GameObject orderList = GameObject.FindGameObjectWithTag("OrderUI");
-                order = Instantiate(o, new Vector3(), Quaternion.identity);
-                order.transform.SetParent(orderList.transform);
-                order.GetComponent<OrderListScript>().ReceiveOrder(30);
+                GameObject o2 = PhotonView.Find(2).gameObject;
+                GameObject o3 = PhotonView.Find(3).gameObject;
+                if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
+                {
+                    GameObject orderList = o2;
+                    o2.SetActive(true);
+                    order = Instantiate(o, new Vector3(), Quaternion.identity);
+                    order.transform.SetParent(o2.transform);
+                    order.GetComponent<OrderListScript>().ReceiveOrder(30);
+                } else
+                {
+                    GameObject orderList = o3;
+                    o3.SetActive(true);
+                    order = Instantiate(o, new Vector3(), Quaternion.identity);
+                    order.transform.SetParent(o3.transform);
+                    order.GetComponent<OrderListScript>().ReceiveOrder(30);
+                }
+                
             }
         }
 
