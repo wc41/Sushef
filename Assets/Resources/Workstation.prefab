@@ -254,6 +254,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   orderList: {fileID: 6516323201693431079, guid: 2dd848976a9c3ff4199423ad3742211a,
     type: 3}
+  o: {fileID: 6516323201693431079, guid: 2dd848976a9c3ff4199423ad3742211a, type: 3}
 --- !u!1 &6918411802369548168
 GameObject:
   m_ObjectHideFlags: 0
