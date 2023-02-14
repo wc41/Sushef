@@ -32,7 +32,7 @@ namespace MyFirstARGame
             rice = new List<int>();
             seaweed = new List<int>();
             allIngredients = new List<int>();
-            orderList = PhotonView.Find(2).gameObject;
+            orderList = PhotonNetwork.Instantiate("Order", new Vector3(), Quaternion.identity);
             orderList.GetComponent<OrderListScript>().ReceiveOrder(30);
         }
 
