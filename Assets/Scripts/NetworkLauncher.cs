@@ -112,5 +112,21 @@ namespace MyFirstARGame
             Debug.Log("Left room");
             this.isJoinedToRoom = false;
         }
+
+        public void RestartGame()
+        {
+            if (PhotonNetwork.IsMasterClient)
+            {
+                foreach (Photon.Realtime.Player p in PhotonNetwork.CurrentRoom.Players.Values)
+                {
+                    if (!p.IsMasterClient)
+                    {
+                        Debug.Log("Kicking player: " + p.UserId);
+                        PhotonNetwork.CloseConnection(p);
+                    }
+                }
+                PhotonNetwork.LeaveRoom();
+            }
+        }
     }
 }

@@ -44,9 +44,7 @@ namespace MyFirstARGame
         /// </summary>
         public GameObject PickedUpObject { get; private set; }
 
-        GameObject ws;
-
-        
+        public GameObject recipe;
 
         /// <summary>
         /// Gets or sets a value indicating whether the user is allowed to place an object.
@@ -170,7 +168,7 @@ namespace MyFirstARGame
             if (Physics.Raycast(ray, out RaycastHit recipeHit, 1000, LayerMask.GetMask("Recipe")))
             {
                 Debug.Log("$$$ Opening recipe book");
-                PhotonView.Find(1).gameObject.SetActive(true);
+                recipe.SetActive(true);
                 this.CanPlace = false;
                 return;
             }
