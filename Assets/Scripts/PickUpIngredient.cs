@@ -18,6 +18,7 @@ namespace MyFirstARGame
     public class PickUpIngredient : PressInputBase
     {
         RaycastHit hit;
+        RaycastHit lastHit;
 
         public Vector3 hitPoint;
         Vector3 offset;
@@ -148,12 +149,12 @@ namespace MyFirstARGame
                 {
                     PickUpObject(hit);
                 }
-
                 this.lastRay = ray;
+                this.lastHit = hit;
             }
             if (this.PickedUpObject != null)
             {
-                UpdateObject(hit);
+                UpdateObject(this.lastHit);
             }
         }
 
@@ -179,7 +180,7 @@ namespace MyFirstARGame
                 Debug.Log("$$$ offset = " + offset);
                 Debug.Log("$$$ hitPoint.position = " + hitPoint);
 
-                this.PickedUpObject.transform.position = new Vector3(hit.point.x + offset.x, 0.2f, hit.point.z);
+                this.PickedUpObject.transform.position = new Vector3(hit.point.x + offset.x, 0.2f, hit.point.z + offset.z);
                 //this.PickedUpObject.transform.position = hit.point;
             }
         }
