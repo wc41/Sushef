@@ -18,6 +18,7 @@ namespace MyFirstARGame
     public class PickUpIngredient : PressInputBase
     {
         RaycastHit hit;
+        RaycastHit lastHit;
 
         public Vector3 hitPoint;
         Vector3 offset;
@@ -138,22 +139,25 @@ namespace MyFirstARGame
                 return;
             }
 
-            if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Game")))
+            if (this.PickedUpObject == null)
             {
-                //GlobalScript j = g.GetComponent<GlobalScript>();
-
-                Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
-
-                if (this.PickedUpObject == null)
+                if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Game")))
                 {
+                    Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
+
                     PickUpObject(hit);
                 }
-
-                this.lastRay = ray;
             }
+
             if (this.PickedUpObject != null)
             {
-                UpdateObject(hit);
+                if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("PlaneTracker")))
+                {
+                    this.lastRay = ray;
+                    this.lastHit = hit;
+                }
+                this.lastRay = ray;
+                UpdateObject(this.lastHit);
             }
         }
 
@@ -168,7 +172,6 @@ namespace MyFirstARGame
 
             hitPoint = hit.point;
             offset = PickedUpObject.transform.position - hit.point;
-
         }
 
         private void UpdateObject(RaycastHit hit)
@@ -179,7 +182,8 @@ namespace MyFirstARGame
                 Debug.Log("$$$ offset = " + offset);
                 Debug.Log("$$$ hitPoint.position = " + hitPoint);
 
-                this.PickedUpObject.transform.position = new Vector3(hit.point.x + offset.x, 0.2f, hit.point.z);
+                //this.PickedUpObject.transform.position = new Vector3(hit.point.x + offset.x, 0.2f, hit.point.z + offset.z);
+                this.PickedUpObject.transform.position = hit.point;
                 //this.PickedUpObject.transform.position = hit.point;
             }
         }
