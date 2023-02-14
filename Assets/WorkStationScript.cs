@@ -37,6 +37,7 @@ namespace MyFirstARGame
             {
                 GameObject o2 = PhotonView.Find(2).gameObject;
                 GameObject o3 = PhotonView.Find(3).gameObject;
+                Debug.Log("&&& player number: " + PhotonNetwork.LocalPlayer.ActorNumber);
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                 {
                     GameObject orderList = o2;
