@@ -187,7 +187,7 @@ namespace MyFirstARGame
                 }
                 else if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Board")))
                 {
-                    Debug.Log("$$$ making..." );
+                    Debug.Log("$$$ making..." + hold);
 
                     hold += Time.deltaTime;
                     if (hold >= 1f)
