@@ -188,6 +188,20 @@ namespace MyFirstARGame
             }
         }
 
+        [PunRPC]
+        public void Sushi(int id, int workstation)
+        {
+            Debug.Log("globalscript sushi called");
+            if (workstation == 1)
+            {
+                workstation1.GetPhotonView().RPC("MadeSushi", RpcTarget.Others, id);
+            }
+            if (workstation == 2)
+            {
+                workstation2.GetPhotonView().RPC("MadeSushi", RpcTarget.Others, id);
+            }
+        }
+
         public bool IsHost()
         {
             return isHost;

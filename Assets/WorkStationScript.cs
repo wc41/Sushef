@@ -24,7 +24,6 @@ namespace MyFirstARGame
         GameObject sushi;
         GameObject g;
 
-        public GameObject o;
         GameObject order;
 
         void Awake()
@@ -51,10 +50,8 @@ namespace MyFirstARGame
                 }
 
                 Debug.Log("$$$ made sashimi");
-                order.GetComponent<OrderListScript>().Create(3);
                 rearrange();
-                // sushi = PhotonNetwork.Instantiate("sashimi", gameObject.translation, Quaternion.identity);
-
+                sushi = PhotonNetwork.Instantiate("sashimi", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
             }
             else if (fish.Count >= 1)
             {
@@ -66,9 +63,8 @@ namespace MyFirstARGame
                         useRice();
                         useSeaweed();
                         Debug.Log("$$$ made maki");
-                        order.GetComponent<OrderListScript>().Create(2);
                         rearrange();
-                        // sushi = PhotonNetwork.Instantiate("maki", gameObject.translation, Quaternion.identity);
+                        sushi = PhotonNetwork.Instantiate("maki", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
 
                     }
                     else
@@ -78,8 +74,7 @@ namespace MyFirstARGame
                         Debug.Log("$$$ made nigiri");
                         order.GetComponent<OrderListScript>().Create(0);
                         rearrange();
-                        // sushi = PhotonNetwork.Instantiate("nigiri", gameObject.translation, Quaternion.identity);
-
+                        sushi = PhotonNetwork.Instantiate("nigiri", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
                     }
                 }
             } else
@@ -90,12 +85,9 @@ namespace MyFirstARGame
                     useRice();
                     useRice();
                     Debug.Log("$$$ made onigiri");
-                    order.GetComponent<OrderListScript>().Create(1);
                     rearrange();
-
+                    sushi = PhotonNetwork.Instantiate("onigiri", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
                 }
-                // sushi = PhotonNetwork.Instantiate("onigiri", gameObject.translation, Quaternion.identity);
-
             }
         }
 
@@ -111,9 +103,29 @@ namespace MyFirstARGame
             Debug.Log("$$$ trashing ingredient");
             GameObject toTrash = PhotonView.Find(id).gameObject;
             PhotonNetwork.Destroy(toTrash);
-
+            rearrange();
         }
 
+
+        [PunRPC]
+        public void MadeSushi(int id)
+        {
+            string name = sushi.name;
+            if (name.Contains("onigiri"))
+            {
+                order.GetComponent<OrderListScript>().Create(1);
+            } else if (name.Contains("nigiri"))
+            {
+                order.GetComponent<OrderListScript>().Create(0);
+            } else if (name.Contains("sashimi"))
+            {
+                order.GetComponent<OrderListScript>().Create(3);
+            } else if (name.Contains("maki"))
+            {
+                order.GetComponent<OrderListScript>().Create(2);
+            }
+            PhotonNetwork.Destroy(sushi);
+        }
 
         [PunRPC]
         public void RemoveIngredient(int ID)
@@ -124,9 +136,9 @@ namespace MyFirstARGame
                 {
                     allIngredients.Remove(i);
                     Debug.Log("$$$ ingredient removed from workstation");
-
                 }
             }
+            rearrange();
         }
 
 

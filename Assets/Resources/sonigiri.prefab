@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2117243915115010922}
   - component: {fileID: 4042399240586252546}
   - component: {fileID: 373813051153532410}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 7940855780762166582}
   - component: {fileID: 5287723795541459542}
   - component: {fileID: 3878194556548794623}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,9 +204,9 @@ GameObject:
   m_Component:
   - component: {fileID: 214196385275688358}
   - component: {fileID: 1418088304040643570}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: sonigiri
-  m_TagString: Untagged
+  m_TagString: Sushi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 5672884808753536449}
   - component: {fileID: 6328439755485899214}
   - component: {fileID: 505141135992804059}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 5627889458334117942}
   - component: {fileID: 9045248573358701609}
   - component: {fileID: 4907859193128850779}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

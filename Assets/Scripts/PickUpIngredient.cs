@@ -92,6 +92,29 @@ namespace MyFirstARGame
                     this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
             }
         }
+
+        private void releasedOnPlate(RaycastHit plateHit)
+        {
+            Debug.Log("$$$ released on plate");
+            g = GameObject.FindGameObjectWithTag("GameManager");
+
+            Vector3 platePos = plateHit.transform.position;
+            if (this.PickedUpObject.tag == "Sushi")
+            {
+                if (platePos.z > 0)
+                {
+                    g.GetPhotonView().RPC("Sushi", RpcTarget.Others,
+                        this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
+                }
+                else if (platePos.z < 0)
+                {
+                    g.GetPhotonView().RPC("Sushi", RpcTarget.Others,
+                        this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
+                }
+            }
+        }
+
+
         private void Update()
         {
             // update after release
@@ -107,6 +130,11 @@ namespace MyFirstARGame
                 // hit trash
                 else if (Physics.Raycast(lastRay, out RaycastHit trashHit, 1000, LayerMask.GetMask("Trash"))) {
                     releasedOnTrash(trashHit);
+                }
+
+                else if (Physics.Raycast(lastRay, out RaycastHit plateHit, 1000, LayerMask.GetMask("Plate")))
+                {
+                    // releasedOnPlate(plateHit);
                 }
 
                 this.PickedUpObject = null;
@@ -142,6 +170,11 @@ namespace MyFirstARGame
             if (this.PickedUpObject == null)
             {
                 if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Game")))
+                {
+                    Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
+
+                    PickUpObject(hit);
+                } else if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Sushi")))
                 {
                     Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
 
