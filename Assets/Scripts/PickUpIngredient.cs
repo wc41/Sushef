@@ -35,6 +35,9 @@ namespace MyFirstARGame
         private Ray lastRay;
         private GameObject g;
 
+        private float hold;
+        Time timer;
+
 
         /// <summary>
         /// The object instantiated as a result of a successful raycast intersection with a plane.
@@ -120,6 +123,7 @@ namespace MyFirstARGame
 
         private void Update()
         {
+            
             // update after release
             if (Pointer.current != null && this.PickedUpObject != null && this.pressed == false)
             {
@@ -139,8 +143,6 @@ namespace MyFirstARGame
                 {
                     releasedOnPlate(plateHit);
                 }
-
-                
             }
 
             
@@ -182,6 +184,26 @@ namespace MyFirstARGame
                     Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
 
                     PickUpObject(hit);
+                }
+                else if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Board")))
+                {
+                    Debug.Log("$$$ making..." );
+
+                    hold += Time.deltaTime;
+                    if (hold >= 1f)
+                    {
+                        Vector3 puObjectPosition = hit.transform.position;
+
+                        if (puObjectPosition.z > 0)
+                        {
+                            g.GetPhotonView().RPC("HoldToCreate", RpcTarget.Others, 1);
+                        }
+                        else if (puObjectPosition.z < 0)
+                        {
+                            g.GetPhotonView().RPC("HoldToCreate", RpcTarget.Others, 2);
+                        }
+                        hold = 0f;
+                    }
                 }
             }
 

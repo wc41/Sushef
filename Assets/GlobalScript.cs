@@ -138,6 +138,19 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
+        public void HoldToCreate(int ID)
+        {
+            if (ID == 1)
+            {
+                workstation1.GetPhotonView().RPC("Cook", RpcTarget.Others, ID);
+            }
+            if (ID == 2)
+            {
+                workstation2.GetPhotonView().RPC("Cook", RpcTarget.Others, ID);
+            }
+        }
+
+        [PunRPC]
         public void PlayerJoin()
         {
             // In our PC scene, we have an ImageTarget object that we can update with the observerd real word size and then disable us.

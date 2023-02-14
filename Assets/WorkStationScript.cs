@@ -42,6 +42,11 @@ namespace MyFirstARGame
             // Onigiri: S + R + R
             // Maki: S + R + F
             // Sashimi: F + F + F
+        }
+
+        [PunRPC] 
+        public void Cook()
+        {
             if (fish.Count >= 3)
             {
                 for (int i = 0; i < 3; i++)
@@ -65,7 +70,6 @@ namespace MyFirstARGame
                         Debug.Log("$$$ made maki");
                         rearrange();
                         sushi = PhotonNetwork.Instantiate("smaki", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
-
                     }
                     else
                     {
@@ -76,7 +80,8 @@ namespace MyFirstARGame
                         sushi = PhotonNetwork.Instantiate("snigiri", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
                     }
                 }
-            } else
+            }
+            else
             {
                 if (rice.Count >= 2 && seaweed.Count >= 1)
                 {
