@@ -39,6 +39,7 @@ namespace MyFirstARGame
         private void Awake()
         {
             this.InitSingleton();
+            PhotonNetwork.EnableCloseConnection = true;
         }
 
         private void InitSingleton()
