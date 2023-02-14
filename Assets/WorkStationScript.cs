@@ -27,7 +27,7 @@ namespace MyFirstARGame
         public GameObject o;
         GameObject order;
 
-        void Start()
+        void Awake()
         {
             fish = new List<int>();
             rice = new List<int>();
@@ -37,6 +37,7 @@ namespace MyFirstARGame
             {
                 GameObject o2 = PhotonView.Find(2).gameObject;
                 GameObject o3 = PhotonView.Find(3).gameObject;
+                Debug.Log("&&& who am i");
                 Debug.Log("&&& player number: " + PhotonNetwork.LocalPlayer.ActorNumber);
                 if (PhotonNetwork.LocalPlayer.ActorNumber == 2)
                 {
