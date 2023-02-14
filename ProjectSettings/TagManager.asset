@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - GameManager
+  - OrderUI
+  - RecipeUI
   layers:
   - Default
   - TransparentFX
@@ -23,8 +25,8 @@ TagManager:
   - Trash
   - Recipe
   - Plate
-  - 
-  - 
+  - PickedUp
+  - PlaneTracker
   - 
   - 
   - 
