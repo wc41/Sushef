@@ -98,14 +98,14 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
-        public void AddIngredientGlobal(int id, int workstation)
+        public void AddIngredientGlobal(int id, int workstation, int playerID)
         {
             if (workstation == 1)
             {
-                workstation1.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id);
+                workstation1.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id, playerID);
             } if (workstation == 2)
             {
-                workstation2.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id);
+                workstation2.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id, playerID);
             }
         }
 
@@ -188,30 +188,30 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
-        public void Trash(int id, int workstation)
+        public void Trash(int id, int workstation, int playerID)
         {
             Debug.Log("globalscript trash called");
             if (workstation == 1)
             {
-                workstation1.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id);
+                workstation1.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id, playerID);
             }
             if (workstation == 2)
             {
-                workstation2.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id);
+                workstation2.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id, playerID);
             }
         }
 
         [PunRPC]
-        public void Sushi(int id, int workstation)
+        public void Sushi(int id, int workstation, int playerID)
         {
             Debug.Log("globalscript sushi called");
             if (workstation == 1)
             {
-                workstation1.GetPhotonView().RPC("MadeSushi", RpcTarget.Others, id);
+                workstation1.GetPhotonView().RPC("MadeSushi", RpcTarget.Others, id, playerID);
             }
             if (workstation == 2)
             {
-                workstation2.GetPhotonView().RPC("MadeSushi", RpcTarget.Others, id);
+                workstation2.GetPhotonView().RPC("MadeSushi", RpcTarget.Others, id, playerID);
             }
         }
 

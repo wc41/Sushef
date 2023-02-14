@@ -70,13 +70,13 @@ namespace MyFirstARGame
 
                 if (puObjectPosition.z > 0)
                 {
-                    g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
-                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
+                    g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.MasterClient,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1, PhotonNetwork.LocalPlayer.ActorNumber);
                 }
                 else if (puObjectPosition.z < 0)
                 {
-                    g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
-                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
+                    g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.MasterClient,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2, PhotonNetwork.LocalPlayer.ActorNumber);
                 }
                 this.PickedUpObject = null;
             }
@@ -90,13 +90,13 @@ namespace MyFirstARGame
             Vector3 trashPos = trashHit.transform.position;
             if (trashPos.z > 0)
             {
-                g.GetPhotonView().RPC("Trash", RpcTarget.Others,
-                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
+                g.GetPhotonView().RPC("Trash", RpcTarget.MasterClient,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1, PhotonNetwork.LocalPlayer.ActorNumber);
             }
             else if (trashPos.z < 0)
             {
-                g.GetPhotonView().RPC("Trash", RpcTarget.Others,
-                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
+                g.GetPhotonView().RPC("Trash", RpcTarget.MasterClient,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2, PhotonNetwork.LocalPlayer.ActorNumber);
             }
             this.PickedUpObject = null;
         }
@@ -111,13 +111,13 @@ namespace MyFirstARGame
             {
                 if (platePos.z > 0)
                 {
-                    g.GetPhotonView().RPC("Sushi", RpcTarget.Others,
-                        this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
+                    g.GetPhotonView().RPC("Sushi", RpcTarget.MasterClient,
+                        this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1, PhotonNetwork.LocalPlayer.ActorNumber);
                 }
                 else if (platePos.z < 0)
                 {
-                    g.GetPhotonView().RPC("Sushi", RpcTarget.Others,
-                        this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
+                    g.GetPhotonView().RPC("Sushi", RpcTarget.MasterClient,
+                        this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2, PhotonNetwork.LocalPlayer.ActorNumber);
                 }
                 this.PickedUpObject = null;
             }

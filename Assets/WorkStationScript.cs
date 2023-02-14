@@ -50,6 +50,7 @@ namespace MyFirstARGame
             if (playerID != PhotonNetwork.LocalPlayer.ActorNumber)
             {
                 Debug.Log("Expecting player ID:" + PhotonNetwork.LocalPlayer.ActorNumber + ", is actually: " + playerID);
+                return;
             }
             if (fish.Count >= 3)
             {
@@ -106,8 +107,9 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
-        public void TrashIngredientOmg(int id)
+        public void TrashIngredientOmg(int id, int playerID)
         {
+            if (PhotonNetwork.LocalPlayer.ActorNumber != playerID) return;
             Debug.Log("$$$ trashing ingredient");
             GameObject toTrash = PhotonView.Find(id).gameObject;
             PhotonNetwork.Destroy(toTrash);
@@ -116,8 +118,9 @@ namespace MyFirstARGame
 
 
         [PunRPC]
-        public void MadeSushi(int id)
+        public void MadeSushi(int id, int playerID)
         {
+            if (PhotonNetwork.LocalPlayer.ActorNumber != playerID) return;
             string name = sushi.name;
             if (name.Contains("onigiri"))
             {
@@ -151,11 +154,12 @@ namespace MyFirstARGame
 
 
         [PunRPC]
-        public void AddIngredient(int ID)
+        public void AddIngredient(int ID, int playerID)
         {
             // presumably called when ingredient object collides with workstation area
             // presumably PhotonView ID is also sent 
 
+            if (PhotonNetwork.LocalPlayer.ActorNumber != playerID) return;
             Debug.Log("$$$ add ingredient called");
             GameObject i = PhotonView.Find(ID).gameObject;
 
