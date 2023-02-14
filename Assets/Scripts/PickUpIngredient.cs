@@ -143,18 +143,16 @@ namespace MyFirstARGame
             {
                 if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Game")))
                 {
-                    //GlobalScript j = g.GetComponent<GlobalScript>();
-
                     Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
 
                     PickUpObject(hit);
                 }
             }
+
             if (this.PickedUpObject != null)
             {
-                if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("PickedUp")))
+                if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("PlaneTracker")))
                 {
-                    //GlobalScript j = g.GetComponent<GlobalScript>();
                     this.lastRay = ray;
                     this.lastHit = hit;
                 }
@@ -172,11 +170,8 @@ namespace MyFirstARGame
 
             this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
-            this.PickedUpObject.layer = LayerMask.NameToLayer("PickedUp");
-
             hitPoint = hit.point;
             offset = PickedUpObject.transform.position - hit.point;
-
         }
 
         private void UpdateObject(RaycastHit hit)
@@ -187,7 +182,8 @@ namespace MyFirstARGame
                 Debug.Log("$$$ offset = " + offset);
                 Debug.Log("$$$ hitPoint.position = " + hitPoint);
 
-                this.PickedUpObject.transform.position = new Vector3(hit.point.x + offset.x, 0.2f, hit.point.z + offset.z);
+                //this.PickedUpObject.transform.position = new Vector3(hit.point.x + offset.x, 0.2f, hit.point.z + offset.z);
+                this.PickedUpObject.transform.position = hit.point;
                 //this.PickedUpObject.transform.position = hit.point;
             }
         }

@@ -19,6 +19,7 @@ namespace MyFirstARGame
         public GameObject wall2;
         public GameObject workstation1;
         public GameObject workstation2;
+        public GameObject emptyPlaneTracker;
 
         private float time;
         private int tableId;
@@ -199,7 +200,10 @@ namespace MyFirstARGame
             time = 0;
             roundStarted = true;
             tables[0] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.2f, 0f), Quaternion.identity);
-            
+
+            emptyPlaneTracker = PhotonNetwork.Instantiate("planeTrack", new Vector3(0f, 0.194f, 0f), Quaternion.identity);
+
+
             System.Random rnd = new System.Random();
             int num = rnd.Next(3);
             if (num == 0)
