@@ -24,7 +24,8 @@ namespace MyFirstARGame
         GameObject sushi;
         GameObject g;
 
-        GameObject orderList;
+        public GameObject o;
+        GameObject order;
 
         void Start()
         {
@@ -34,8 +35,10 @@ namespace MyFirstARGame
             allIngredients = new List<int>();
             if (!PhotonNetwork.IsMasterClient)
             {
-                orderList = GameObject.FindGameObjectWithTag("OrderUI");
-                orderList.GetComponent<OrderListScript>().ReceiveOrder(30);
+                GameObject orderList = GameObject.FindGameObjectWithTag("OrderUI");
+                order = Instantiate(o, new Vector3(), Quaternion.identity);
+                order.transform.SetParent(orderList.transform);
+                order.GetComponent<OrderListScript>().ReceiveOrder(30);
             }
         }
 
@@ -55,7 +58,7 @@ namespace MyFirstARGame
                 }
 
                 Debug.Log("$$$ made sashimi");
-                orderList.GetComponent<OrderListScript>().Create(3);
+                order.GetComponent<OrderListScript>().Create(3);
                 rearrange();
                 // sushi = PhotonNetwork.Instantiate("sashimi", gameObject.translation, Quaternion.identity);
 
@@ -70,7 +73,7 @@ namespace MyFirstARGame
                         useRice();
                         useSeaweed();
                         Debug.Log("$$$ made maki");
-                        orderList.GetComponent<OrderListScript>().Create(2);
+                        order.GetComponent<OrderListScript>().Create(2);
                         rearrange();
                         // sushi = PhotonNetwork.Instantiate("maki", gameObject.translation, Quaternion.identity);
 
@@ -80,7 +83,7 @@ namespace MyFirstARGame
                         useFish();
                         useRice();
                         Debug.Log("$$$ made nigiri");
-                        orderList.GetComponent<OrderListScript>().Create(0);
+                        order.GetComponent<OrderListScript>().Create(0);
                         rearrange();
                         // sushi = PhotonNetwork.Instantiate("nigiri", gameObject.translation, Quaternion.identity);
 
@@ -94,7 +97,7 @@ namespace MyFirstARGame
                     useRice();
                     useRice();
                     Debug.Log("$$$ made onigiri");
-                    orderList.GetComponent<OrderListScript>().Create(1);
+                    order.GetComponent<OrderListScript>().Create(1);
                     rearrange();
 
                 }
