@@ -142,11 +142,11 @@ namespace MyFirstARGame
         {
             if (ID == 1)
             {
-                workstation1.GetPhotonView().RPC("Cook", RpcTarget.Others, ID);
+                workstation1.GetPhotonView().RPC("Cook", RpcTarget.Others);
             }
             if (ID == 2)
             {
-                workstation2.GetPhotonView().RPC("Cook", RpcTarget.Others, ID);
+                workstation2.GetPhotonView().RPC("Cook", RpcTarget.Others);
             }
         }
 
