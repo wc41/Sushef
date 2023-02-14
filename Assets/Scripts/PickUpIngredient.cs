@@ -64,19 +64,22 @@ namespace MyFirstARGame
             Debug.Log("$$$ released on board");
             g = GameObject.FindGameObjectWithTag("GameManager");
 
-            Vector3 puObjectPosition = this.PickedUpObject.transform.position;
+            if (this.PickedUpObject.tag == "Ingredient")
+            {
+                Vector3 puObjectPosition = this.PickedUpObject.transform.position;
 
-            if (puObjectPosition.z > 0)
-            {
-                g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
-                this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
+                if (puObjectPosition.z > 0)
+                {
+                    g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1);
+                }
+                else if (puObjectPosition.z < 0)
+                {
+                    g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
+                }
+                this.PickedUpObject = null;
             }
-            else if (puObjectPosition.z < 0)
-            {
-                g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
-                this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
-            }
-            this.PickedUpObject = null;
         }
 
         private void releasedOnTrash(RaycastHit trashHit)
