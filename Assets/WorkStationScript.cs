@@ -25,7 +25,6 @@ namespace MyFirstARGame
         GameObject g;
 
         GameObject orderList;
-        public GameObject o;
 
         void Start()
         {
@@ -36,8 +35,6 @@ namespace MyFirstARGame
             if (!PhotonNetwork.IsMasterClient)
             {
                 orderList = GameObject.FindGameObjectWithTag("OrderUI");
-                GameObject order = Instantiate(o, new Vector3(), Quaternion.identity);
-                order.transform.SetParent(orderList.transform);
                 orderList.GetComponent<OrderListScript>().ReceiveOrder(30);
             }
         }
