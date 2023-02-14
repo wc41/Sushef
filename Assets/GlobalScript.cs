@@ -158,16 +158,14 @@ namespace MyFirstARGame
         public void ReadyPlayer1(int ID)
         {
             Debug.Log("ready player 1");
-            workstation1 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
-            workstation1.GetComponent<PhotonView>().TransferOwnership(ID);
+            workstation1 = PhotonView.Find(ID).gameObject;
         }
 
         [PunRPC]
         public void ReadyPlayer2(int ID)
         {
             Debug.Log("ready player 2");
-            workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.Euler(0, 180, 0));
-            workstation2.GetComponent<PhotonView>().TransferOwnership(ID);
+            workstation2 = PhotonView.Find(ID).gameObject;
         }
 
         [PunRPC]
