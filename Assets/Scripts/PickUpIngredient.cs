@@ -134,7 +134,7 @@ namespace MyFirstARGame
 
                 else if (Physics.Raycast(lastRay, out RaycastHit plateHit, 1000, LayerMask.GetMask("Plate")))
                 {
-                    // releasedOnPlate(plateHit);
+                    releasedOnPlate(plateHit);
                 }
 
                 this.PickedUpObject = null;
