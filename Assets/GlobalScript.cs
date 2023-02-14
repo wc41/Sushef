@@ -201,8 +201,11 @@ namespace MyFirstARGame
             roundStarted = true;
             tables[0] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.2f, 0f), Quaternion.identity);
 
-            emptyPlaneTracker = PhotonNetwork.Instantiate("planeTrack", new Vector3(0f, 0.194f, 0f), Quaternion.identity);
-
+            emptyPlaneTracker = PhotonNetwork.Instantiate("planeTrack", new Vector3(0f, 0.19f, 0f), Quaternion.identity);
+            if (emptyPlaneTracker == null)
+            {
+                Debug.Log("$$$ failed to instantiate plane tracker");
+            }
 
             System.Random rnd = new System.Random();
             int num = rnd.Next(3);
