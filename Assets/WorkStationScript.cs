@@ -33,6 +33,7 @@ namespace MyFirstARGame
             seaweed = new List<int>();
             allIngredients = new List<int>();
             orderList = PhotonNetwork.Instantiate("Order", new Vector3(), Quaternion.identity);
+            Debug.Log("$$$ Order List Received");
             orderList.GetComponent<OrderListScript>().ReceiveOrder(30);
         }
 
