@@ -51,7 +51,7 @@ namespace MyFirstARGame
 
                 Debug.Log("$$$ made sashimi");
                 rearrange();
-                sushi = PhotonNetwork.Instantiate("sashimi", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
+                sushi = PhotonNetwork.Instantiate("ssashimi", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
             }
             else if (fish.Count >= 1)
             {
@@ -64,7 +64,7 @@ namespace MyFirstARGame
                         useSeaweed();
                         Debug.Log("$$$ made maki");
                         rearrange();
-                        sushi = PhotonNetwork.Instantiate("maki", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
+                        sushi = PhotonNetwork.Instantiate("smaki", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
 
                     }
                     else
@@ -74,7 +74,7 @@ namespace MyFirstARGame
                         Debug.Log("$$$ made nigiri");
                         order.GetComponent<OrderListScript>().Create(0);
                         rearrange();
-                        sushi = PhotonNetwork.Instantiate("nigiri", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
+                        sushi = PhotonNetwork.Instantiate("snigiri", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
                     }
                 }
             } else
@@ -86,7 +86,7 @@ namespace MyFirstARGame
                     useRice();
                     Debug.Log("$$$ made onigiri");
                     rearrange();
-                    sushi = PhotonNetwork.Instantiate("onigiri", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
+                    sushi = PhotonNetwork.Instantiate("sonigiri", new Vector3(0f, 0.19f, gameObject.transform.GetChild(0).transform.position.z), Quaternion.identity);
                 }
             }
         }
