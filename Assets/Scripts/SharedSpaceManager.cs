@@ -216,7 +216,7 @@ namespace MyFirstARGame
                     if (!playerB && Vector3.Distance(new Vector3(0f, 0f, -1f), new Vector3(playerPosition.x, 0f, playerPosition.z)) < 0.3f)
                     {
                         Debug.Log("!!! Player ID: " + PhotonNetwork.LocalPlayer.ActorNumber);
-                        GameObject workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, 0.2f), Quaternion.identity);
+                        GameObject workstation2 = PhotonNetwork.Instantiate("Workstation", new Vector3(0f, 0f, -0.2f), Quaternion.Euler(0, 180, 0));
                         workstation2.GetComponent<WorkStationScript>().PlaceOrder();
                         g.GetPhotonView().RPC("ReadyPlayer2", RpcTarget.Others, workstation2.GetPhotonView().ViewID);
                         playerB = true;
