@@ -47,7 +47,10 @@ namespace MyFirstARGame
         [PunRPC] 
         public void Cook(int playerID)
         {
-            if (playerID != PhotonNetwork.LocalPlayer.ActorNumber) return;
+            if (playerID != PhotonNetwork.LocalPlayer.ActorNumber)
+            {
+                Debug.Log("Expecting player ID:" + PhotonNetwork.LocalPlayer.ActorNumber + ", is actually: " + playerID);
+            }
             if (fish.Count >= 3)
             {
                 for (int i = 0; i < 3; i++)
