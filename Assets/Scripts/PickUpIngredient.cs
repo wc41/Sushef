@@ -196,11 +196,11 @@ namespace MyFirstARGame
 
                         if (puObjectPosition.z > 0)
                         {
-                            g.GetPhotonView().RPC("HoldToCreate", RpcTarget.Others, 1);
+                            g.GetPhotonView().RPC("HoldToCreate", RpcTarget.Others, 1, PhotonNetwork.LocalPlayer.ActorNumber);
                         }
                         else if (puObjectPosition.z < 0)
                         {
-                            g.GetPhotonView().RPC("HoldToCreate", RpcTarget.Others, 2);
+                            g.GetPhotonView().RPC("HoldToCreate", RpcTarget.Others, 2, PhotonNetwork.LocalPlayer.ActorNumber);
                         }
                         hold = 0f;
                     }

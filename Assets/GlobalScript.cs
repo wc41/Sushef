@@ -138,15 +138,15 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
-        public void HoldToCreate(int ID)
+        public void HoldToCreate(int ID, int playerID)
         {
             if (ID == 1)
             {
-                workstation1.GetPhotonView().RPC("Cook", RpcTarget.Others);
+                workstation1.GetPhotonView().RPC("Cook", RpcTarget.Others, playerID);
             }
             if (ID == 2)
             {
-                workstation2.GetPhotonView().RPC("Cook", RpcTarget.Others);
+                workstation2.GetPhotonView().RPC("Cook", RpcTarget.Others, playerID);
             }
         }
 
