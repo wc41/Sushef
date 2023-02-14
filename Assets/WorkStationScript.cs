@@ -24,7 +24,7 @@ namespace MyFirstARGame
         GameObject sushi;
         GameObject g;
 
-        public GameObject orderList;
+        GameObject orderList;
 
         void Start()
         {
@@ -32,9 +32,11 @@ namespace MyFirstARGame
             rice = new List<int>();
             seaweed = new List<int>();
             allIngredients = new List<int>();
-            orderList = PhotonNetwork.Instantiate("Order", new Vector3(), Quaternion.identity);
-            Debug.Log("$$$ Order List Received");
-            orderList.GetComponent<OrderListScript>().ReceiveOrder(30);
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                orderList = PhotonView.Find(2).gameObject;
+                orderList.GetComponent<OrderListScript>().ReceiveOrder(30);
+            }
         }
 
         // Update is called once per frame
