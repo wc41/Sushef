@@ -73,6 +73,7 @@ namespace MyFirstARGame
                 g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.Others,
                 this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
             }
+            this.PickedUpObject = null;
         }
 
         private void releasedOnTrash(RaycastHit trashHit)
@@ -91,6 +92,7 @@ namespace MyFirstARGame
                 g.GetPhotonView().RPC("Trash", RpcTarget.Others,
                     this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
             }
+            this.PickedUpObject = null;
         }
 
         private void releasedOnPlate(RaycastHit plateHit)
@@ -111,6 +113,7 @@ namespace MyFirstARGame
                     g.GetPhotonView().RPC("Sushi", RpcTarget.Others,
                         this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2);
                 }
+                this.PickedUpObject = null;
             }
         }
 
@@ -137,7 +140,7 @@ namespace MyFirstARGame
                     releasedOnPlate(plateHit);
                 }
 
-                this.PickedUpObject = null;
+                
             }
 
             
