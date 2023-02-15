@@ -26,7 +26,16 @@ namespace MyFirstARGame
         // Update is called once per frame
         void Update()
         {
-            if (ready && order[0] + order[1] + order[2] + order[3] == 0)
+            if (ready)
+            {
+                if (order[0] + order[1] + order[2] + order[3] == 0)
+                {
+                    ready = false;
+                }
+                orderText.text = "Nigiri: " + order[0] + " Onigiri: " + order[1] + " Maki: " + order[2] + " Sashimi: " + order[3] + "\nScore: " + score;
+            }
+
+            if (order[0] + order[1] + order[2] + order[3] == 0)
             {
                 orderText.text = "You win!!!";
                 score += initOrder * 5;
@@ -35,10 +44,6 @@ namespace MyFirstARGame
             {
                 orderText.text = "You lost!!!";
                 gameObject.transform.GetChild(1).gameObject.SetActive(true);
-            }
-            else if (ready)
-            {
-                orderText.text = "Nigiri: " + order[0] + " Onigiri: " + order[1] + " Maki: " + order[2] + " Sashimi: " + order[3] + "\nScore: " + score;
             }
             else
             {

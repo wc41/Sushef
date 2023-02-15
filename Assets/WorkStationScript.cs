@@ -62,6 +62,7 @@ namespace MyFirstARGame
         [PunRPC]
         public void Lose(int playerID)
         {
+            if (PhotonNetwork.LocalPlayer.ActorNumber != playerID) return;
             order.GetComponent<OrderListScript>().Lost();
             orderPlaced = false;
         }
