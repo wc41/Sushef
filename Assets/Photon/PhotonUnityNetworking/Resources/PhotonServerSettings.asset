@@ -62,6 +62,10 @@ MonoBehaviour:
   - MadeSushi
   - Cook
   - HoldToCreate
+  - TrashWasabi
+  - TrashWasabiGlobal
+  - Lose
+  - WinState
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
