@@ -258,6 +258,11 @@ namespace MyFirstARGame
             }
         }
 
+        public void Restart()
+        {
+            g.GetPhotonView().RPC("CallPlaceOrder", RpcTarget.MasterClient);
+        }
+
 
         protected override void OnPress(Vector3 position)
         {

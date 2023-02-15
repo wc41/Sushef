@@ -51,6 +51,15 @@
             SetPlacementState(true);
         }
 
+        public void Restart()
+        {
+            var moveIngredits = FindObjectOfType<PickUpIngredient>();
+            if (moveIngredits != null)
+            {
+                moveIngredits.Restart();
+            }
+        }
+
         /// <summary>
         /// Checks whether <paramref name="point"/> is over any UI element.
         /// </summary>

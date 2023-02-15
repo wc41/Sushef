@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
+using UnityEditor.XR.ARKit;
 
 namespace MyFirstARGame
 {
@@ -30,9 +31,11 @@ namespace MyFirstARGame
             {
                 orderText.text = "You win!!!";
                 score += initOrder * 5;
+                gameObject.transform.GetChild(1).gameObject.SetActive(true);
             } else if (lost)
             {
                 orderText.text = "You lost!!!";
+                gameObject.transform.GetChild(1).gameObject.SetActive(true);
             }
             else if (ready)
             {
@@ -61,6 +64,7 @@ namespace MyFirstARGame
             ready = true;
 
             Debug.Log("$$$order received, making...");
+            gameObject.transform.GetChild(1).gameObject.SetActive(false);
         }
 
         public void Create(int type)

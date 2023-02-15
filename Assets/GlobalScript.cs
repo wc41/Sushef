@@ -97,7 +97,7 @@ namespace MyFirstARGame
                         tableId = 0;
                     }
                 }
-            } else if (isHost && !roundStarted && (ready1 || ready2))
+            } else if (isHost && !roundStarted && (ready1 && ready2))
             {
                 beginRound();
             }
@@ -126,6 +126,13 @@ namespace MyFirstARGame
             {
                 workstation2.GetPhotonView().RPC("TrashWasabi", RpcTarget.Others, id, playerID);
             }
+        }
+
+        [PunRPC]
+        public void CallPlaceOrder()
+        {
+            workstation1.GetPhotonView().RPC("PlaceOrder", RpcTarget.Others);
+            workstation2.GetPhotonView().RPC("PlaceOrder", RpcTarget.Others);
         }
 
         [PunRPC]
@@ -194,7 +201,7 @@ namespace MyFirstARGame
                 Debug.Log("player: " + players);
                 if (!roundStarted && players == 1 && isHost)
                 {
-                    beginRound();
+                    //beginRound();
                 }
             }
         }
@@ -259,6 +266,9 @@ namespace MyFirstARGame
             time = 0;
             roundStarted = true;
             tables[0] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.2f, 0f), Quaternion.identity);
+
+            workstation1.GetPhotonView().RPC("PlaceOrder", RpcTarget.Others);
+            workstation2.GetPhotonView().RPC("PlaceOrder", RpcTarget.Others);
 
             emptyPlaneTracker = PhotonNetwork.Instantiate("planeTrack", new Vector3(0f, 0.19f, 0f), Quaternion.identity);
             if (emptyPlaneTracker == null)
