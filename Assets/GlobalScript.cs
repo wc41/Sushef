@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.InputSystem;
 
 namespace MyFirstARGame
 {
@@ -28,6 +29,9 @@ namespace MyFirstARGame
 
         private bool ready1;
         private bool ready2;
+
+        private int player1;
+        private int player2;
 
         void Awake()
         {
@@ -125,6 +129,19 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
+        public void WinState (int playerID)
+        {
+            if (playerID == player1)
+            {
+                workstation2.GetPhotonView().RPC("Lose", RpcTarget.Others, playerID);
+            }
+            if (playerID == player2)
+            {
+                workstation1.GetPhotonView().RPC("Lose", RpcTarget.Others, playerID);
+            }
+        }
+
+        [PunRPC]
         public void TakeIngredientAway(int id)
         {
             Debug.Log("$$$ picking up ingredient");
@@ -183,17 +200,19 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
-        public void ReadyPlayer1(int ID)
+        public void ReadyPlayer1(int ID, int playerID)
         {
             Debug.Log("ready player 1");
             workstation1 = PhotonView.Find(ID).gameObject;
+            player1 = playerID;
         }
 
         [PunRPC]
-        public void ReadyPlayer2(int ID)
+        public void ReadyPlayer2(int ID, int playerID)
         {
             Debug.Log("ready player 2");
             workstation2 = PhotonView.Find(ID).gameObject;
+            player2 = playerID;
         }
 
         [PunRPC]

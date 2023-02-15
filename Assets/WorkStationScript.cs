@@ -26,6 +26,8 @@ namespace MyFirstARGame
 
         GameObject order;
 
+        bool orderPlaced;
+
         void Awake()
         {
             fish = new List<int>();
@@ -37,11 +39,29 @@ namespace MyFirstARGame
         // Update is called once per frame
         void Update()
         {
+            if (orderPlaced)
+            {
+                if (order.GetComponent<OrderListScript>().order[0]
+                    + order.GetComponent<OrderListScript>().order[1]
+                    + order.GetComponent<OrderListScript>().order[2]
+                    + order.GetComponent<OrderListScript>().order[3]
+                    == 0)
+                {
+                    g = GameObject.FindGameObjectWithTag("GameManager");
+                    g.GetPhotonView().RPC("WinState", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
+                }
+            }
             // Recipes:
             // Nigiri: F + R
             // Onigiri: S + R + R
             // Maki: S + R + F
             // Sashimi: F + F + F
+        }
+
+        [PunRPC]
+        public void Lose(int playerID)
+        {
+            order.GetComponent< OrderListScript>().Lost();
         }
 
         [PunRPC] 
@@ -103,7 +123,8 @@ namespace MyFirstARGame
         public void PlaceOrder()
         {
             order = GameObject.FindGameObjectWithTag("OrderUI");
-            order.GetComponent<OrderListScript>().ReceiveOrder(30);
+            order.GetComponent<OrderListScript>().ReceiveOrder(10);
+            orderPlaced = true;
         }
 
         [PunRPC]
