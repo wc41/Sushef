@@ -15,6 +15,8 @@ namespace MyFirstARGame
 
         public int[] order = { 0, 0, 0, 0 };
         bool ready;
+        int score;
+        int initOrder;
         // Start is called before the first frame update
         void Start()
         {
@@ -27,13 +29,14 @@ namespace MyFirstARGame
             if (ready && order[0] + order[1] + order[2] + order[3] == 0)
             {
                 orderText.text = "You win!!!";
+                score += initOrder * 5;
             } else if (lost)
             {
                 orderText.text = "You lost!!!";
             }
             else if (ready)
             {
-                orderText.text = "Nigiri: " + order[0] + " Onigiri: " + order[1] + " Maki: " + order[2] + " Sashimi: " + order[3];
+                orderText.text = "Nigiri: " + order[0] + " Onigiri: " + order[1] + " Maki: " + order[2] + " Sashimi: " + order[3] + "\nScore: " + score;
             }
             else
             {
@@ -47,6 +50,7 @@ namespace MyFirstARGame
         }
         public void ReceiveOrder(int num)
         {
+            initOrder = num;
             rnd = new System.Random();
             order[0] = (int)(num * 1f * rnd.Next(15, 35) / 100f);
             num -= order[0];
@@ -64,6 +68,16 @@ namespace MyFirstARGame
             if (order[type] > 0)
             {
                 order[type] -= 1;
+            }
+            if (type == 0)
+            {
+                score += 15;
+            } else if (type == 3)
+            {
+                score += 30;
+            } else
+            {
+                score += 20;
             }
         }
     }
