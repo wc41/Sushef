@@ -15,6 +15,7 @@ namespace MyFirstARGame
 
         public int[] order = { 0, 0, 0, 0 };
         bool ready;
+        bool started;
         int score;
         int initOrder;
         // Start is called before the first frame update
@@ -26,6 +27,11 @@ namespace MyFirstARGame
         // Update is called once per frame
         void Update()
         {
+            if (!started)
+            {
+                orderText.text = "";
+                return;
+            }
             if (ready)
             {
                 if (order[0] + order[1] + order[2] + order[3] == 0)
@@ -70,6 +76,7 @@ namespace MyFirstARGame
             order[3] = num - order[2];
             lost = false;
             ready = true;
+            started = true;
 
             Debug.Log("$$$order received, making...");
             gameObject.transform.GetChild(1).gameObject.SetActive(false);
