@@ -22,6 +22,9 @@
         private GameObject recipeUICloseButton;
 
         [SerializeField]
+        private GameObject continueUICloseButton;
+
+        [SerializeField]
         private GameObject orderText;
 
         private bool isPlacing;
@@ -47,6 +50,19 @@
         public void CloseMenu()
         {
             GameObject panel = GameObject.FindGameObjectWithTag("RecipeUI");
+            panel.SetActive(false);
+            SetPlacementState(true);
+
+            var moveIngredits = FindObjectOfType<PickUpIngredient>();
+            if (moveIngredits != null)
+            {
+                moveIngredits.restart = true;
+            }
+        }
+
+        public void CloseContinue()
+        {
+            GameObject panel = GameObject.FindGameObjectWithTag("ContinueUI");
             panel.SetActive(false);
             SetPlacementState(true);
         }

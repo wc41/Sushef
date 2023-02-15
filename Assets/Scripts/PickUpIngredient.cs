@@ -50,6 +50,7 @@ namespace MyFirstARGame
         /// Gets or sets a value indicating whether the user is allowed to place an object.
         /// </summary>
         public bool CanPlace { get; set; }
+        public bool restart;
 
         protected override void Awake()
         {
@@ -124,6 +125,12 @@ namespace MyFirstARGame
 
         private void Update()
         {
+            if (restart)
+            {
+                restart = false;
+                g = GameObject.FindGameObjectWithTag("GameManager");
+                g.GetPhotonView().RPC("Proceed", RpcTarget.MasterClient);
+            }
             
             // update after release
             if (Pointer.current != null && this.PickedUpObject != null && this.pressed == false)

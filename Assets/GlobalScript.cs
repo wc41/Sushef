@@ -29,6 +29,10 @@ namespace MyFirstARGame
         private bool ready1;
         private bool ready2;
 
+        int player1;
+        int player2;
+        int ordernumber;
+
         void Awake()
         {
             roundStarted = false;
@@ -39,6 +43,8 @@ namespace MyFirstARGame
 
             ready1 = false;
             ready2 = false;
+
+            ordernumber = 1;
         }
 
         // Update is called once per frame
@@ -91,7 +97,7 @@ namespace MyFirstARGame
                         tableId = 0;
                     }
                 }
-            } else if (isHost && !roundStarted && (ready1 || ready2))
+            } else if (isHost && !roundStarted && (ready1 && ready2))
             {
                 beginRound();
             }
@@ -100,10 +106,10 @@ namespace MyFirstARGame
         [PunRPC]
         public void AddIngredientGlobal(int id, int workstation, int playerID)
         {
-            if (workstation == 1)
+            if (workstation == 1 && playerID == player1)
             {
                 workstation1.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id, playerID);
-            } if (workstation == 2)
+            } else if (workstation == 2 && playerID == player2)
             {
                 workstation2.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id, playerID);
             }
@@ -140,11 +146,11 @@ namespace MyFirstARGame
         [PunRPC]
         public void HoldToCreate(int ID, int playerID)
         {
-            if (ID == 1)
+            if (ID == 1 && playerID == player1)
             {
                 workstation1.GetPhotonView().RPC("Cook", RpcTarget.Others, playerID);
             }
-            if (ID == 2)
+            if (ID == 2 && playerID == player2)
             {
                 workstation2.GetPhotonView().RPC("Cook", RpcTarget.Others, playerID);
             }
@@ -168,16 +174,18 @@ namespace MyFirstARGame
         }
 
         [PunRPC]
-        public void ReadyPlayer1(int ID)
+        public void ReadyPlayer1(int ID, int playerID)
         {
             Debug.Log("ready player 1");
+            player1 = playerID;
             workstation1 = PhotonView.Find(ID).gameObject;
         }
 
         [PunRPC]
-        public void ReadyPlayer2(int ID)
+        public void ReadyPlayer2(int ID, int playerID)
         {
             Debug.Log("ready player 2");
+            player1 = playerID;
             workstation2 = PhotonView.Find(ID).gameObject;
         }
 
@@ -191,11 +199,11 @@ namespace MyFirstARGame
         public void Trash(int id, int workstation, int playerID)
         {
             Debug.Log("globalscript trash called");
-            if (workstation == 1)
+            if (workstation == 1 && playerID == player1)
             {
                 workstation1.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id, playerID);
             }
-            if (workstation == 2)
+            if (workstation == 2 && playerID == player2)
             {
                 workstation2.GetPhotonView().RPC("TrashIngredientOmg", RpcTarget.Others, id, playerID);
             }
@@ -205,14 +213,29 @@ namespace MyFirstARGame
         public void Sushi(int id, int workstation, int playerID)
         {
             Debug.Log("globalscript sushi called");
-            if (workstation == 1)
+            if (workstation == 1 && playerID == player1)
             {
                 workstation1.GetPhotonView().RPC("MadeSushi", RpcTarget.Others, id, playerID);
             }
-            if (workstation == 2)
+            if (workstation == 2 && playerID == player2)
             {
                 workstation2.GetPhotonView().RPC("MadeSushi", RpcTarget.Others, id, playerID);
             }
+        }
+
+        [PunRPC]
+        public void Win(int playerID)
+        {
+            workstation1.GetPhotonView().RPC("WaitForRestart", RpcTarget.Others);
+            workstation2.GetPhotonView().RPC("WaitForRestart", RpcTarget.Others);
+        }
+
+        [PunRPC]
+        public void Proceed(int playerID)
+        {
+            workstation1.GetComponent<WorkStationScript>().PlaceOrder(ordernumber);
+            workstation2.GetComponent<WorkStationScript>().PlaceOrder(ordernumber);
+            ordernumber++;
         }
 
         public bool IsHost()
@@ -222,6 +245,9 @@ namespace MyFirstARGame
  
         public void beginRound()
         {
+            workstation1.GetComponent<WorkStationScript>().PlaceOrder(ordernumber);
+            workstation2.GetComponent<WorkStationScript>().PlaceOrder(ordernumber);
+            ordernumber++;
             time = 0;
             roundStarted = true;
             tables[0] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.2f, 0f), Quaternion.identity);

@@ -11,7 +11,7 @@ namespace MyFirstARGame
         System.Random rnd;
         Text orderText;
 
-        int[] order = { 0, 0, 0, 0 };
+        public int[] order = { 0, 0, 0, 0 };
         bool ready;
         // Start is called before the first frame update
         void Start()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using System.Linq;
 
 namespace MyFirstARGame
 {
@@ -25,6 +26,8 @@ namespace MyFirstARGame
         GameObject g;
 
         GameObject order;
+        GameObject continuePanel;
+        bool orderPlaced;
 
         void Awake()
         {
@@ -37,11 +40,15 @@ namespace MyFirstARGame
         // Update is called once per frame
         void Update()
         {
-            // Recipes:
-            // Nigiri: F + R
-            // Onigiri: S + R + R
-            // Maki: S + R + F
-            // Sashimi: F + F + F
+            if (orderPlaced)
+            {
+                if (order.GetComponent<OrderListScript>().order.Sum() == 0)
+                {
+                    g = GameObject.FindGameObjectWithTag("GameManager");
+                    g.GetPhotonView().RPC("Win", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
+                    orderPlaced = false;
+                }
+            }
         }
 
         [PunRPC] 
@@ -100,10 +107,11 @@ namespace MyFirstARGame
             }
         }
 
-        public void PlaceOrder()
+        public void PlaceOrder(int i)
         {
             order = GameObject.FindGameObjectWithTag("OrderUI");
-            order.GetComponent<OrderListScript>().ReceiveOrder(30);
+            order.GetComponent<OrderListScript>().ReceiveOrder(15 + 5 * i);
+            orderPlaced = true;
         }
 
         [PunRPC]
@@ -111,6 +119,7 @@ namespace MyFirstARGame
         {
             if (PhotonNetwork.LocalPlayer.ActorNumber != playerID) return;
             Debug.Log("$$$ trashing ingredient");
+            RemoveIngredient(id);
             GameObject toTrash = PhotonView.Find(id).gameObject;
             PhotonNetwork.Destroy(toTrash);
             rearrange();
@@ -146,6 +155,15 @@ namespace MyFirstARGame
                 if (i == ID)
                 {
                     allIngredients.Remove(i);
+                    if (fish.Contains(i))
+                    {
+                        fish.Remove(i);
+                    } else if (seaweed.Contains(i))
+                    {
+                        seaweed.Remove(i);
+                    } else if (rice.Contains(i)){
+                        rice.Remove(i);
+                    }
                     Debug.Log("$$$ ingredient removed from workstation");
                 }
             }
@@ -227,5 +245,16 @@ namespace MyFirstARGame
             }
         }
 
+        [PunRPC]
+        public void WaitForRestart()
+        {
+            orderPlaced = false;
+            allIngredients.Clear();
+            fish.Clear();
+            seaweed.Clear();
+            rice.Clear();
+            continuePanel = GameObject.FindGameObjectWithTag("ContinueUI");
+            continuePanel.SetActive(true);
+        }
     }
 }
