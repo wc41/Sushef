@@ -24,7 +24,7 @@ namespace MyFirstARGame
         // Update is called once per frame
         void Update()
         {
-            if (order[0] + order[1] + order[2] + order[3] == 0)
+            if (ready && order[0] + order[1] + order[2] + order[3] == 0)
             {
                 orderText.text = "You win!!!";
             } else if (lost)
