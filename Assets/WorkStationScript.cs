@@ -157,6 +157,16 @@ namespace MyFirstARGame
                 {
                     allIngredients.Remove(i);
                     Debug.Log("$$$ ingredient removed from workstation");
+                    if (fish.Contains(i))
+                    {
+                        fish.Remove(i);
+                    } else if (seaweed.Contains(i))
+                    {
+                        seaweed.Remove(i);
+                    } else if (rice.Contains(i))
+                    {
+                        rice.Remove(i);
+                    }
                 }
             }
             rearrange();
