@@ -30,7 +30,7 @@ namespace MyFirstARGame
             {
                 if (order[0] + order[1] + order[2] + order[3] == 0)
                 {
-                    orderText.text = "You win!!!";
+                    orderText.text = "";
                     gameObject.transform.GetChild(1).gameObject.SetActive(true);
                     score += initOrder * 5;
                     ready = false;
@@ -68,6 +68,7 @@ namespace MyFirstARGame
             num -= order[1];
             order[2] = (int)(num * 1f * rnd.Next(35, 65) / 100f);
             order[3] = num - order[2];
+            lost = false;
             ready = true;
 
             Debug.Log("$$$order received, making...");
