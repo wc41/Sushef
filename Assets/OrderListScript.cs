@@ -30,12 +30,14 @@ namespace MyFirstARGame
             {
                 if (order[0] + order[1] + order[2] + order[3] == 0)
                 {
+                    orderText.text = "You win!!!";
+                    score += initOrder * 5;
+                    gameObject.transform.GetChild(1).gameObject.SetActive(true);
                     ready = false;
                 }
                 orderText.text = "Nigiri: " + order[0] + " Onigiri: " + order[1] + " Maki: " + order[2] + " Sashimi: " + order[3] + "\nScore: " + score;
             }
-
-            if (order[0] + order[1] + order[2] + order[3] == 0)
+            else if (order[0] + order[1] + order[2] + order[3] == 0)
             {
                 orderText.text = "You win!!!";
                 score += initOrder * 5;
@@ -44,8 +46,7 @@ namespace MyFirstARGame
             {
                 orderText.text = "You lost!!!";
                 gameObject.transform.GetChild(1).gameObject.SetActive(true);
-            }
-            else
+            } else 
             {
                 orderText.text = "";
             }
