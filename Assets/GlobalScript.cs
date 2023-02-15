@@ -83,7 +83,7 @@ namespace MyFirstARGame
                     }
                     else if (num == 2)
                     {
-                        ingredients[tableId] = PhotonNetwork.Instantiate("iweed", new Vector3(.6f, 0.22f, 0f), Quaternion.identity);
+                        ingredients[tableId] = PhotonNetwork.Instantiate("iweed", new Vector3(.6f, 0.215f, 0f), Quaternion.identity);
                     }
                     tableId++;
                     if (tableId > 9)
