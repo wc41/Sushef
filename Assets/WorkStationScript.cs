@@ -107,6 +107,7 @@ namespace MyFirstARGame
             }
         }
 
+        [PunRPC]
         public void PlaceOrder(int i)
         {
             order = GameObject.FindGameObjectWithTag("OrderUI");

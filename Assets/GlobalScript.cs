@@ -166,10 +166,6 @@ namespace MyFirstARGame
             {
                 players++;
                 Debug.Log("player: " + players);
-                if (!roundStarted && players == 1 && isHost)
-                {
-                    beginRound();
-                }
             }
         }
 
@@ -235,8 +231,8 @@ namespace MyFirstARGame
         [PunRPC]
         public void Proceed(int playerID)
         {
-            workstation1.GetComponent<WorkStationScript>().PlaceOrder(ordernumber);
-            workstation2.GetComponent<WorkStationScript>().PlaceOrder(ordernumber);
+            workstation1.GetPhotonView().RPC("PlaceOrder", RpcTarget.Others, ordernumber);
+            workstation2.GetPhotonView().RPC("PlaceOrder", RpcTarget.Others, ordernumber);
             ordernumber++;
         }
 
@@ -247,8 +243,8 @@ namespace MyFirstARGame
  
         public void beginRound()
         {
-            workstation1.GetComponent<WorkStationScript>().PlaceOrder(ordernumber);
-            workstation2.GetComponent<WorkStationScript>().PlaceOrder(ordernumber);
+            workstation1.GetPhotonView().RPC("PlaceOrder", RpcTarget.Others, ordernumber);
+            workstation2.GetPhotonView().RPC("PlaceOrder", RpcTarget.Others, ordernumber);
             ordernumber++;
             time = 0;
             roundStarted = true;
