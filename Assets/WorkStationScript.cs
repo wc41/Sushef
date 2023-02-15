@@ -49,6 +49,7 @@ namespace MyFirstARGame
                 {
                     g = GameObject.FindGameObjectWithTag("GameManager");
                     g.GetPhotonView().RPC("WinState", RpcTarget.MasterClient, PhotonNetwork.LocalPlayer.ActorNumber);
+                    orderPlaced = false;
                 }
             }
             // Recipes:
@@ -61,7 +62,8 @@ namespace MyFirstARGame
         [PunRPC]
         public void Lose(int playerID)
         {
-            order.GetComponent< OrderListScript>().Lost();
+            order.GetComponent<OrderListScript>().Lost();
+            orderPlaced = false;
         }
 
         [PunRPC] 
