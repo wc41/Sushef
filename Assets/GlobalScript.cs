@@ -73,17 +73,19 @@ namespace MyFirstARGame
                     tables[tableId] = PhotonNetwork.Instantiate("Belt", new Vector3(.6f, 0.2f, 0f), Quaternion.identity);
 
                     System.Random rnd = new System.Random();
-                    int num = rnd.Next(3);
-                    if (num == 0)
+                    int num = rnd.Next(31);
+                    if (num < 10)
                     {
                         ingredients[tableId] = PhotonNetwork.Instantiate("ifish", new Vector3(.6f, 0.22f, 0f), Quaternion.identity);
-                    } else if (num == 1)
+                    } else if (num >= 10 && num < 20)
                     {
                         ingredients[tableId] = PhotonNetwork.Instantiate("irice", new Vector3(.6f, 0.22f, 0f), Quaternion.identity);
-                    }
-                    else if (num == 2)
+                    } else if (num >= 20 && num < 30)
                     {
                         ingredients[tableId] = PhotonNetwork.Instantiate("iweed", new Vector3(.6f, 0.215f, 0f), Quaternion.identity);
+                    } else
+                    {
+                        ingredients[tableId] = PhotonNetwork.Instantiate("iwasabi", new Vector3(.6f, 0.215f, 0f), Quaternion.identity);
                     }
                     tableId++;
                     if (tableId > 9)
@@ -106,6 +108,19 @@ namespace MyFirstARGame
             } if (workstation == 2)
             {
                 workstation2.GetPhotonView().RPC("AddIngredient", RpcTarget.Others, id, playerID);
+            }
+        }
+
+        [PunRPC]
+        public void TrashWasabiGlobal(int id, int workstation, int playerID)
+        {
+            if (workstation == 1)
+            {
+                workstation1.GetPhotonView().RPC("TrashWasabi", RpcTarget.Others, id, playerID);
+            }
+            if (workstation == 2)
+            {
+                workstation2.GetPhotonView().RPC("TrashWasabi", RpcTarget.Others, id, playerID);
             }
         }
 

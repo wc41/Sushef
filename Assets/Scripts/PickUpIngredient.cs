@@ -20,6 +20,8 @@ namespace MyFirstARGame
         RaycastHit hit;
         RaycastHit lastHit;
 
+        float makeTime;
+
         public Vector3 hitPoint;
         Vector3 offset;
 
@@ -46,7 +48,6 @@ namespace MyFirstARGame
 
         GameObject ws;
 
-        
 
         /// <summary>
         /// Gets or sets a value indicating whether the user is allowed to place an object.
@@ -56,6 +57,7 @@ namespace MyFirstARGame
         protected override void Awake()
         {
             base.Awake();
+            makeTime = 1.5f;
             this.m_RaycastManager = this.GetComponent<ARRaycastManager>();
         }
 
@@ -76,6 +78,22 @@ namespace MyFirstARGame
                 else if (puObjectPosition.z < 0)
                 {
                     g.GetPhotonView().RPC("AddIngredientGlobal", RpcTarget.MasterClient,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2, PhotonNetwork.LocalPlayer.ActorNumber);
+                }
+                this.PickedUpObject = null;
+            } else if (this.PickedUpObject.tag == "Wasabi")
+            {
+                makeTime *= 0.75f;
+                Vector3 puObjectPosition = this.PickedUpObject.transform.position;
+
+                if (puObjectPosition.z > 0)
+                {
+                    g.GetPhotonView().RPC("TrashWasabiGlobal", RpcTarget.MasterClient,
+                    this.PickedUpObject.GetComponent<PhotonView>().ViewID, 1, PhotonNetwork.LocalPlayer.ActorNumber);
+                }
+                else if (puObjectPosition.z < 0)
+                {
+                    g.GetPhotonView().RPC("TrashWasabiGlobal", RpcTarget.MasterClient,
                     this.PickedUpObject.GetComponent<PhotonView>().ViewID, 2, PhotonNetwork.LocalPlayer.ActorNumber);
                 }
                 this.PickedUpObject = null;
@@ -142,6 +160,7 @@ namespace MyFirstARGame
                     releasedOnTrash(trashHit);
                 }
 
+                // hit plate
                 else if (Physics.Raycast(lastRay, out RaycastHit plateHit, 1000, LayerMask.GetMask("Plate")))
                 {
                     releasedOnPlate(plateHit);
@@ -187,11 +206,10 @@ namespace MyFirstARGame
                     Debug.Log("$$$ I found: " + hit.transform.gameObject.name + ".");
 
                     PickUpObject(hit);
-                }
-                else if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Board")))
+                } else if (Physics.Raycast(ray, out hit, 1000, LayerMask.GetMask("Board")))
                 {
                     hold += Time.deltaTime;
-                    if (hold >= 1f)
+                    if (hold >= makeTime)
                     {
                         Vector3 puObjectPosition = hit.transform.position;
 
@@ -229,27 +247,17 @@ namespace MyFirstARGame
 
             this.PickedUpObject.GetComponent<PhotonView>().TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
 
-            hitPoint = hit.point;
-            offset = PickedUpObject.transform.position - hit.point;
         }
 
         private void UpdateObject(RaycastHit hit)
         {
             if (this.PickedUpObject != null)
             {
-                Debug.Log("$$$ this.PickedUpObject.transform.position = " + this.PickedUpObject.transform.position);
-                Debug.Log("$$$ offset = " + offset);
-                Debug.Log("$$$ hitPoint.position = " + hitPoint);
 
-                //this.PickedUpObject.transform.position = new Vector3(hit.point.x + offset.x, 0.2f, hit.point.z + offset.z);
                 this.PickedUpObject.transform.position = hit.point;
-                //this.PickedUpObject.transform.position = hit.point;
             }
         }
 
-        //private void UpdateObject(RaycastHit hit)
-        //{
-        //}
 
         protected override void OnPress(Vector3 position)
         {
@@ -259,7 +267,6 @@ namespace MyFirstARGame
         protected override void OnPressCancel()
         {
             this.pressed = false;
-            //this.PickedUpObject = null;
         }
     }
 }

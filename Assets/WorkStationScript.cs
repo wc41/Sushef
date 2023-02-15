@@ -116,6 +116,16 @@ namespace MyFirstARGame
             rearrange();
         }
 
+        [PunRPC]
+        public void TrashWasabi(int id, int playerID)
+        {
+            if (PhotonNetwork.LocalPlayer.ActorNumber != playerID) return;
+            Debug.Log("$$$ trashing wasabi");
+            GameObject toTrash = PhotonView.Find(id).gameObject;
+            PhotonNetwork.Destroy(toTrash);
+            rearrange();
+        }
+
 
         [PunRPC]
         public void MadeSushi(int id, int playerID)
