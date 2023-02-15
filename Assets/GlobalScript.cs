@@ -212,6 +212,7 @@ namespace MyFirstARGame
             Debug.Log("ready player 1");
             workstation1 = PhotonView.Find(ID).gameObject;
             player1 = playerID;
+            ready1 = true;
         }
 
         [PunRPC]
@@ -220,6 +221,7 @@ namespace MyFirstARGame
             Debug.Log("ready player 2");
             workstation2 = PhotonView.Find(ID).gameObject;
             player2 = playerID;
+            ready2 = true;
         }
 
         [PunRPC]
