@@ -20,7 +20,7 @@ namespace MyFirstARGame
         // Start is called before the first frame update
         void Start()
         {
-            orderText = gameObject.GetComponentInChildren<Text>();
+            orderText = gameObject.GetComponent<Text>();
         }
 
         // Update is called once per frame
